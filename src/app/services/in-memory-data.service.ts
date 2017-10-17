@@ -15,6 +15,16 @@ export class InMemoryDataService implements InMemoryDbService {
     const program = [
       {"id":1,"name":"Prescription Alerts","description":"PBM Communications including Order Status and Refill Reminder alerts"}
     ];
-    return { communication: communication, program: program};
+    const programconfiguration = [
+      {"id":1,
+       "name":"Prescription Alerts Order Status",
+       "description":"Order Status Program-level Configuration",
+       "program":
+         {"id":1,
+          "name":"Prescription Alerts",
+          "description":"PBM Communications including Order Status and Refill Reminder alerts",
+          "programConfiguration":[1]}
+        }];
+    return { communication: communication, program: program, programconfiguration: programconfiguration};
   }
 }
