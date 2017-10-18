@@ -29,7 +29,8 @@ import { InMemoryDataService }  from './services/in-memory-data.service';
 // Modal stuff
 import { ModalComponent }              from './components/modal/modal.component';
 import { ComponentAsContentComponent } from './components/modal/component-as-content/component-as-content.component';
-import { NgbdModalContent } from './components/modal/component-as-content/component-as-content.component';
+import { NgbdModalContent }            from './components/modal/component-as-content/component-as-content.component';
+import { AddProgramComponent }         from './components/modal/addprogram/addprogram.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { NgbdModalContent } from './components/modal/component-as-content/compon
 
     ModalComponent,
     ComponentAsContentComponent,
-    NgbdModalContent
+    NgbdModalContent,
+    AddProgramComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,7 @@ import { NgbdModalContent } from './components/modal/component-as-content/compon
     NgbModule.forRoot()
     ,InMemoryWebApiModule.forRoot(InMemoryDataService),
   ],
-  entryComponents: [NgbdModalContent],
+  entryComponents: [NgbdModalContent, AddProgramComponent],
   providers: [CommunicationService, ProgramService],
   bootstrap: [AppComponent]
 })

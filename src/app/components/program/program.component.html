@@ -1,8 +1,14 @@
-<h2>Programs</h2>
-<table class="table table-striped table-bordered table-hover table-condensed">
-  <thead>
+<h4>Manage Programs
+  <button class="btn btn-outline-dark btn-sm" (click)="addNewProgramModal()">Add</button>
+</h4>
+<table class="table table-responsive table-sm table-striped table-bordered table-hover">
+  <caption>
+    Programs define collections of Communications, each with a program-level configuration that 
+    specify the (default) channel priority, if the comm is mandatory, with an effective and expiration date
+  </caption>
+  <thead class="thead-inverse">
     <tr>
-      <th>Prog ID</th>
+      <th>ID</th>
       <th>Name</th>
       <th>Description</th>
       <th>Status</th>
@@ -11,7 +17,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let program of programs" >
-      <td><span class="badge">{{program.id}}</span></td>
+      <th scope="row"><span class="badge badge-secondary">{{program.id}}</span></th>
       <td><span>{{program.name}}</span></td>
       <td><span>{{program.description}}</span></td>
       <td>&nbsp;</td>
