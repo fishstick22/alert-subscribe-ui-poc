@@ -30,6 +30,23 @@ export class ProgramService {
                .catch(this.handleError);
   }
 
+  create(program: Program): Promise<Program> {
+    const prgJson = JSON.stringify(program);
+    console.log('ProgramService create: ', prgJson);
+    return this.http
+      .post(this.programUrl, prgJson, {headers: this.headers})
+      .toPromise()
+      .then(
+        response => {
+          console.log("service response text " + response.statusText);
+          console.log("service response data " + response.json());
+          console.log("service response status " + response.status);
+
+          return response.json() as Program
+        })
+      .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);
