@@ -1,25 +1,11 @@
-<!-- Sarting with basic "Webpage" template
-     https://www.w3schools.com/bootstrap/bootstrap_templates.asp -->
+<!-- Sarting with basic "Bootstrap starter" template
+     https://getbootstrap.com/docs/4.0/examples/starter-template/-->
+
 <app-navbar [customLogoTitle]=[title]></app-navbar>   
   
-<div class="container-fluid text-center">    
-  <div class="row content">
-    <div class="col-sm-1 sidenav">
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-    </div>
-    <div class="col-sm-10 text-left"> 
-      <router-outlet></router-outlet>
-    </div>
-    <div class="col-sm-1 sidenav">
-      <div class="well">
-        <p>ADS</p>
-      </div>
-      <div class="well">
-        <p>ADS</p>
-      </div>
-    </div>
+<div class="container">
+  <div class="starter-template">
+    <router-outlet></router-outlet>
   </div>
 </div>
 
