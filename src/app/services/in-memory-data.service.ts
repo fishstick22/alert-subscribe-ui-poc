@@ -13,7 +13,8 @@ export class InMemoryDataService implements InMemoryDbService {
       {"id":1907,"name":"Future Fill Release Reminder","description":"The Future Fill Release Reminder alert will be triggered by LINKS and sent to CMP when a prescription is released from future fill"}
     ];
     const program = [
-      {"id":1,"name":"Prescription Alerts","description":"PBM Communications including Order Status and Refill Reminder alerts"}
+      {"id":1,"name":"Prescription Alerts","description":"PBM Communications including Order Status and Refill Reminder alerts"},
+      {"id":2,"name":"Non-Prescription Alerts","description":"tired of adding a new program just to test deleting it"}
     ];
     const programconfiguration = [
       {"id":1,

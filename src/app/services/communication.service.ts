@@ -1,7 +1,11 @@
-import { Injectable }    from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Injectable, Inject }    from '@angular/core';
+import { Headers, Http }         from '@angular/http';
+
+import { APP_CONFIG }            from '../app.config'
+import { IAppConfig }            from '../iapp-config'
 
 import 'rxjs/add/operator/toPromise';
+;
 
 import { Communication } from './../model/communication';
 
@@ -9,14 +13,16 @@ import { Communication } from './../model/communication';
 export class CommunicationService {
 
   private headers = new Headers({'Content-Type': 'application/json'});
-  //private communicationUrl = 'http://localhost:8080/AlertSubscribeServicesPOC/service/communication';  // URL to web api
-  private communicationUrl = 'api/communication';  // URL to web api
+  private commApiEndpoint;
 
-  constructor(private http: Http) { }
+
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig, private http: Http) { 
+    this.commApiEndpoint = this.config.apiEndpoint + 'api/communication';  // URL to web api
+  }
 
   getCommunications(): Promise<Communication[]> {
-    console.log('CommunicationService getCommunications...');
-    return this.http.get(this.communicationUrl)
+    console.log('CommunicationService getCommunications...', );
+    return this.http.get(this.commApiEndpoint)
                .toPromise()
                .then(
                  response => {

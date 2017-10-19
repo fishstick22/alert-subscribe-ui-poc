@@ -1,7 +1,7 @@
-<form #programForm="ngForm" (ngSubmit)="saveProgram(programForm)" >
-  <input type="hidden" name="id" [(ngModel)]="program.id" id="newProgramId">
+<form #programForm="ngForm" (ngSubmit)="deleteProgram(programForm)" >
+  <input type="hidden" name="id" [(ngModel)]="program.id" id="programId">
   <div class="modal-header bg-dark">
-    <h4 class="modal-title text-white">Add New Program</h4>
+    <h4 class="modal-title text-white">Delete Program</h4>
     <button type="button" class="close text-white" aria-label="Close" (click)="addProgramModal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -9,19 +9,19 @@
   <div class="modal-body">
     <div class="form-group">
       <label for="programName">Program Name</label>
-        <input type="text" class="form-control" name="name" [(ngModel)]="program.name" required
+        <input type="text" class="form-control" name="name" [(ngModel)]="program.name" required [disabled]="true"
           id="programName" aria-describedby="programNamelHelp" placeholder="Enter Program Name">
         <small id="programNamelHelp" class="form-text text-muted">Short Name of the Program.</small>
     </div>
     <div class="form-group">
       <label for="programDescription">Program Description</label>
-        <input type="text" class="form-control" name="description" [(ngModel)]="program.description" required
+        <input type="text" class="form-control" name="description" [(ngModel)]="program.description" required [disabled]="true"
           id="programDescription" aria-describedby="programDescriptionlHelp" placeholder="Enter Program Description">
         <small id="programDescriptionlHelp" class="form-text text-muted">Brief Description of the Program.</small>
     </div>
   </div>
   <div class="modal-footer">
-    <button type="submit" class="btn btn-outline-dark" [disabled]="!programForm.valid">Save</button>
-    <button type="button" class="btn btn-outline-dark" (click)="addProgramModal.close('Close click')">Close</button>
+    <button type="submit" class="btn btn-outline-dark" [disabled]="!programForm.valid">Delete</button>
+    <button type="button" class="btn btn-outline-dark" (click)="editProgramModal.close('Close click')">Close</button>
   </div>
-</form>  
+</form>
