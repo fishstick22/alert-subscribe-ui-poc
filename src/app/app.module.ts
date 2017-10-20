@@ -41,6 +41,12 @@ import { DeleteProgramComponent }      from './components/modal/deleteprogram/de
 import { APP_CONFIG, AppConfig }       from './app.config';
 import { IAppConfig }                  from './iapp-config';
 
+// Utilities
+//http://www.carbonatethis.com/sort-table-columns-with-angular-and-typescript/
+import { SortableColumnComponent } from './components/utility/sortable-column/sortable-column.component';
+import { SortableColumnService }   from './services/sortable-column.service';
+import { SortableTableDirective }  from './components/utility/sortable-table.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +65,10 @@ import { IAppConfig }                  from './iapp-config';
     NgbdModalContent,
     AddProgramComponent,
     EditProgramComponent,
-    DeleteProgramComponent
+    DeleteProgramComponent,
+
+    SortableColumnComponent,
+    SortableTableDirective
   ],
   imports: [
     BrowserModule,
@@ -67,7 +76,7 @@ import { IAppConfig }                  from './iapp-config';
     FormsModule,
     HttpModule,
     NgbModule.forRoot(),
-    //InMemoryWebApiModule.forRoot(InMemoryDataService),
+    InMemoryWebApiModule.forRoot(InMemoryDataService),
   ],
   entryComponents: [
     NgbdModalContent, 
@@ -78,6 +87,7 @@ import { IAppConfig }                  from './iapp-config';
   providers: [
     CommunicationService, 
     ProgramService,
+    SortableColumnService,
     { provide: APP_CONFIG, useValue: AppConfig }
   ],
   bootstrap: [AppComponent]

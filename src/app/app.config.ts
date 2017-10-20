@@ -5,10 +5,10 @@ import { IAppConfig }     from "./iapp-config";
 export let APP_CONFIG = new InjectionToken("app.config");
 
 //https://stackoverflow.com/questions/34986922/define-global-constants-in-angular-2/40287063#40287063
-// export const AppConfig: IAppConfig = {    
-//     apiEndpoint: ""  
-// };
-
 export const AppConfig: IAppConfig = {    
-   apiEndpoint: "http://localhost:8080/AlertSubscribeServicesPOC/"  
+  apiEndpoint: ""  
 };
+
+// export const AppConfig: IAppConfig = {    
+//    apiEndpoint: "http://localhost:8080/AlertSubscribeServicesPOC/"  
+// };
