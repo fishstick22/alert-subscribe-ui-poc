@@ -15,9 +15,14 @@ export class CommunicationComponent implements OnInit {
   commId: string = '';
   commName: string = '';
   commDesc: string = '';
+  selectedRow: Number;
 
   constructor(private communicationService: CommunicationService) { }
 
+  setClickedRow(index) {
+    this.selectedRow = index;
+  }
+  
   searchCommId() {
     console.log('CommunicationComponent searchCommId user entered: ', this.commId);
     this.displayComm = this.communications.filter(comm => {
@@ -29,19 +34,23 @@ export class CommunicationComponent implements OnInit {
   searchCommName() {
     console.log('CommunicationComponent searchCommName user entered: ', this.commName);
     this.displayComm = this.communications.filter(comm => {
-      return (String(comm.name).indexOf(this.commName) !== -1 )
-    
+      //return (comm.name.indexOf(this.commName) !== -1 );
+      return this.containsString(comm.name, this.commName);
     });
   }
 
   searchCommDesc() {
     console.log('CommunicationComponent searchCommDesc user entered: ', this.commDesc);
     this.displayComm = this.communications.filter(comm => {
-      return (String(comm.description).indexOf(this.commDesc) !== -1 )
+      return (comm.description.indexOf(this.commDesc) !== -1 );
     
     });
   }
   
+  containsString(columnValue: string, searchValue: string): boolean {
+    return (columnValue.toLocaleLowerCase().indexOf(searchValue.toLocaleLowerCase()) !== -1);
+  }
+
   getCommunications(): void {
     this.communicationService.getCommunications()
     .then(communications => {

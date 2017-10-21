@@ -10,25 +10,26 @@
       <th>Status</th>
       <th>Actions</th>
     </tr>
-    <tr><!-- search/filter header row -->
-      <td width="7%">
+    <tr class="thead-light"><!-- search/filter header row -->
+      <th width="7%">
         <input type="text" id="seachCommId" class="form-control form-control-sm" placeholder="search"
                name="commId" [(ngModel)]="commId" (keyup)="searchCommId()"/>
-      </td>
-      <td width="23%">
+      </th>
+      <th width="23%">
         <input type="text" id="seachName" class="form-control form-control-sm" placeholder="search Name"
                name="commName" [(ngModel)]="commName" (keyup)="searchCommName()"/>
-      </td>
-      <td>
+      </th>
+      <th>
         <input type="text" id="seachDescription" class="form-control form-control-sm" placeholder="search Description"
                name="commDesc" [(ngModel)]="commDesc" (keyup)="searchCommDesc()"/>
-      </td>
-      <td></td>
-      <td></td>
+      </th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let communication of displayComm" >
+    <tr *ngFor="let communication of displayComm; let i = index" 
+        (click)="setClickedRow(i)" [class.table-success]="i == selectedRow">
       <td><span class="badge badge-secondary">{{communication.id}}</span></td>
       <td><span>{{communication.name}}</span></td>
       <td><span>{{communication.description}}</span></td>
