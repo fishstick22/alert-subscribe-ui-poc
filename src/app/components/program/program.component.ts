@@ -5,8 +5,8 @@ import { AddProgramComponent }    from '../modal/addprogram/addprogram.component
 import { EditProgramComponent }   from '../modal/editprogram/editprogram.component';
 import { DeleteProgramComponent } from '../modal/deleteprogram/deleteprogram.component';
 
-import { Program }         from './../../model/program';
-import { ProgramService }  from './../../services/program.service';
+import { Program }                from './../../model/program';
+import { ProgramService }         from './../../services/program.service';
 
 @Component({
   selector: 'app-program',
@@ -15,7 +15,7 @@ import { ProgramService }  from './../../services/program.service';
 })
 export class ProgramComponent implements OnInit {
 
-  programs: Program[] = [];
+  programs: Program[];
   closeResult: string;
 
   constructor(private programService: ProgramService, private modalService: NgbModal) { }
@@ -23,12 +23,8 @@ export class ProgramComponent implements OnInit {
   ngOnInit(): void {
     console.log('ProgramComponent ngOnInit...');
     this.programService.getPrograms()
-      .then(programs => {
-        console.log(programs)
-        this.programs = programs;
-        console.log(this.programs.length);
-      });
-
+      .then(programs => this.programs = programs)
+      .catch(error => console.log('getPrograms error: ', error));
   }
 
   addProgram(program: Program): void {
@@ -37,37 +33,29 @@ export class ProgramComponent implements OnInit {
       program.id = this.programs.length + 1;
     }
 
-    this.programService.create(program)
-      .then(program => {
-        console.log('addNewProgram: ', program);
-        this.insertProgram(program);
-      })
-      .catch(error => {
-          console.log('addNewProgram error: ', error);
-      });
+    this.programService.createProgram(program)
+      .then(program => console.log('addNewProgram: ', program, this.programs))
+      .catch(error =>  console.log('addNewProgram error: ', error));
   
   }
 
   editProgram(program: Program): void {
     
-    this.programService.update(program)
-      .then(program => {
-        console.log('editProgram: ', program);
-        //
-      })
-      .catch(error => {
-          console.log('editProgram error: ', error);
-      });
+    this.programService.updateProgram(program)
+      .then(program => console.log('editProgram: ', program))
+      .catch(error =>  console.log('editProgram error: ', error));
   
   }
 
   deleteProgram(program: Program): void {
     
-    this.programService.delete(program)
+    this.programService.deleteProgram(program)
       .then(result => {
-        console.log('deleteProgram: ', program);
-        this.programs = this.removeProgram(program);
-        program = null;
+        // not sure why have to do this on this array, 
+        //it's not a copy, should be a reference
+        //this.programs = this.removeProgram(program);
+        // Oh, because boy genius used filter to create a new array instance
+        console.log('deleteProgram: ', program, this.programs);
       })
       .catch(error => {
           console.log('deleteProgram error: ', error);
@@ -141,33 +129,8 @@ export class ProgramComponent implements OnInit {
     });    
   }
 
-  // yeah, these are all one-liners, but I like to encapsulate these
-  // implementations for reference in a prototype like this
   private findProgram(id): Program {
     return this.programs.find(p => p.id === id);
-  }
-
-  private insertProgram(program: Program): void {
-    this.programs.push(program);
-  }
-
-  private removeProgram(program: Program): Program[] {
-    // some reason this is returning an empty array
-    //this.programs = this.programs.filter(program => program.id !== program.id);
-    //program = null;
-    // missing something obvious here
-    // let newArray = this.programs.filter(
-    //   (p : Program) => {
-    //     console.log('id: ', p.id, 'prg id: ', program.id);
-    //     console.log(p.id !== program.id);
-    //     return p.id !== program.id;
-    //   }
-    // )
-    // AH ok, you can't use the same variable name for the iterator and the comparison
-    // DUH
-    // console.log(newArray);
-    // return newArray;
-    return this.programs.filter(p => p.id !== program.id);
   }
 
   private getDismissReason(reason: any): string {

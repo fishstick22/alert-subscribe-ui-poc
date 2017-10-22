@@ -21,6 +21,7 @@ import { PageNotFoundComponent }  from './components/page-not-found/page-not-fou
 // Services
 import { CommunicationService }   from './services/communication.service';
 import { ProgramService }         from './services/program.service';
+import { ProgramConfigurationService } from './services/program-configuration.service';
 
 // Imports for loading & configuring the in-memory web api
 // want some way to turn it on and off without commenting out code
@@ -35,7 +36,8 @@ import { NgbdModalContent }            from './components/modal/component-as-con
 import { AddProgramComponent }         from './components/modal/addprogram/addprogram.component';
 import { EditProgramComponent }        from './components/modal/editprogram/editprogram.component';
 import { DeleteProgramComponent }      from './components/modal/deleteprogram/deleteprogram.component';
-
+import { ConfigureProgramViaCommunicationComponent } 
+                                       from './components/modal/configure-program-via-communication/configure-program-via-communication.component';
 // AppConfig
 //https://stackoverflow.com/questions/34986922/define-global-constants-in-angular-2/40287063#40287063
 import { APP_CONFIG, AppConfig }       from './app.config';
@@ -66,6 +68,7 @@ import { SortableTableDirective }  from './components/utility/sortable-table.dir
     AddProgramComponent,
     EditProgramComponent,
     DeleteProgramComponent,
+    ConfigureProgramViaCommunicationComponent,
 
     SortableColumnComponent,
     SortableTableDirective
@@ -82,11 +85,13 @@ import { SortableTableDirective }  from './components/utility/sortable-table.dir
     NgbdModalContent, 
     AddProgramComponent, 
     EditProgramComponent,
-    DeleteProgramComponent
+    DeleteProgramComponent,
+    ConfigureProgramViaCommunicationComponent
   ],
   providers: [
     CommunicationService, 
     ProgramService,
+    ProgramConfigurationService,
     SortableColumnService,
     { provide: APP_CONFIG, useValue: AppConfig }
   ],

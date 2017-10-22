@@ -10,7 +10,7 @@ export class InMemoryDataService implements InMemoryDbService {
       {"id":1904,"name":"Ship Consent Initial","description":"Initial consent from member"},
       {"id":1905,"name":"Ship Consent Followup","description":"Followup consent from member"},
       {"id":1906,"name":"Ship Consent Final","description":"Final followup consent from member"},
-      {"id":1907,"name":"Future Fill Release Reminder","description":"The Future Fill Release Reminder alert will be triggered by LINKS and sent to CMP when a prescription is released from future fill"}
+      {"id":1907,"name":"Future Fill Release Reminder","description":"Notifies a member when a prescription is released from future fill"}
     ];
     const program = [
       {"id":1,"name":"Prescription Alerts","description":"PBM Communications including Order Status and Refill Reminder alerts"},
@@ -18,14 +18,22 @@ export class InMemoryDataService implements InMemoryDbService {
     ];
     const programconfiguration = [
       {"id":1,
-       "name":"Prescription Alerts Order Status",
-       "description":"Order Status Program-level Configuration",
-       "program":
-         {"id":1,
-          "name":"Prescription Alerts",
-          "description":"PBM Communications including Order Status and Refill Reminder alerts",
-          "programConfiguration":[1]}
-        }];
+      "name":"Prescription Alerts Order Status",
+      "description":"Order Status Program-level Configuration",
+      "program":
+        {"id":1,
+         "name":"Prescription Alerts",
+         "description":"PBM Communications including Order Status and Refill Reminder alerts",
+         "programConfiguration":[1]
+        },
+      "communication": 
+        {"id":261,
+         "name":"Order Received",
+         "description":"Notifies a member when their order is received",
+         "programConfiguration":[1]
+        }
+      }
+    ];
     return { communication: communication, program: program, programconfiguration: programconfiguration};
   }
 }
