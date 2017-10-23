@@ -1,8 +1,8 @@
 <form #programForm="ngForm" (ngSubmit)="saveProgram(programForm)" >
-  <input type="hidden" name="id" [(ngModel)]="program.id" id="newProgramId">
+  <input type="hidden" name="id" [(ngModel)]="program.id" id="programId">
   <div class="modal-header bg-dark">
-    <h4 class="modal-title text-white">Add New Program</h4>
-    <button type="button" class="close text-white" aria-label="Close" (click)="addProgramModal.dismiss('Cross click')">
+    <h4 class="modal-title text-white">Edit Program</h4>
+    <button type="button" class="close text-white" aria-label="Close" (click)="editProgramModal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -22,6 +22,6 @@
   </div>
   <div class="modal-footer">
     <button type="submit" class="btn btn-outline-dark" [disabled]="!programForm.valid">Save</button>
-    <button type="button" class="btn btn-outline-dark" (click)="addProgramModal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-outline-dark" (click)="editProgramModal.close('Close click')">Close</button>
   </div>
-</form>  
+</form>

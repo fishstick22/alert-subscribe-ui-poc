@@ -12,7 +12,7 @@ import { ComponentAsContentComponent } from './components/modal/component-as-con
 const routes: Routes = [
   { path: 'home',           component: HomeComponent },
   { path: 'dashboard',      component: DashboardComponent },
-  { path: 'communications', component: CommunicationComponent },
+  { path: 'communication',  component: CommunicationComponent },
   { path: 'program',        component: ProgramComponent },
   { path: 'modaltest',      component: ModalComponent },
   { path: 'modalcontenttest',      component: ComponentAsContentComponent },

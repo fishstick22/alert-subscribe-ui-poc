@@ -10,7 +10,7 @@ import { Program }         from './../../../model/program';
 })
 export class AddProgramComponent implements OnInit {
 
-  @Input() nextId;
+  @Input() programId;
   
   public SAVESUCCESS: string = 'Close on succesful save';
 
@@ -19,11 +19,11 @@ export class AddProgramComponent implements OnInit {
   constructor(public addProgramModal: NgbActiveModal) { }
 
   ngOnInit(): void {
-    this.program = {id: this.nextId, name: undefined, description: undefined};
+    this.program = {id: this.programId, name: undefined, description: undefined, programConfiguration: undefined };
     console.log('AddProgramComponent init: ' + this.program);
   }
 
-  saveNewProgram() {
+  saveProgram() {
     console.log('AddProgramComponent save');
 
     this.addProgramModal.close({resultTxt: this.SAVESUCCESS, resultObj: this.program});
