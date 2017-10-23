@@ -45,32 +45,26 @@
             <td *ngIf="i === lastPgmConfigRow"><input type="text" class="form-control form-control-sm" name="name" [(ngModel)]="pc.name" required
               id="pgmConfigName" aria-describedby="pgmConfigNamelHelp" placeholder="Enter Program Configuration Name">
             </td>
-            <select-channel-priority name="chanEmailPriority" [priority]="pc.chanEmailPriority"
-              [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority>
-            <!--
-            <td *ngIf="i !== lastPgmConfigRow"><span>{{pc.chanEmailPriority}}</span></td>
-            <td *ngIf="i === lastPgmConfigRow">
-              <select [(ngModel)]="pc.chanEmailPriority" id="chanEmailPriority" name="chanEmailPriority"
-                  [disabled]="i !== lastPgmConfigRow">
-                <option *ngFor="let cpo of channelPriortyOpts" [ngValue]="cpo">{{cpo}}</option>
-              </select>
-            </td>-->
-            <td *ngIf="i !== lastPgmConfigRow"><span>{{pc.chanIvrPriority}}</span></td>
-            <td *ngIf="i === lastPgmConfigRow">
-              <select [(ngModel)]="pc.chanIvrPriority" id="chanIvrPriority" name="chanIvrPriority"
-                  [disabled]="i !== lastPgmConfigRow">
-                <option *ngFor="let cpo of channelPriortyOpts" [ngValue]="cpo">{{cpo}}</option>
-              </select>
+            <td>
+              <select-channel-priority name="chanEmailPriority" [priority]="pc.chanEmailPriority"
+                [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority>
             </td>
-            <td *ngIf="i !== lastPgmConfigRow"><span>{{pc.chanSmsPriority}}</span></td>
-            <td *ngIf="i === lastPgmConfigRow">
-              <select [(ngModel)]="pc.chanSmsPriority" id="chanSmsPriority" name="chanSmsPriority"
-                  [disabled]="i !== lastPgmConfigRow">
-                <option *ngFor="let cpo of channelPriortyOpts" [ngValue]="cpo">{{cpo}}</option>
-              </select>
+            <td>
+              <select-channel-priority name="chanIvrPriority" [priority]="pc.chanIvrPriority"
+                [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority>
             </td>
-            <td>0</td>
-            <td>0</td>
+            <td>
+              <select-channel-priority name="chanSmsPriority" [priority]="pc.chanSmsPriority"
+                [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority>
+            </td>  
+            <td>
+              <select-channel-priority name="chanMailPriority" [priority]="pc.chanMailPriority"
+                [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority>
+            </td> 
+            <td>
+              <select-channel-priority name="chanMobilePriority" [priority]="pc.chanMobilePriority"
+                [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority>
+            </td> 
             <td *ngIf="i !== lastPgmConfigRow"><span>{{pc.chanMandatory}}</span></td>
             <td *ngIf="i === lastPgmConfigRow">
               <select [(ngModel)]="pc.chanMandatory" id="chanMandatory" name="chanMandatory" required
