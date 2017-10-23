@@ -20,38 +20,22 @@ export class ProgramConfigurationService {
     this.progConfigApiEndpoint = this.config.apiEndpoint + 'api/programconfiguration';  // URL to web api
   }
 
-  public getProgramConfigurations(): Promise<ProgramConfiguration[]> {
-    return new Promise((resolve, reject) => {
-      if(this.programConfigurations) {
-        resolve (this.programConfigurations);
-      } else {  
-        this.getProgramConfigurationsThruApi()
-          .then(programConfigurations => {
-            console.log(programConfigurations)
-            this.programConfigurations = programConfigurations;
-            console.log(this.programConfigurations.length);
-            resolve (this.programConfigurations); 
-          }
-        ).catch(this.handleError);
-      }
-      //reject();// not sure how this is reached, if API server is down?           
-    });
-
+  public async getProgramConfigurations(): Promise<ProgramConfiguration[]> {
+    if(this.programConfigurations) {
+      return this.programConfigurations;
+    } else {
+      this.programConfigurations = await this.getProgramConfigurationsThruApi();
+      return this.programConfigurations;
+    }
   }
 
-  private getProgramConfigurationsThruApi(): Promise<ProgramConfiguration[]> {
-    console.log('CommunicationService getCommunications...');
-    return this.http
-        .get(this.progConfigApiEndpoint)
-        .toPromise()
-        .then(response => {
-          console.log("service response text " + response.statusText);
-          console.log("service response data " + response.json());
-          console.log("service response status " + response.status);
-          //return response.json().data as Communication[]
-          return response.json() as ProgramConfiguration[]
-        })
-        .catch(this.handleError);
+  private async getProgramConfigurationsThruApi(): Promise<ProgramConfiguration[]> {
+    try {
+      const response = await this.http.get(this.progConfigApiEndpoint).toPromise();
+      return response.json() as ProgramConfiguration[];
+    } catch (error) {
+      this.handleError(error);
+    }
   }
 
   private handleError(error: any): Promise<any> {

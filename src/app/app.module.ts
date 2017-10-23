@@ -4,6 +4,10 @@ import { FormsModule }    from '@angular/forms';
 import { HttpModule }     from '@angular/http';
 import { NgbModule }      from '@ng-bootstrap/ng-bootstrap';
 
+// AppConfig
+//https://stackoverflow.com/questions/34986922/define-global-constants-in-angular-2/40287063#40287063
+import { APP_CONFIG, AppConfig }  from './app.config';
+import { IAppConfig }             from './iapp-config';
 import { AppComponent }           from './app.component';
 // Basic Page Layout Stuff
 import { NavbarComponent }        from './components/navbar/navbar.component';
@@ -38,16 +42,16 @@ import { EditProgramComponent }        from './components/modal/editprogram/edit
 import { DeleteProgramComponent }      from './components/modal/deleteprogram/deleteprogram.component';
 import { ConfigureProgramViaCommunicationComponent } 
                                        from './components/modal/configure-program-via-communication/configure-program-via-communication.component';
-// AppConfig
-//https://stackoverflow.com/questions/34986922/define-global-constants-in-angular-2/40287063#40287063
-import { APP_CONFIG, AppConfig }       from './app.config';
-import { IAppConfig }                  from './iapp-config';
+
 
 // Utilities
 //http://www.carbonatethis.com/sort-table-columns-with-angular-and-typescript/
 import { SortableColumnComponent } from './components/utility/sortable-column/sortable-column.component';
 import { SortableColumnService }   from './services/sortable-column.service';
 import { SortableTableDirective }  from './components/utility/sortable-table.directive';
+
+// Forms
+import { SelectChannelPriorityComponent } from './components/forms/select-channel-priority/select-channel-priority.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +75,9 @@ import { SortableTableDirective }  from './components/utility/sortable-table.dir
     ConfigureProgramViaCommunicationComponent,
 
     SortableColumnComponent,
-    SortableTableDirective
+    SortableTableDirective,
+
+    SelectChannelPriorityComponent
   ],
   imports: [
     BrowserModule,

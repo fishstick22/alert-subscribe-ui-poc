@@ -20,20 +20,29 @@ export class CommunicationService {
     this.commApiEndpoint = this.config.apiEndpoint + 'api/communication';  // URL to web api
   }
 
-  getCommunications(): Promise<Communication[]> {
+  // getCommunications(): Promise<Communication[]> {
+  //   console.log('CommunicationService getCommunications...', );
+  //   return this.http.get(this.commApiEndpoint)
+  //              .toPromise()
+  //              .then(
+  //                response => {
+  //                  console.log("service response text " + response.statusText);
+  //                  console.log("service response data " + response.json());
+  //                  console.log("service response status " + response.status);
+  //                  //return response.json().data as Communication[]
+  //                  return response.json() as Communication[]
+  //                }
+  //               )
+  //              .catch(this.handleError);
+  // }
+  async getCommunications(): Promise<Communication[]> {
     console.log('CommunicationService getCommunications...', );
-    return this.http.get(this.commApiEndpoint)
-               .toPromise()
-               .then(
-                 response => {
-                   console.log("service response text " + response.statusText);
-                   console.log("service response data " + response.json());
-                   console.log("service response status " + response.status);
-                   //return response.json().data as Communication[]
-                   return response.json() as Communication[]
-                 }
-                )
-               .catch(this.handleError);
+    try {
+      const response = await this.http.get(this.commApiEndpoint).toPromise();
+      return response.json() as Communication[];
+    } catch (error) {
+      this.handleError(error);
+    }
   }
 
   private handleError(error: any): Promise<any> {

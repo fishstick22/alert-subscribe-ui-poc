@@ -37,20 +37,29 @@ export class CommunicationComponent implements OnInit {
     private modalService: NgbModal) { }
 
     
-  ngOnInit(): void {
+  async ngOnInit() {
     console.log('CommunicationComponent ngOnInit...');
-    this.getCommunications();
+    await this.getCommunications();
     this.getPrograms();
-    this.getProgramConfigurations();
+    await this.getProgramConfigurations();
+
+    this.displayComm = this.communications;
   }
 
-  getCommunications(): void {
-    this.communicationService.getCommunications()
-      .then(communications => {
-        this.communications = communications;
-        this.displayComm = this.communications.slice();
-      })
-      .catch(error => console.log('getCommunications error: ', error));
+  // getCommunications(): void {
+  //   this.communicationService.getCommunications()
+  //     .then(communications => {
+  //       this.communications = communications;
+  //       this.displayComm = this.communications.slice();
+  //     })
+  //     .catch(error => console.log('getCommunications error: ', error));
+  // }
+  async getCommunications() {
+    try {
+      this.communications = await this.communicationService.getCommunications();
+    } catch (error) {
+      console.log('getCommunications error: ', error)
+    }
   }
 
   getPrograms(): void {
@@ -59,10 +68,17 @@ export class CommunicationComponent implements OnInit {
       .catch(error => console.log('getPrograms error: ', error));
   }
 
-  getProgramConfigurations(): void {
-    this.programConfigurationService.getProgramConfigurations()
-      .then(programConfigurations => this.programConfigurations = programConfigurations)
-      .catch(error => console.log('getProgramConfigurations error: ', error));
+  // getProgramConfigurations(): void {
+  //   this.programConfigurationService.getProgramConfigurations()
+  //     .then(programConfigurations => this.programConfigurations = programConfigurations)
+  //     .catch(error => console.log('getProgramConfigurations error: ', error));
+  // }
+  async getProgramConfigurations() {
+    try {
+      this.programConfigurations = await this.programConfigurationService.getProgramConfigurations();
+    } catch (error) {
+      console.log('getProgramConfigurations error: ', error)
+    }
   }
 
   setClickedRow(index) {
@@ -146,13 +162,13 @@ export class CommunicationComponent implements OnInit {
 
     modalRef.result.then((result) => {
       if (result.resultTxt == modalComp.SAVESUCCESS) {
-        console.log('addNewProgram result: ', result.resultObj);
+        console.log('configureProgramModal result: ', result.resultObj);
         this.closeResult = `Closed with: ${result.resultTxt}`;
         //this.addProgram(result.resultObj);
       } else {
         this.closeResult = `Closed with: ${result}`;
       }
-      console.log('addNewProgram result: ', this.closeResult);
+      console.log('configureProgram result: ', this.closeResult);
     }, (reason) => {
       //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       //console.log('addNewProgram result: ', this.closeResult);

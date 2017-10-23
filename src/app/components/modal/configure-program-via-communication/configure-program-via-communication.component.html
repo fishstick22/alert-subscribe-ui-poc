@@ -14,8 +14,8 @@
     <div class="modal-body">
       <div class="form-group">
         <label for="programName">Choose Program</label>
-        <select [(ngModel)]="selectedValue" id="program" name="program"
-          [disabled]="selectedValue !== undefined">
+        <select [(ngModel)]="selectedProgram" id="program" name="program"
+            [disabled]="!lastPgmConfigRow">
           <option *ngFor="let p of programs" [ngValue]="p.id">
             {{p.name}}
           </option>
@@ -27,43 +27,81 @@
           <tr>
             <th>ID</th>
             <th>Name</th>
+            <th>E<small>mail</small></th>
             <th>IVR</th>
             <th>SMS</th>
-            <th>Email</th>
             <th>Mail</th>
             <th>Mobile</th>
-            <th>Mandatory</th>
+            <th>M<small>andatory</small></th>
             <th>Effective</th>
             <th>Expiration</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let pc of programConfigurations" >
+          <tr *ngFor="let pc of programConfigurations; let i = index" 
+              [class.table-success]="i == lastPgmConfigRow">
             <td><span class="badge badge-secondary">{{pc.id}}</span></td>
-            <td><span>{{pc.name}}</span></td>
-            <td>
-              <select><option>3</option></select>
+            <td *ngIf="i !== lastPgmConfigRow"><span>{{pc.name}}</span></td>
+            <td *ngIf="i === lastPgmConfigRow"><input type="text" class="form-control form-control-sm" name="name" [(ngModel)]="pc.name" required
+              id="pgmConfigName" aria-describedby="pgmConfigNamelHelp" placeholder="Enter Program Configuration Name">
             </td>
-            <td><select><option>1</option></select></td>
-            <td><select><option>3</option></select></td>
-            <td><select><option>0</option></select></td>
-            <td><select><option>0</option></select></td>
-            <td><select><option>Email</option></select></td>
-            <td>1/1/2017</td>
-            <td>12/31/9999</td>
+            <select-channel-priority name="chanEmailPriority" [priority]="pc.chanEmailPriority"
+              [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority>
+            <!--
+            <td *ngIf="i !== lastPgmConfigRow"><span>{{pc.chanEmailPriority}}</span></td>
+            <td *ngIf="i === lastPgmConfigRow">
+              <select [(ngModel)]="pc.chanEmailPriority" id="chanEmailPriority" name="chanEmailPriority"
+                  [disabled]="i !== lastPgmConfigRow">
+                <option *ngFor="let cpo of channelPriortyOpts" [ngValue]="cpo">{{cpo}}</option>
+              </select>
+            </td>-->
+            <td *ngIf="i !== lastPgmConfigRow"><span>{{pc.chanIvrPriority}}</span></td>
+            <td *ngIf="i === lastPgmConfigRow">
+              <select [(ngModel)]="pc.chanIvrPriority" id="chanIvrPriority" name="chanIvrPriority"
+                  [disabled]="i !== lastPgmConfigRow">
+                <option *ngFor="let cpo of channelPriortyOpts" [ngValue]="cpo">{{cpo}}</option>
+              </select>
+            </td>
+            <td *ngIf="i !== lastPgmConfigRow"><span>{{pc.chanSmsPriority}}</span></td>
+            <td *ngIf="i === lastPgmConfigRow">
+              <select [(ngModel)]="pc.chanSmsPriority" id="chanSmsPriority" name="chanSmsPriority"
+                  [disabled]="i !== lastPgmConfigRow">
+                <option *ngFor="let cpo of channelPriortyOpts" [ngValue]="cpo">{{cpo}}</option>
+              </select>
+            </td>
+            <td>0</td>
+            <td>0</td>
+            <td *ngIf="i !== lastPgmConfigRow"><span>{{pc.chanMandatory}}</span></td>
+            <td *ngIf="i === lastPgmConfigRow">
+              <select [(ngModel)]="pc.chanMandatory" id="chanMandatory" name="chanMandatory" required
+                  [disabled]="i !== lastPgmConfigRow">
+                <option *ngFor="let cmo of chanMandatoryOpts" [ngValue]="cmo">{{cmo}}</option>
+              </select>
+            </td>
+            <td *ngIf="i !== lastPgmConfigRow"><span>{{pc.effective}}</span></td>
+            <td *ngIf="i === lastPgmConfigRow">{{pc.effective}}</td>
+            <td *ngIf="i !== lastPgmConfigRow"><span>{{pc.expiration}}</span></td>
+            <td *ngIf="i === lastPgmConfigRow">{{pc.expiration}}</td>
+            <!--
+     "chanMailPriority": 0,
+     "chanMobilePriority": 0,
+
+     "effective": "2017-1-1",
+     "expiration": "9999-12-31",
+            -->
           </tr>
-          <tr>
+          <tr *ngIf="!addingProgramConfig">
             <td>
                 <a href="javascript:void(0)" title="click here to configure the Program for this Communication">
-                    <span class="badge badge-success" (click)="configureProgramModal(communication.id)" >
+                    <span class="badge badge-success" (click)="addProgramConfig(pc)" >
                       Add
                     </span></a>
             </td>
           </tr>
       </table>
     </div>
-    <div class="modal-footer"><!--
-      <button type="submit" class="btn btn-outline-dark" [disabled]="!programForm.valid">Save</button>-->
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-outline-dark" [disabled]="true">Save</button>
       <button type="button" class="btn btn-outline-dark" (click)="configureProgramModal.close('Close click')">Close</button>
     </div>
   </form>

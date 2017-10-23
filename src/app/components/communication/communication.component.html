@@ -33,7 +33,7 @@
       <td><span class="badge badge-secondary">{{communication.id}}</span></td>
       <td><span>{{communication.name}}</span></td>
       <td><span>{{communication.description}}</span></td>
-      <td></td>
+      <td><span *ngIf="communication.id === 261"><i class="fa fa-check" aria-hidden="true" title="{{communication.name}} Configured (Date)"></i></span></td>
       <td>
        <a href="javascript:void(0)" title="click here to configure the Program for this Communication">
         <span class="badge badge-success" *ngIf="i == selectedRow" (click)="configureProgramModal(communication.id)" >
