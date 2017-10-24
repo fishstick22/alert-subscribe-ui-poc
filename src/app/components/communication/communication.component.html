@@ -28,17 +28,18 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let communication of displayComm; let i = index" 
-        (click)="setClickedRow(i)" [class.table-success]="i == selectedRow">
+    <tr *ngFor="let communication of displayComm; let i = index"
+        title="Click to configure {{communication.name}} Program settings" 
+        (click)="setClickedRow(i); configureProgramModal(communication.id)" [class.table-success]="i == selectedRow">
       <td><span class="badge badge-secondary">{{communication.id}}</span></td>
       <td><span>{{communication.name}}</span></td>
       <td><span>{{communication.description}}</span></td>
       <td><span *ngIf="communication.id === 261"><i class="fa fa-check" aria-hidden="true" title="{{communication.name}} Configured (Date)"></i></span></td>
-      <td>
+      <td><!--
        <a href="javascript:void(0)" title="click here to configure the Program for this Communication">
         <span class="badge badge-success" *ngIf="i == selectedRow" (click)="configureProgramModal(communication.id)" >
           Configure Program
-        </span></a>
+        </span></a>-->
       </td>
     </tr>
   </tbody>
