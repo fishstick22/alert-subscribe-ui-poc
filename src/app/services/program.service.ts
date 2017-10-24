@@ -19,111 +19,95 @@ export class ProgramService {
     this.progApiEndpoint = this.config.apiEndpoint + 'api/program';  // URL to web api
   }
 
-  public getPrograms(): Promise<Program[]> {
-    return new Promise((resolve, reject) => {
-      if(this.programs) {
-        resolve (this.programs);
-      } else {  
-        this.getProgramsThruApi()
-          .then(programs => {
-            console.log(programs)
-            this.programs = programs;
-            console.log(this.programs.length);
-            resolve (this.programs); 
-          }
-        ).catch(this.handleError);
-      }
-      //reject();// not sure how this is reached, if API server is down?           
-    });
-
+  public async getPrograms(): Promise<Program[]> {
+    if(this.programs) {
+      return this.programs;
+    } else {
+      this.programs = await this.getProgramsThruApi();
+      return this.programs;
+    }
   }
 
-  private getProgramsThruApi(): Promise<Program[]> {
-    console.log('ProgramService getProgramsThruApi...');
-    return this.http
-        .get(this.progApiEndpoint)
-        .toPromise()
-        .then(response => {
-          console.log("service response text " + response.statusText);
-          console.log("service response data " + response.json());
-          console.log("service response status " + response.status);
-          //return response.json().data as Communication[]
-          return response.json() as Program[]
-        })
-        .catch(this.handleError);
+  private async getProgramsThruApi(): Promise<Program[]> {
+    try {
+      const response = await this.http.get(this.progApiEndpoint).toPromise();
+      return response.json() as Program[];
+    } catch (error) {
+      this.handleError(error);
+    }
   }
 
-  public createProgram(program: Program): Promise<Program> {
-    return new Promise((resolve, reject) => {
-      if(this.programs) {
-        this.createProgramThruApi(program)
-          .then(program => {
-            console.log('createProgram: ', program);
-            this.insertProgram(program);
-            resolve (program); 
-        }).catch(this.handleError);
-      } else { reject () }
-           
-    });
+  public async createProgram(program: Program): Promise<Program> {
+    await this.createProgramThruApi(program);
+    this.insertProgram(program);
+    return program;
   }
 
   private insertProgram(program: Program): void {
     this.programs.push(program);
   }
 
-  private createProgramThruApi(program: Program): Promise<Program> {
-    const prgJson = JSON.stringify(program);
-    console.log('ProgramService create: ', prgJson);
-    return this.http
-      .post(this.progApiEndpoint, prgJson, {headers: this.headers})
-      .toPromise()
-      .then(
-        response => {
-          console.log("service response text " + response.statusText);
-          //console.log("service response data " + response.json());
-          console.log("service response status " + response.status);
-          // REST not returning the created object
-          //return response.json() as Program
-          return program; // this only works here because the server does not assign the ID
-        })
-      .catch(this.handleError);
+  private async createProgramThruApi(program: Program): Promise<Program> {
+    try {
+      const response = await this.http.post(this.progApiEndpoint, JSON.stringify(program), {headers: this.headers}).toPromise();
+      return response.json() as Program;
+    } catch (error) {
+      this.handleError(error);
+    }
+    // const prgJson = JSON.stringify(program);
+    // console.log('ProgramService create: ', prgJson);
+    // return this.http
+    //   .post(this.progApiEndpoint, prgJson, {headers: this.headers})
+    //   .toPromise()
+    //   .then(
+    //     response => {
+    //       console.log("service response text " + response.statusText);
+    //       //console.log("service response data " + response.json());
+    //       console.log("service response status " + response.status);
+    //       // REST not returning the created object
+    //       //return response.json() as Program
+    //       return program; // this only works here because the server does not assign the ID
+    //     })
+    //   .catch(this.handleError);
   }
 
-  public updateProgram(program: Program): Promise<Program> {
-    return new Promise((resolve, reject) => {
-      if(this.programs) {
-        this.updateProgramThruApi(program)
-          .then(program => {
-            console.log('updateProgram: ', program);
-            resolve (program); 
-        }).catch(this.handleError);
-      } else { reject () }
-           
-    });
+  public async updateProgram(program: Program): Promise<Program> {
+    await this.updateProgramThruApi(program);
+    return program;
   }
 
-  private updateProgramThruApi(program: Program): Promise<Program> {
+  private async updateProgramThruApi(program: Program): Promise<Program> {
     const url = `${this.progApiEndpoint}/${program.id}`;
-    return this.http
-      .put(url, JSON.stringify(program), {headers: this.headers})
-      .toPromise()
-      .then(() => program)
-      .catch(this.handleError);
+    try {
+      const response = await this.http.put(url, JSON.stringify(program), {headers: this.headers}).toPromise();
+      return response.json() as Program;
+    } catch (error) {
+      this.handleError(error);
+    }
+    // return this.http
+    //   .put(url, JSON.stringify(program), {headers: this.headers})
+    //   .toPromise()
+    //   .then(() => program)
+    //   .catch(this.handleError);
   }
 
-  public deleteProgram(program: Program): Promise<Program> {
-    return new Promise((resolve, reject) => {
-      if(this.programs) {
-        this.deleteProgramThruApi(program)
-          .then(result => {
-            console.log('deleteProgram: ', program);
-            this.removeProgram(program);
-            program = null;
-            resolve (null); 
-        }).catch(this.handleError);
-      } else { reject () }
+  public async deleteProgram(program: Program): Promise<Program> {
+    await this.deleteProgramThruApi(program);
+    this.removeProgram(program);
+    program = null;
+    return program;
+    // return new Promise((resolve, reject) => {
+    //   if(this.programs) {
+    //     this.deleteProgramThruApi(program)
+    //       .then(result => {
+    //         console.log('deleteProgram: ', program);
+    //         this.removeProgram(program);
+    //         program = null;
+    //         resolve (null); 
+    //     }).catch(this.handleError);
+    //   } else { reject () }
            
-    });
+    // });
   }
 
   private removeProgram(program: Program): void {
@@ -136,13 +120,19 @@ export class ProgramService {
     }
   }
 
-  private deleteProgramThruApi(program: Program): Promise<Program> {
+  private async deleteProgramThruApi(program: Program): Promise<Program> {
     const url = `${this.progApiEndpoint}/${program.id}`;
-    return this.http
-      .delete(url, {headers: this.headers})
-      .toPromise()
-      .then(() => null)
-      .catch(this.handleError);
+    try {
+      const response = await this.http.delete(url, {headers: this.headers}).toPromise();
+      return response.json() as Program;
+    } catch (error) {
+      this.handleError(error);
+    }
+    // return this.http
+    //   .delete(url, {headers: this.headers})
+    //   .toPromise()
+    //   .then(() => null)
+    //   .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {

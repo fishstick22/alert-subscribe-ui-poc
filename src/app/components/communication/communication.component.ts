@@ -81,10 +81,6 @@ export class CommunicationComponent implements OnInit {
     }
   }
 
-  setClickedRow(index) {
-    this.selectedRow = index;
-  }
-  
   searchCommId() {
     console.log('CommunicationComponent searchCommId user entered: ', this.commId);
     this.displayComm = this.displayComm.filter(comm => {
@@ -148,6 +144,10 @@ export class CommunicationComponent implements OnInit {
     this.displayComm = this.getCommunicationsSorted($event, this.displayComm);
   }
 
+  private setClickedRow(index) {
+    this.selectedRow = index;
+  }
+
   private configureProgramModal(commId) {
     const modalOpts: NgbModalOptions = {
       size: 'lg'
@@ -162,15 +162,17 @@ export class CommunicationComponent implements OnInit {
 
     modalRef.result.then((result) => {
       if (result.resultTxt == modalComp.SAVESUCCESS) {
-        console.log('configureProgramModal result: ', result.resultObj);
-        this.closeResult = `Closed with: ${result.resultTxt}`;
-        //this.addProgram(result.resultObj);
+        //console.log('configureProgramModal result: ', result.resultObj);
+        //this.closeResult = `Closed with: ${result.resultTxt}`;
+        this.addProgramConfiguration(result.resultObj);
       } else {
         this.closeResult = `Closed with: ${result}`;
       }
-      console.log('configureProgram result: ', this.closeResult);
+      this.setClickedRow(null);
+      //console.log('configureProgram result: ', this.closeResult);
     }, (reason) => {
       //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.setClickedRow(null);
       //console.log('addNewProgram result: ', this.closeResult);
     });    
   }
@@ -180,9 +182,22 @@ export class CommunicationComponent implements OnInit {
   }
 
   private findProgramConfigurations(id): ProgramConfiguration[] {
-    return this.programConfigurations.filter(pc => pc.communication.id === id);
+    return this.programConfigurations.filter(pc => {
+      return pc.communication.id === id
+    });
   }
 
+  private addProgramConfiguration(programConfiguration: ProgramConfiguration): void {
+    
+        // if (program.id === undefined) {
+        //   program.id = this.programs.length + 1;
+        // }
+    
+        this.programConfigurationService.createProgramConfiguration(programConfiguration)
+          .then(programConfiguration => console.log('addProgramConfiguration:', programConfiguration, this.programConfigurations))
+          .catch(error =>  console.log('addProgramConfiguration error: ', error));
+      
+      }
 }
 
 

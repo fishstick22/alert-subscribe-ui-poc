@@ -1,6 +1,6 @@
 
   <form #programConfigurationViaCommunicationForm="ngForm" 
-    (ngSubmit)="saveProgram(programConfigurationViaCommunicationForm)" >
+    (ngSubmit)="saveProgramConfiguration(programConfigurationViaCommunicationForm)" >
 <!--    <input type="hidden" name="id" [(ngModel)]="program.id" id="programId">-->
     <div class="modal-header bg-dark">
       <h4 class="modal-title text-white">
@@ -14,11 +14,8 @@
     <div class="modal-body">
       <div class="form-group">
         <label for="programName">Choose Program</label>
-        <select [(ngModel)]="selectedProgram" id="program" name="program"
-            [disabled]="!lastPgmConfigRow">
-          <option *ngFor="let p of programs" [ngValue]="p.id">
-            {{p.name}}
-          </option>
+        <select [(ngModel)]="selectedProgram" id="program" name="program" required>
+          <option *ngFor="let p of programs" [ngValue]="p.id">{{p.name}}</option>
         </select>
       </div>
       <table class="table table-responsive table-sm table-striped table-bordered table-hover">
@@ -45,26 +42,21 @@
             <td *ngIf="i === lastPgmConfigRow"><input type="text" class="form-control form-control-sm" name="name" [(ngModel)]="pc.name" required
               id="pgmConfigName" aria-describedby="pgmConfigNamelHelp" placeholder="Enter Program Configuration Name">
             </td>
-            <td>
-              <select-channel-priority name="chanEmailPriority" [priority]="pc.chanEmailPriority"
-                [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority>
-            </td>
-            <td>
-              <select-channel-priority name="chanIvrPriority" [priority]="pc.chanIvrPriority"
-                [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority>
-            </td>
-            <td>
-              <select-channel-priority name="chanSmsPriority" [priority]="pc.chanSmsPriority"
-                [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority>
-            </td>  
-            <td>
-              <select-channel-priority name="chanMailPriority" [priority]="pc.chanMailPriority"
-                [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority>
-            </td> 
-            <td>
-              <select-channel-priority name="chanMobilePriority" [priority]="pc.chanMobilePriority"
-                [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority>
-            </td> 
+            <td><select-channel-priority 
+                  name="chanEmailPriority" [priority]="pc.chanEmailPriority"
+                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority></td>
+            <td><select-channel-priority 
+                  name="chanIvrPriority" [priority]="pc.chanIvrPriority"
+                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority></td>
+            <td><select-channel-priority 
+                  name="chanSmsPriority" [priority]="pc.chanSmsPriority"
+                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority></td>  
+            <td><select-channel-priority 
+                  name="chanMailPriority" [priority]="pc.chanMailPriority"
+                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority></td> 
+            <td><select-channel-priority 
+                  name="chanMobilePriority" [priority]="pc.chanMobilePriority"
+                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority></td> 
             <td *ngIf="i !== lastPgmConfigRow"><span>{{pc.chanMandatory}}</span></td>
             <td *ngIf="i === lastPgmConfigRow">
               <select [(ngModel)]="pc.chanMandatory" id="chanMandatory" name="chanMandatory" required
@@ -84,6 +76,7 @@
      "expiration": "9999-12-31",
             -->
           </tr>
+          <!--
           <tr *ngIf="!addingProgramConfig">
             <td>
                 <a href="javascript:void(0)" title="click here to configure the Program for this Communication">
@@ -91,11 +84,12 @@
                       Add
                     </span></a>
             </td>
-          </tr>
+          </tr>-->
       </table>
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-outline-dark" [disabled]="true">Save</button>
+      <span class="mr-auto">Some instructional content or condition message goes here:</span>
+      <button type="submit" class="btn btn-outline-dark" [disabled]="!programConfigurationViaCommunicationForm.valid">Save</button>
       <button type="button" class="btn btn-outline-dark" (click)="configureProgramModal.close('Close click')">Close</button>
     </div>
   </form>

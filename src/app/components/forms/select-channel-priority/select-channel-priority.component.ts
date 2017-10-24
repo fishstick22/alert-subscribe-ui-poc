@@ -24,11 +24,11 @@ export class SelectChannelPriorityComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("SelectChannelPriorityComponent ");
-    console.log("name: ", this.name);
-    console.log("priority: ", this.priority);
-    console.log("i: ", this.i);
-    console.log("lastPgmConfigRow: ", this.lastPgmConfigRow);
+    // console.log("SelectChannelPriorityComponent ");
+    // console.log("name: ", this.name);
+    // console.log("priority: ", this.priority);
+    // console.log("i: ", this.i);
+    // console.log("lastPgmConfigRow: ", this.lastPgmConfigRow);
   }
 
 }
