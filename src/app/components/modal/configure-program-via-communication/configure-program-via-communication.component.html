@@ -28,7 +28,7 @@
             <th>IVR</th>
             <th>SMS</th>
             <th>Mail</th>
-            <th>Mobile</th>
+            <th>M<small>obile</small></th>
             <th>M<small>andatory</small></th>
             <th>Effective</th>
             <th>Expiration</th>
@@ -64,10 +64,13 @@
                 <option *ngFor="let cmo of chanMandatoryOpts" [ngValue]="cmo">{{cmo}}</option>
               </select>
             </td>
-            <td *ngIf="i !== lastPgmConfigRow"><span>{{pc.effective}}</span></td>
-            <td *ngIf="i === lastPgmConfigRow">{{pc.effective}}</td>
-            <td *ngIf="i !== lastPgmConfigRow"><span>{{pc.expiration}}</span></td>
-            <td *ngIf="i === lastPgmConfigRow">{{pc.expiration}}</td>
+            <td><date-eff-exp
+                  name="effective" dateType="effective" [dateValue]="pc.effective"
+                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow"></date-eff-exp></td>
+            <td><date-eff-exp
+                  name="expiration" dateType="expiration" [dateValue]="pc.expiration"
+                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow"></date-eff-exp></td>
+
             <!--
      "chanMailPriority": 0,
      "chanMobilePriority": 0,
@@ -76,15 +79,6 @@
      "expiration": "9999-12-31",
             -->
           </tr>
-          <!--
-          <tr *ngIf="!addingProgramConfig">
-            <td>
-                <a href="javascript:void(0)" title="click here to configure the Program for this Communication">
-                    <span class="badge badge-success" (click)="addProgramConfig(pc)" >
-                      Add
-                    </span></a>
-            </td>
-          </tr>-->
       </table>
     </div>
     <div class="modal-footer">

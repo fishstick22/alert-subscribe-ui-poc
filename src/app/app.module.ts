@@ -52,6 +52,7 @@ import { SortableTableDirective }  from './components/utility/sortable-table.dir
 
 // Forms
 import { SelectChannelPriorityComponent } from './components/forms/select-channel-priority/select-channel-priority.component';
+import { DateEffExpComponent } from './components/forms/date-eff-exp/date-eff-exp.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { SelectChannelPriorityComponent } from './components/forms/select-channe
     SortableColumnComponent,
     SortableTableDirective,
 
-    SelectChannelPriorityComponent
+    SelectChannelPriorityComponent,
+    DateEffExpComponent
   ],
   imports: [
     BrowserModule,

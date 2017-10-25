@@ -1,6 +1,6 @@
-import { Component, OnInit }             from '@angular/core';
+import { Component, OnInit }           from '@angular/core';
 import { NgbModal, ModalDismissReasons,
-         NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+         NgbModalOptions }             from '@ng-bootstrap/ng-bootstrap';
 
 import { ConfigureProgramViaCommunicationComponent } from '../modal/configure-program-via-communication/configure-program-via-communication.component';
 //
@@ -46,14 +46,6 @@ export class CommunicationComponent implements OnInit {
     this.displayComm = this.communications;
   }
 
-  // getCommunications(): void {
-  //   this.communicationService.getCommunications()
-  //     .then(communications => {
-  //       this.communications = communications;
-  //       this.displayComm = this.communications.slice();
-  //     })
-  //     .catch(error => console.log('getCommunications error: ', error));
-  // }
   async getCommunications() {
     try {
       this.communications = await this.communicationService.getCommunications();
@@ -68,11 +60,6 @@ export class CommunicationComponent implements OnInit {
       .catch(error => console.log('getPrograms error: ', error));
   }
 
-  // getProgramConfigurations(): void {
-  //   this.programConfigurationService.getProgramConfigurations()
-  //     .then(programConfigurations => this.programConfigurations = programConfigurations)
-  //     .catch(error => console.log('getProgramConfigurations error: ', error));
-  // }
   async getProgramConfigurations() {
     try {
       this.programConfigurations = await this.programConfigurationService.getProgramConfigurations();
@@ -92,7 +79,6 @@ export class CommunicationComponent implements OnInit {
   searchCommName() {
     console.log('CommunicationComponent searchCommName user entered: ', this.commName);
     this.displayComm = this.displayComm.filter(comm => {
-      //return (comm.name.indexOf(this.commName) !== -1 );
       return this.containsString(comm.name, this.commName);
     });
   }
@@ -110,17 +96,6 @@ export class CommunicationComponent implements OnInit {
   }
 
   getCommunicationsSorted(criteria: CommunicationSortCriteria, commArray: Communication[]): Communication[] {
-    // this.communications.sort((a,b) => {
-    //   if(criteria.sortDirection === 'desc') {
-    //     return a[criteria.sortColumn] < b[criteria.sortColumn];
-    //   } else {
-    //     return a[criteria.sortColumn] > b[criteria.sortColumn];
-    //   }
-    // });
-
-    //.sort() takes a function that returns number, not boolean.
-    // You need to return negative if the first item is smaller; 
-    // positive if it it's larger, or zero if they're equal.
 
     return commArray
       .sort((a,b) => {
@@ -162,18 +137,23 @@ export class CommunicationComponent implements OnInit {
 
     modalRef.result.then((result) => {
       if (result.resultTxt == modalComp.SAVESUCCESS) {
-        //console.log('configureProgramModal result: ', result.resultObj);
-        //this.closeResult = `Closed with: ${result.resultTxt}`;
-        this.addProgramConfiguration(result.resultObj);
+        console.log('configureProgramModal result: ', result.resultObj);
+        this.closeResult = `Closed with: ${result.resultTxt}`;
+        if (result.resultObj.prev) {
+          this.updateProgramConfiguration(result.resultObj.prev);
+        }
+        if (result.resultObj.new) {
+          this.addProgramConfiguration(result.resultObj.new);  
+        }
       } else {
         this.closeResult = `Closed with: ${result}`;
       }
       this.setClickedRow(null);
-      //console.log('configureProgram result: ', this.closeResult);
+      console.log('configureProgram result: ', this.closeResult);
     }, (reason) => {
-      //this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       this.setClickedRow(null);
-      //console.log('addNewProgram result: ', this.closeResult);
+      console.log('addNewProgram result: ', this.closeResult);
     });    
   }
 
@@ -189,17 +169,28 @@ export class CommunicationComponent implements OnInit {
 
   private addProgramConfiguration(programConfiguration: ProgramConfiguration): void {
     
-        // if (program.id === undefined) {
-        //   program.id = this.programs.length + 1;
-        // }
-    
-        this.programConfigurationService.createProgramConfiguration(programConfiguration)
+    this.programConfigurationService.createProgramConfiguration(programConfiguration)
           .then(programConfiguration => console.log('addProgramConfiguration:', programConfiguration, this.programConfigurations))
           .catch(error =>  console.log('addProgramConfiguration error: ', error));
-      
-      }
-}
+  }
 
+  private updateProgramConfiguration(programConfiguration: ProgramConfiguration): void {
+    
+    this.programConfigurationService.updateProgramConfiguration(programConfiguration)
+          .then(programConfiguration => console.log('updateProgramConfiguration:', programConfiguration, this.programConfigurations))
+          .catch(error =>  console.log('updateProgramConfiguration error: ', error));
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
+}
 
 export class CommunicationSortCriteria {
   sortColumn: string;

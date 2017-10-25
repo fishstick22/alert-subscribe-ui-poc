@@ -3,14 +3,17 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'select-channel-priority',
   template: `
-  <div *ngIf="i !== lastPgmConfigRow" class="container">{{priority}}</div>
-  <div *ngIf="i === lastPgmConfigRow" >
+  <div *ngIf="i !== lastPgmConfigRow" class="flex-justify-center">{{priority}}</div>
+  <div *ngIf="i === lastPgmConfigRow" class="flex-justify-right">
     <select [(ngModel)]="priority" id="name" name="name" [disabled]="i !== lastPgmConfigRow">
       <option *ngFor="let cpo of channelPriortyOpts" [ngValue]="cpo">{{cpo}}</option>
     </select>
   </div>`,
   // https://tutorialzine.com/2015/09/quick-tip-the-simplest-way-to-center-elements-vertically-and-horizontally
-  styles: ['.container {display: flex; justify-content: center; align-items: center;}']
+  styles: [
+    '.flex-justify-center {display: flex; justify-content: center; align-items: center;}',
+    '.flex-justify-right {display: flex; justify-content: flex-end; align-items: right;}'
+  ]
 })
 export class SelectChannelPriorityComponent implements OnInit {
 

@@ -51,10 +51,6 @@ export class ProgramComponent implements OnInit {
     
     this.programService.deleteProgram(program)
       .then(result => {
-        // not sure why have to do this on this array, 
-        //it's not a copy, should be a reference
-        //this.programs = this.removeProgram(program);
-        // Oh, because boy genius used filter to create a new array instance
         console.log('deleteProgram: ', program, this.programs);
       })
       .catch(error => {

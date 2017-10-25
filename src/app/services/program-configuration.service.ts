@@ -57,6 +57,20 @@ export class ProgramConfigurationService {
     }
   }
 
+  public async updateProgramConfiguration(programConfiguration: ProgramConfiguration): Promise<ProgramConfiguration> {
+    programConfiguration = await this.updateProgramConfigurationThruApi(programConfiguration);
+    return programConfiguration;
+  }
+
+  private async updateProgramConfigurationThruApi(programConfiguration: ProgramConfiguration): Promise<ProgramConfiguration> {
+    try {
+      const response = await this.http.put(this.progConfigApiEndpoint, JSON.stringify(programConfiguration), {headers: this.headers}).toPromise();
+      return response.json() as ProgramConfiguration;
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);
