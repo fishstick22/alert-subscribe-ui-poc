@@ -38,7 +38,7 @@ export class ProgramService {
   }
 
   public async createProgram(program: Program): Promise<Program> {
-    await this.createProgramThruApi(program);
+    program = await this.createProgramThruApi(program);
     this.insertProgram(program);
     return program;
   }
@@ -50,25 +50,18 @@ export class ProgramService {
   private async createProgramThruApi(program: Program): Promise<Program> {
     try {
       const response = await this.http.post(this.progApiEndpoint, JSON.stringify(program), {headers: this.headers}).toPromise();
-      return response.json() as Program;
+      try {
+        return response.json() as Program;
+      } catch (error) {
+        // some reason spring is returning only headers
+        //if (response.url) {
+        //  console.log('createProgramThruApi: ', response.url)
+        //}
+        return program;
+      }    
     } catch (error) {
       this.handleError(error);
     }
-    // const prgJson = JSON.stringify(program);
-    // console.log('ProgramService create: ', prgJson);
-    // return this.http
-    //   .post(this.progApiEndpoint, prgJson, {headers: this.headers})
-    //   .toPromise()
-    //   .then(
-    //     response => {
-    //       console.log("service response text " + response.statusText);
-    //       //console.log("service response data " + response.json());
-    //       console.log("service response status " + response.status);
-    //       // REST not returning the created object
-    //       //return response.json() as Program
-    //       return program; // this only works here because the server does not assign the ID
-    //     })
-    //   .catch(this.handleError);
   }
 
   public async updateProgram(program: Program): Promise<Program> {
@@ -84,11 +77,6 @@ export class ProgramService {
     } catch (error) {
       this.handleError(error);
     }
-    // return this.http
-    //   .put(url, JSON.stringify(program), {headers: this.headers})
-    //   .toPromise()
-    //   .then(() => program)
-    //   .catch(this.handleError);
   }
 
   public async deleteProgram(program: Program): Promise<Program> {
@@ -96,24 +84,9 @@ export class ProgramService {
     this.removeProgram(program);
     program = null;
     return program;
-    // return new Promise((resolve, reject) => {
-    //   if(this.programs) {
-    //     this.deleteProgramThruApi(program)
-    //       .then(result => {
-    //         console.log('deleteProgram: ', program);
-    //         this.removeProgram(program);
-    //         program = null;
-    //         resolve (null); 
-    //     }).catch(this.handleError);
-    //   } else { reject () }
-           
-    // });
   }
 
   private removeProgram(program: Program): void {
-    // this broke my implementation of using the array from the components by reference
-    //return this.programs.filter(p => p.id !== program.id);
-    // DUH, that creates another object
     let index = this.programs.indexOf(program);
     if(index > -1){
       this.programs.splice(index, 1);
@@ -128,11 +101,6 @@ export class ProgramService {
     } catch (error) {
       this.handleError(error);
     }
-    // return this.http
-    //   .delete(url, {headers: this.headers})
-    //   .toPromise()
-    //   .then(() => null)
-    //   .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {
