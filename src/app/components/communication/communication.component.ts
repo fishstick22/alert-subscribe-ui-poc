@@ -140,7 +140,7 @@ export class CommunicationComponent implements OnInit {
         console.log('configureProgramModal result: ', result.resultObj);
         this.closeResult = `Closed with: ${result.resultTxt}`;
         if (result.resultObj.prev) {
-          this.updateProgramConfiguration(result.resultObj.prev);
+          this.updateProgramConfiguration(<ProgramConfiguration> result.resultObj.prev);
         }
         if (result.resultObj.new) {
           this.addProgramConfiguration(result.resultObj.new);  
@@ -157,13 +157,25 @@ export class CommunicationComponent implements OnInit {
     });    
   }
 
-  private findCommunication(id): Communication {
+  private findProgram(id: number): Program {
+    return this.programs.find(p => p.id === id);
+  }
+
+  private findCommunication(id: number): Communication {
     return this.communications.find(c => c.id === id);
   }
 
   private findProgramConfigurations(id): ProgramConfiguration[] {
     return this.programConfigurations.filter(pc => {
-      return pc.communication.id === id
+      if (pc.communication.id === id) {
+        console.log(pc, 'Program: ', typeof(pc.program));
+        if (typeof(pc.program) == 'number') {
+          const programId = <number> pc.program;
+          pc.program = this.findProgram(programId);
+        }
+        return true;
+      }
+       
     });
   }
 

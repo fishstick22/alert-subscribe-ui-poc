@@ -38,7 +38,8 @@ export class ConfigureProgramViaCommunicationComponent implements OnInit {
     } else {
       let indxOfLast = this.programConfigurations.length-1;
       if(this.programConfigurations[indxOfLast] && this.programConfigurations[indxOfLast].program) {
-        this.prevPgmConfig = this.programConfigurations[indxOfLast];
+        // why? this shows up as Object when it is ProgramConfiguration
+        this.prevPgmConfig = <ProgramConfiguration> this.programConfigurations[indxOfLast];
         this.selectedProgram = this.prevPgmConfig.program.id;
         this.addProgramConfig(this.programConfigurations[indxOfLast])
       }
@@ -87,7 +88,7 @@ export class ConfigureProgramViaCommunicationComponent implements OnInit {
     this.newPgmConfig.program = this.findProgram(this.selectedProgram);
     this.newPgmConfig.communication = this.communication;
 
-    const resultObj = {
+    const resultObj: Object = {
       prev: this.prevPgmConfig,
       new: this.newPgmConfig
     };

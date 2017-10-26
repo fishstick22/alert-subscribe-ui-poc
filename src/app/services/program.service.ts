@@ -38,7 +38,7 @@ export class ProgramService {
   }
 
   public async createProgram(program: Program): Promise<Program> {
-    await this.createProgramThruApi(program);
+    program = await this.createProgramThruApi(program);
     this.insertProgram(program);
     return program;
   }
@@ -50,7 +50,15 @@ export class ProgramService {
   private async createProgramThruApi(program: Program): Promise<Program> {
     try {
       const response = await this.http.post(this.progApiEndpoint, JSON.stringify(program), {headers: this.headers}).toPromise();
-      return response.json() as Program;
+      try {
+        return response.json() as Program;
+      } catch (error) {
+        // some reason spring is returning only headers
+        //if (response.url) {
+        //  console.log('createProgramThruApi: ', response.url)
+        //}
+        return program;
+      }    
     } catch (error) {
       this.handleError(error);
     }

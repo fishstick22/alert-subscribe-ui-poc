@@ -87,7 +87,7 @@ import { DateEffExpComponent } from './components/forms/date-eff-exp/date-eff-ex
     FormsModule,
     HttpModule,
     NgbModule.forRoot(),
-    InMemoryWebApiModule.forRoot(InMemoryDataService),
+    //InMemoryWebApiModule.forRoot(InMemoryDataService),
   ],
   entryComponents: [
     NgbdModalContent, 
