@@ -24,9 +24,20 @@ export class ProgramService {
       return this.programs;
     } else {
       this.programs = await this.getProgramsThruApi();
-      return this.programs;
+      return this.removeProgramConfigurationCruft(this.programs);
     }
   }
+
+  private removeProgramConfigurationCruft(programs: Program[]): Program[] {
+    // some reason spring rest is giving empty array objects of programConfiguration property
+    // get rid of them all
+    for (var i = 0, len = programs.length; i < len; i++) {
+      if (programs[i].programConfiguration.length) {
+        programs[i].programConfiguration = [];
+      }
+    }
+    return programs;
+  } 
 
   private async getProgramsThruApi(): Promise<Program[]> {
     try {
