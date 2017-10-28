@@ -39,10 +39,6 @@ export class ProgramConfigurationService {
   }
 
   public async createProgramConfiguration(programConfiguration: ProgramConfiguration): Promise<ProgramConfiguration> {
-    // getting error 
-    // JSON parse error: Unresolved forward references for:
-    // Object id [1] (for com.cvshealth.eccm.prototype.alertsubsvcpoc.entity.ProgramConfiguration)
-    // think this might be because communication and program are [1] and not the actual objects?
     programConfiguration = await this.createProgramConfigurationThruApi(programConfiguration);
     this.insertProgramConfiguration(programConfiguration);
     return programConfiguration;
@@ -53,18 +49,18 @@ export class ProgramConfigurationService {
   }
 
   private async createProgramConfigurationThruApi(programConfiguration: ProgramConfiguration): Promise<ProgramConfiguration> {
-    console.log('createProgramConfigurationThruApi', programConfiguration.id);
-    console.log('createProgramConfigurationThruApi', programConfiguration.program.programConfiguration);
-    console.log('createProgramConfigurationThruApi', programConfiguration.communication.programConfiguration);
-    if (!programConfiguration.id) {
-      programConfiguration.id = null;
-    }
-    if (programConfiguration.program.programConfiguration.length) {
-      programConfiguration.program.programConfiguration=[];
-    }
-    if (programConfiguration.communication.programConfiguration.length) {
-      programConfiguration.communication.programConfiguration=[];
-    }
+    // console.log('createProgramConfigurationThruApi', programConfiguration.id);
+    // console.log('createProgramConfigurationThruApi', programConfiguration.program.programConfiguration);
+    // console.log('createProgramConfigurationThruApi', programConfiguration.communication.programConfiguration);
+    // if (!programConfiguration.id) {
+    //   programConfiguration.id = null;
+    // }
+    // if (programConfiguration.program.programConfiguration.length) {
+    //   programConfiguration.program.programConfiguration=[];
+    // }
+    // if (programConfiguration.communication.programConfiguration.length) {
+    //   programConfiguration.communication.programConfiguration=[];
+    // }
     try {
       const response = await this.http.post(this.progConfigApiEndpoint, JSON.stringify(programConfiguration), {headers: this.headers}).toPromise();
       return response.json() as ProgramConfiguration;

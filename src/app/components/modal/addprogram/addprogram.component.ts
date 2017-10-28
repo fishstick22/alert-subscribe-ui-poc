@@ -19,7 +19,7 @@ export class AddProgramComponent implements OnInit {
   constructor(public addProgramModal: NgbActiveModal) { }
 
   ngOnInit(): void {
-    this.program = {id: this.programId, name: undefined, description: undefined };
+    this.program = {id: this.programId, name: undefined, description: undefined, programConfiguration: [] };
     console.log('AddProgramComponent init: ' + this.program);
   }
 
