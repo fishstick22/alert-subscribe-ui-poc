@@ -28,12 +28,14 @@ import { ProgramConfiguration }     from './../../../model/program-configuration
   
       <div *ngIf="dateType == 'expiration'" class="flex-justify-center">
         <!-- the expiration date of the new row -->  
-      {{progConfig.expiration}}</div>
+        <input class="form-control form-control-sm" value="{{progConfig.expiration}}" readonly>
+      </div>
     </div>
   `,
   // https://tutorialzine.com/2015/09/quick-tip-the-simplest-way-to-center-elements-vertically-and-horizontally
   styles: [
-    '.flex-justify-center {display: flex; justify-content: center; align-items: center;}'
+    '.flex-justify-center {display: flex; justify-content: center; align-items: center;}',
+    'input { width: 80px; }'
   ]
 })
 export class DateEffExpComponent implements OnInit {

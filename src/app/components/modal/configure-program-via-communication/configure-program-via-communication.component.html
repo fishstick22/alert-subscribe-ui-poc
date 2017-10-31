@@ -23,15 +23,15 @@
         <thead class="thead-inverse">
           <tr>
             <th>ID</th>
-            <th>Name</th>
+            <th>N<small>ame</small></th>
             <th>E<small>mail</small></th>
             <th>IVR</th>
             <th>SMS</th>
-            <th>Mail</th>
+            <th>M<small>ail</small></th>
             <th>M<small>obile</small></th>
             <th>M<small>andatory</small></th>
-            <th>Effective</th>
-            <th>Expiration</th>
+            <th>E<small>ffective</small></th>
+            <th>E<small>xpiration</small></th>
           </tr>
         </thead>
         <tbody>
@@ -42,6 +42,10 @@
             <td *ngIf="i === lastPgmConfigRow"><input type="text" class="form-control form-control-sm" name="name" [(ngModel)]="pc.name" required
               id="pgmConfigName" aria-describedby="pgmConfigNamelHelp" placeholder="Enter Program Configuration Name">
             </td>
+            <!-- TODO Make this custom select component NgModel aware
+              http://blog.rangle.io/angular-2-ngmodel-and-custom-form-components/
+              or http://almerosteyn.com/2016/04/linkup-custom-control-to-ngcontrol-ngmodel
+            -->
             <td><select-channel-priority 
                   name="chanEmailPriority" [priority]="pc.chanEmailPriority"
                   [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority></td>
@@ -60,7 +64,7 @@
             <td *ngIf="i !== lastPgmConfigRow"><span>{{pc.chanMandatory}}</span></td>
             <td *ngIf="i === lastPgmConfigRow">
               <select [(ngModel)]="pc.chanMandatory" id="chanMandatory" name="chanMandatory" required
-                  [disabled]="i !== lastPgmConfigRow">
+                class="form-control form-control-sm" [disabled]="i !== lastPgmConfigRow">
                 <option *ngFor="let cmo of chanMandatoryOpts" [ngValue]="cmo">{{cmo}}</option>
               </select>
             </td>
