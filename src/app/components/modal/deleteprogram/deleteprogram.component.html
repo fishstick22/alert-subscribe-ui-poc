@@ -2,7 +2,7 @@
   <input type="hidden" name="id" [(ngModel)]="program.id" id="programId">
   <div class="modal-header bg-dark">
     <h4 class="modal-title text-white">Delete Program</h4>
-    <button type="button" class="close text-white" aria-label="Close" (click)="addProgramModal.dismiss('Cross click')">
+    <button type="button" class="close text-white" aria-label="Close" (click)="deleteProgramModal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -22,6 +22,6 @@
   </div>
   <div class="modal-footer">
     <button type="submit" class="btn btn-outline-dark" [disabled]="!programForm.valid">Delete</button>
-    <button type="button" class="btn btn-outline-dark" (click)="editProgramModal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-outline-dark" (click)="deleteProgramModal.close('Close click')">Close</button>
   </div>
 </form>
