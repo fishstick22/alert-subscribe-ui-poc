@@ -34,7 +34,7 @@ export class ConfigureProgramViaCommunicationComponent implements OnInit {
     // get the list of programs to populate the dropdown (covered in @Input() programs: Program[];)
     // check if there are progConfig already (for now just checking for first one, have to check for eff dates)
     if(this.programConfigurations.length === 0) { // no existing configs for comm
-      this.addProgramConfig(null);
+      this.addProgramConfig();
     } else {
       let indxOfLast = this.programConfigurations.length-1;
       if(this.programConfigurations[indxOfLast] && this.programConfigurations[indxOfLast].program) {
@@ -46,39 +46,39 @@ export class ConfigureProgramViaCommunicationComponent implements OnInit {
     }   
   }
 
-  addProgramConfig(lastPgmConfig: ProgramConfiguration) {
+  addProgramConfig(lastPgmConfig?: ProgramConfiguration) {
 
-    this.newPgmConfig = new ProgramConfiguration();
+    const today = new Date();
+    let tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
 
-    let today = new Date;
     if(lastPgmConfig) {
       // adding a new row, expiring the previous, copying the previous values
       lastPgmConfig.expiration = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      this.newPgmConfig.name               = lastPgmConfig.name;
-      this.newPgmConfig.chanEmailPriority  = lastPgmConfig.chanEmailPriority;
-      this.newPgmConfig.chanIvrPriority    = lastPgmConfig.chanIvrPriority;
-      this.newPgmConfig.chanSmsPriority    = lastPgmConfig.chanSmsPriority;
-      this.newPgmConfig.chanMailPriority   = lastPgmConfig.chanMailPriority;
-      this.newPgmConfig.chanMobilePriority = lastPgmConfig.chanMobilePriority;
-      this.newPgmConfig.chanMandatory      = lastPgmConfig.chanMandatory;
+      this.newPgmConfig = new ProgramConfiguration(lastPgmConfig);
 
     } else {
       // this is a first-time row for this communication, set some defaults
-      this.newPgmConfig.chanEmailPriority = 0;
-      this.newPgmConfig.chanIvrPriority = 0;
-      this.newPgmConfig.chanSmsPriority = 0;
-      this.newPgmConfig.chanMailPriority = 0;
-      this.newPgmConfig.chanMobilePriority = 0;
-      this.newPgmConfig.chanMandatory = 'No';
+      this.newPgmConfig = new ProgramConfiguration();
 
     }
 
-    this.newPgmConfig.effective = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    this.newPgmConfig.effective = tomorrow.getFullYear()+'-'+(tomorrow.getMonth()+1)+'-'+tomorrow.getDate();
     this.newPgmConfig.expiration = '9999-12-31';
 
     this.lastPgmConfigRow = this.programConfigurations.length;
     this.programConfigurations[this.programConfigurations.length] = this.newPgmConfig;
  
+  }
+  
+  updateDateValue(newDate, pc: ProgramConfiguration, dateType: string) {
+    console.log('ConfigureProgramViaCommunicationComponent updateDateValue: ', newDate.newDateValue, pc, dateType);
+    if (dateType === 'effective') {
+      pc.effective = newDate.newDateValue;
+    }
+    if (dateType === 'expiration') {
+      pc.expiration = newDate.newDateValue;
+    }
   }
 
   saveProgramConfiguration() {
@@ -88,16 +88,21 @@ export class ConfigureProgramViaCommunicationComponent implements OnInit {
     this.newPgmConfig.program = this.findProgram(this.selectedProgram);
     this.newPgmConfig.communication = this.communication;
 
-    const resultObj: Object = {
-      prev: this.prevPgmConfig,
-      new: this.newPgmConfig
+    const modalResult: ProgramConfigModalResult = {
+      prevProgConfig: this.prevPgmConfig,
+      newProgConfig: this.newPgmConfig
     };
 
-    this.configureProgramModal.close({resultTxt: this.SAVESUCCESS, resultObj: resultObj});
+    this.configureProgramModal.close({resultTxt: this.SAVESUCCESS, modalResult: modalResult});
   }
 
   private findProgram(id): Program {
     return this.programs.find(p => p.id === id);
   }
 
+}
+
+export class ProgramConfigModalResult {
+  prevProgConfig: ProgramConfiguration;
+  newProgConfig: ProgramConfiguration;
 }

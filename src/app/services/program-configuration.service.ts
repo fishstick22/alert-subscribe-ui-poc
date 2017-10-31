@@ -6,7 +6,6 @@ import { IAppConfig }            from '../iapp-config'
 
 import 'rxjs/add/operator/toPromise';
 
-//import { Program } from './../model/program';
 import { ProgramConfiguration } from './../model/program-configuration';
 
 @Injectable()
@@ -49,18 +48,6 @@ export class ProgramConfigurationService {
   }
 
   private async createProgramConfigurationThruApi(programConfiguration: ProgramConfiguration): Promise<ProgramConfiguration> {
-    // console.log('createProgramConfigurationThruApi', programConfiguration.id);
-    // console.log('createProgramConfigurationThruApi', programConfiguration.program.programConfiguration);
-    // console.log('createProgramConfigurationThruApi', programConfiguration.communication.programConfiguration);
-    // if (!programConfiguration.id) {
-    //   programConfiguration.id = null;
-    // }
-    // if (programConfiguration.program.programConfiguration.length) {
-    //   programConfiguration.program.programConfiguration=[];
-    // }
-    // if (programConfiguration.communication.programConfiguration.length) {
-    //   programConfiguration.communication.programConfiguration=[];
-    // }
     try {
       const response = await this.http.post(this.progConfigApiEndpoint, JSON.stringify(programConfiguration), {headers: this.headers}).toPromise();
       return response.json() as ProgramConfiguration;
