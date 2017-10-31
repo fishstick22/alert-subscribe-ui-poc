@@ -59,7 +59,7 @@ export class ProgramComponent implements OnInit {
   
   }
 
-  private addProgramModal() {
+  addProgramModal() {
     const modalRef = this.modalService.open(AddProgramComponent);
     const modalComp: AddProgramComponent  = modalRef.componentInstance;
 
@@ -81,7 +81,7 @@ export class ProgramComponent implements OnInit {
     });    
   }
 
-  private editProgramModal(programId) {
+  editProgramModal(programId) {
     const modalRef = this.modalService.open(EditProgramComponent);
     const modalComp: EditProgramComponent  = modalRef.componentInstance;
 
@@ -103,7 +103,7 @@ export class ProgramComponent implements OnInit {
     });    
   }
 
-  private deleteProgramModal(programId) {
+  deleteProgramModal(programId) {
     const modalRef = this.modalService.open(DeleteProgramComponent);
     const modalComp: DeleteProgramComponent  = modalRef.componentInstance;
 
