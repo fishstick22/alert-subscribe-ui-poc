@@ -2,7 +2,8 @@ import { Component, OnInit }           from '@angular/core';
 import { NgbModal, ModalDismissReasons,
          NgbModalOptions }             from '@ng-bootstrap/ng-bootstrap';
 
-import { ConfigureProgramViaCommunicationComponent } from '../modal/configure-program-via-communication/configure-program-via-communication.component';
+import { ConfigureProgramViaCommunicationComponent,
+         ProgramConfigModalResult }    from '../modal/configure-program-via-communication/configure-program-via-communication.component';
 //
 
 import { Communication }               from './../../model/communication';
@@ -137,13 +138,19 @@ export class CommunicationComponent implements OnInit {
 
     modalRef.result.then((result) => {
       if (result.resultTxt == modalComp.SAVESUCCESS) {
-        console.log('configureProgramModal result: ', result.resultObj);
+        console.log('configureProgramModal result: ', result.modalResult);
         this.closeResult = `Closed with: ${result.resultTxt}`;
-        if (result.resultObj.prev) {
-          this.updateProgramConfiguration(<ProgramConfiguration> result.resultObj.prev);
-        }
-        if (result.resultObj.new) {
-          this.addProgramConfiguration(result.resultObj.new);  
+        if (result.modalResult) {
+          const modalResult: ProgramConfigModalResult = result.modalResult;
+          if (modalResult.prevProgConfig) {
+            this.updateProgramConfiguration(modalResult.prevProgConfig);
+          }
+          if (modalResult.newProgConfig) {
+            this.addProgramConfiguration(modalResult.newProgConfig);  
+          }
+        } else {
+          // this would be some kind of exception
+          console.log('CommunicationComponent configureProgramModal bad result: ', result.modalResult);
         }
       } else {
         this.closeResult = `Closed with: ${result}`;

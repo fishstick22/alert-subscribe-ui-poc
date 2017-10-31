@@ -32,8 +32,8 @@ export class CommunicationService {
     // some reason spring rest is giving empty array objects of programConfiguration property
     // get rid of them all
     for (var i = 0, len = communications.length; i < len; i++) {
-      if (communications[i].programConfiguration.length) {
-        communications[i].programConfiguration = [];
+      if (communications[i].programConfiguration && communications[i].programConfiguration.length) {
+          communications[i].programConfiguration = [];
       }
     }
     return communications;

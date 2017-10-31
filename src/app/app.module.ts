@@ -53,6 +53,8 @@ import { SortableTableDirective }  from './components/utility/sortable-table.dir
 // Forms
 import { SelectChannelPriorityComponent } from './components/forms/select-channel-priority/select-channel-priority.component';
 import { DateEffExpComponent } from './components/forms/date-eff-exp/date-eff-exp.component';
+import { DatepickerPopupComponent } from './components/forms/datepicker-popup/datepicker-popup.component';
+import { ClosePopoverOnClickOutsideDirective } from './components/forms/datepicker-popup/close-popover-on-click-outside.directive';
 
 @NgModule({
   declarations: [
@@ -79,7 +81,9 @@ import { DateEffExpComponent } from './components/forms/date-eff-exp/date-eff-ex
     SortableTableDirective,
 
     SelectChannelPriorityComponent,
-    DateEffExpComponent
+    DateEffExpComponent,
+    DatepickerPopupComponent,
+    ClosePopoverOnClickOutsideDirective
   ],
   imports: [
     BrowserModule,
@@ -87,7 +91,7 @@ import { DateEffExpComponent } from './components/forms/date-eff-exp/date-eff-ex
     FormsModule,
     HttpModule,
     NgbModule.forRoot(),
-    //InMemoryWebApiModule.forRoot(InMemoryDataService),
+    InMemoryWebApiModule.forRoot(InMemoryDataService),
   ],
   entryComponents: [
     NgbdModalContent, 

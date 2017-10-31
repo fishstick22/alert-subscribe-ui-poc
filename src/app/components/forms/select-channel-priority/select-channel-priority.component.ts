@@ -5,7 +5,8 @@ import { Component, OnInit, Input } from '@angular/core';
   template: `
   <div *ngIf="i !== lastPgmConfigRow" class="flex-justify-center">{{priority}}</div>
   <div *ngIf="i === lastPgmConfigRow" class="flex-justify-right">
-    <select [(ngModel)]="priority" id="name" name="name" [disabled]="i !== lastPgmConfigRow">
+    <select [(ngModel)]="priority" id="name" name="name" 
+      class="form-control form-control-sm" [disabled]="i !== lastPgmConfigRow">
       <option *ngFor="let cpo of channelPriortyOpts" [ngValue]="cpo">{{cpo}}</option>
     </select>
   </div>`,

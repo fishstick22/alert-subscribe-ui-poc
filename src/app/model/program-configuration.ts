@@ -2,6 +2,27 @@ import { Program }       from './program';
 import { Communication } from './communication';
 
 export class ProgramConfiguration {
+
+    constructor(prgConf?: ProgramConfiguration) {
+
+        if (prgConf) {
+            this.name               = prgConf.name;
+            this.chanEmailPriority  = prgConf.chanEmailPriority;
+            this.chanIvrPriority    = prgConf.chanIvrPriority;
+            this.chanSmsPriority    = prgConf.chanSmsPriority;
+            this.chanMailPriority   = prgConf.chanMailPriority;
+            this.chanMobilePriority = prgConf.chanMobilePriority;
+            this.chanMandatory      = prgConf.chanMandatory;
+        } else {
+            this.chanEmailPriority  = 0;
+            this.chanIvrPriority    = 0;
+            this.chanSmsPriority    = 0;
+            this.chanMailPriority   = 0;
+            this.chanMobilePriority = 0;
+            this.chanMandatory      = 'No';
+        }
+    }
+
     id: number;
     name: string;
     description: string;
