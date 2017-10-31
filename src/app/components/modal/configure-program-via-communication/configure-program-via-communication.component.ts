@@ -22,7 +22,6 @@ export class ConfigureProgramViaCommunicationComponent implements OnInit {
   prevPgmConfig: ProgramConfiguration;
 
   selectedProgram: number;
-  chanMandatoryOpts: string[] = ['No', 'Email', 'IVR', 'SMS'];
   lastPgmConfigRow: number;
 
   constructor(public configureProgramModal: NgbActiveModal) { }

@@ -1,7 +1,7 @@
 
   <form #programConfigurationViaCommunicationForm="ngForm" 
     (ngSubmit)="saveProgramConfiguration(programConfigurationViaCommunicationForm)" >
-<!--    <input type="hidden" name="id" [(ngModel)]="program.id" id="programId">-->
+
     <div class="modal-header bg-dark">
       <h4 class="modal-title text-white">
         Configure Program
@@ -11,10 +11,11 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
+    
     <div class="modal-body">
       <div class="form-group">
         <label for="programName">Choose Program</label>
-        <select [(ngModel)]="selectedProgram" id="program" name="program" required>
+        <select id="program" name="program" [(ngModel)]="selectedProgram" required>
           <option *ngFor="let p of programs" [ngValue]="p.id">{{p.name}}</option>
         </select>
       </div>
@@ -38,8 +39,12 @@
           <tr *ngFor="let pc of programConfigurations; let i = index" 
               [class.table-success]="i == lastPgmConfigRow">
             <td><span class="badge badge-secondary">{{pc.id}}</span></td>
-            <td *ngIf="i !== lastPgmConfigRow"><span>{{pc.name}}</span></td>
-            <td *ngIf="i === lastPgmConfigRow"><input type="text" class="form-control form-control-sm" name="name" [(ngModel)]="pc.name" required
+            <td *ngIf="i !== lastPgmConfigRow">
+                <input type="text" class="form-control form-control-sm" name="name" [(ngModel)]="pc.name" readonly
+                id="pgmConfigName" aria-describedby="pgmConfigNamelHelp" placeholder="Enter Program Configuration Name">
+            </td>
+            <td *ngIf="i === lastPgmConfigRow">
+              <input type="text" class="form-control form-control-sm" name="name" [(ngModel)]="pc.name" required
               id="pgmConfigName" aria-describedby="pgmConfigNamelHelp" placeholder="Enter Program Configuration Name">
             </td>
             <!-- TODO Make this custom select component NgModel aware
@@ -47,27 +52,23 @@
               or http://almerosteyn.com/2016/04/linkup-custom-control-to-ngcontrol-ngmodel
             -->
             <td><select-channel-priority 
-                  name="chanEmailPriority" [priority]="pc.chanEmailPriority"
+                  id="chanEmailPriority" name="chanEmailPriority" [(ngModel)]="pc.chanEmailPriority"
                   [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority></td>
             <td><select-channel-priority 
-                  name="chanIvrPriority" [priority]="pc.chanIvrPriority"
+                  id="chanIvrPriority" name="chanIvrPriority" [(ngModel)]="pc.chanIvrPriority"
                   [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority></td>
             <td><select-channel-priority 
-                  name="chanSmsPriority" [priority]="pc.chanSmsPriority"
+                  id="chanSmsPriority" name="chanSmsPriority" [(ngModel)]="pc.chanSmsPriority"
                   [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority></td>  
             <td><select-channel-priority 
-                  name="chanMailPriority" [priority]="pc.chanMailPriority"
+                  id="chanMailPriority" name="chanMailPriority" [(ngModel)]="pc.chanMailPriority"
                   [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority></td> 
             <td><select-channel-priority 
-                  name="chanMobilePriority" [priority]="pc.chanMobilePriority"
+                  id="chanMobilePriority" name="chanMobilePriority" [(ngModel)]="pc.chanMobilePriority"
                   [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority></td> 
-            <td *ngIf="i !== lastPgmConfigRow"><span>{{pc.chanMandatory}}</span></td>
-            <td *ngIf="i === lastPgmConfigRow">
-              <select [(ngModel)]="pc.chanMandatory" id="chanMandatory" name="chanMandatory" required
-                class="form-control form-control-sm" [disabled]="i !== lastPgmConfigRow">
-                <option *ngFor="let cmo of chanMandatoryOpts" [ngValue]="cmo">{{cmo}}</option>
-              </select>
-            </td>
+            <td><select-channel-mandatory
+                  id="chanMandatory" name="chanMandatory" [(ngModel)]="pc.chanMandatory"
+                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-mandatory></td>
             <td><date-eff-exp
                   dateType="effective" [progConfig]="pc"
                   [i]="i" [lastPgmConfigRow]="lastPgmConfigRow"
@@ -76,20 +77,14 @@
                   dateType="expiration" [progConfig]="pc"
                   [i]="i" [lastPgmConfigRow]="lastPgmConfigRow"
                   (newDateValue)="updateDateValue($event, pc, 'expiration')"></date-eff-exp></td>
-
-            <!--
-     "chanMailPriority": 0,
-     "chanMobilePriority": 0,
-
-     "effective": "2017-1-1",
-     "expiration": "9999-12-31",
-            -->
           </tr>
       </table>
     </div>
+
     <div class="modal-footer">
       <span class="mr-auto">Some instructional content or condition message goes here: {{newPgmConfig.effective}}</span>
       <button type="submit" class="btn btn-outline-dark" [disabled]="!programConfigurationViaCommunicationForm.valid">Save</button>
       <button type="button" class="btn btn-outline-dark" (click)="configureProgramModal.close('Close click')">Close</button>
     </div>
+    
   </form>
