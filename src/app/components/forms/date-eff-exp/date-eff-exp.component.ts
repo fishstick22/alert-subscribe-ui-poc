@@ -11,11 +11,13 @@ import { ProgramConfiguration }     from './../../../model/program-configuration
 
       <div *ngIf="dateType == 'effective'" class="flex-justify-center">
         <!-- the effective date of the current effective row -->  
-        {{progConfig.effective}}</div>
+        <input class="form-control form-control-sm" value="{{progConfig.effective}}" readonly>
+      </div>
 
       <div *ngIf="dateType == 'expiration'" class="flex-justify-center">
         <!-- the expiration date of the current/previous row -->  
-        {{progConfig.expiration}}</div>
+        <input class="form-control form-control-sm" value="{{progConfig.expiration}}" readonly>
+      </div>
     </div>
 
     <div *ngIf="i === lastPgmConfigRow" >
