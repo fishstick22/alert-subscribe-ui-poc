@@ -22,6 +22,12 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
+## Deploying to GitHub Pages
+
+Install `npm i -g angular-cli-ghpages` 
+Run `ng build --prod --base-href "https://{username}.github.io/alert-subscribe-ui-poc/"`
+Run `ngh`
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
