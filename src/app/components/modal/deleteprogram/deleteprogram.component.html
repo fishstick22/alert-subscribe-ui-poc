@@ -1,5 +1,5 @@
 <form #programForm="ngForm" (ngSubmit)="deleteProgram(programForm)" >
-  <input type="hidden" name="id" [(ngModel)]="program.id" id="programId">
+  <!--input type="hidden" name="id" [(ngModel)]="program.id" id="programId"-->
   <div class="modal-header bg-dark">
     <h4 class="modal-title text-white">Delete Program</h4>
     <button type="button" class="close text-white" aria-label="Close" (click)="deleteProgramModal.dismiss('Cross click')">
