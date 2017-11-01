@@ -84,8 +84,14 @@
     <div class="modal-footer">
       <!-- https://github.com/twbs/bootstrap/issues/24413 -->
       <!--span class="mr-auto">Some instructional content or condition message goes here: {{newPgmConfig.effective}}</span-->
-      <button type="submit" class="btn btn-outline-dark" [disabled]="!programConfigurationViaCommunicationForm.valid">Save</button>
-      <button type="button" class="btn btn-outline-dark" (click)="configureProgramModal.close('Close click')">Close</button>
+      <div class="w-100">
+        <span class="float-left">Some instructional content or condition message goes here: {{newPgmConfig.effective}}</span>
+        <div class="float-right">
+            <button type="submit" class="btn btn-outline-dark" [disabled]="!programConfigurationViaCommunicationForm.valid">Save</button>
+            <button type="button" class="btn btn-outline-dark" (click)="configureProgramModal.close('Close click')">Close</button>
+        </div>
+      </div>
+      
     </div>
     
   </form>
