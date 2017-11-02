@@ -8,7 +8,7 @@ import { SortableColumnService }                 from '../../../services/sortabl
 // http://www.carbonatethis.com/sort-table-columns-with-angular-and-typescript/
 
 @Component({
-  selector: '[sortable-column]',
+  selector: 'app-sortable-column',
   templateUrl: './sortable-column.component.html',
   styleUrls: ['./sortable-column.component.css']
 })
@@ -16,11 +16,9 @@ export class SortableColumnComponent implements OnInit, OnDestroy {
 
   constructor(private sortService: SortableColumnService) { }
 
-  @Input('sortable-column')
-  columnName: string;
+  @Input() columnName: string;
 
-  @Input('sort-direction')
-  sortDirection: string = '';
+  @Input() sortDirection: string = '';
 
   private columnSortedSubscription: Subscription;
 

@@ -8,7 +8,7 @@ import { SortableColumnService }            from '../../services/sortable-column
 // http://www.carbonatethis.com/sort-table-columns-with-angular-and-typescript/
 
 @Directive({
-  selector: '[sortable-table]'
+  selector: '[appSortableTable]'
 })
 export class SortableTableDirective implements OnInit, OnDestroy {
 

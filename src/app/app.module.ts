@@ -50,8 +50,8 @@ import { SortableTableDirective }      from 'app/components/utility/sortable-tab
 import { SelectChannelPriorityComponent } from 'app/components/forms/select-channel-priority/select-channel-priority.component';
 import { DateEffExpComponent } from 'app/components/forms/date-eff-exp/date-eff-exp.component';
 import { DatepickerPopupComponent } from 'app/components/forms/datepicker-popup/datepicker-popup.component';
-import { ClosePopoverOnClickOutsideDirective } from 'app/components/forms/datepicker-popup/close-popover-on-click-outside.directive';
 import { SelectChannelMandatoryComponent } from 'app/components/forms/select-channel-mandatory/select-channel-mandatory.component';
+import { NgClickOutsideDirective } from './directives/ng-click-outside.directive';
 
 @NgModule({
   declarations: [
@@ -77,8 +77,8 @@ import { SelectChannelMandatoryComponent } from 'app/components/forms/select-cha
     SelectChannelPriorityComponent,
     DateEffExpComponent,
     DatepickerPopupComponent,
-    ClosePopoverOnClickOutsideDirective,
-    SelectChannelMandatoryComponent
+    SelectChannelMandatoryComponent,
+    NgClickOutsideDirective
   ],
   imports: [
     BrowserModule,
