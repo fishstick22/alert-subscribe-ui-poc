@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConfigureProgramViaCommunicationComponent } from './configure-program-via-communication.component';
+import { ProgramConfigByCommComponent } from './program-config-by-comm.component';
 
 describe('ConfigureProgramViaCommunicationComponent', () => {
-  let component: ConfigureProgramViaCommunicationComponent;
-  let fixture: ComponentFixture<ConfigureProgramViaCommunicationComponent>;
+  let component: ProgramConfigByCommComponent;
+  let fixture: ComponentFixture<ProgramConfigByCommComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfigureProgramViaCommunicationComponent ]
+      declarations: [ ProgramConfigByCommComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ConfigureProgramViaCommunicationComponent);
+    fixture = TestBed.createComponent(ProgramConfigByCommComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,16 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { Program }               from './../../../model/program';
-import { ProgramConfiguration }  from './../../../model/program-configuration';
-import { Communication }         from './../../../model/communication';
+import { Program }               from 'app/model/program';
+import { ProgramConfiguration }  from 'app/model/program-configuration';
+import { Communication }         from 'app/model/communication';
 
 @Component({
-  selector: 'app-configure-program-via-communication',
-  templateUrl: './configure-program-via-communication.component.html',
-  styleUrls: ['./configure-program-via-communication.component.css']
+  // selector: 'app-program-config-by-comm', Entry Component needs no selector?
+  templateUrl: './program-config-by-comm.component.html',
+  styleUrls: ['./program-config-by-comm.component.css']
 })
-export class ConfigureProgramViaCommunicationComponent implements OnInit {
+export class ProgramConfigByCommComponent implements OnInit {
 
   @Input() communication: Communication;
   @Input() programs: Program[];
@@ -27,7 +27,7 @@ export class ConfigureProgramViaCommunicationComponent implements OnInit {
   constructor(public configureProgramModal: NgbActiveModal) { }
 
   ngOnInit() {
-    console.log('ConfigureProgramViaCommunicationComponent init: ');
+    console.log('ProgramConfigByCommComponent init: ');
     console.log(this.communication);
     console.log(this.programConfigurations);
     // get the list of programs to populate the dropdown (covered in @Input() programs: Program[];)
@@ -71,7 +71,7 @@ export class ConfigureProgramViaCommunicationComponent implements OnInit {
   }
 
   updateDateValue(newDate, pc: ProgramConfiguration, dateType: string) {
-    console.log('ConfigureProgramViaCommunicationComponent updateDateValue: ', newDate.newDateValue, pc, dateType);
+    console.log('ProgramConfigByCommComponent updateDateValue: ', newDate.newDateValue, pc, dateType);
     if (dateType === 'effective') {
       pc.effective = newDate.newDateValue;
     }
@@ -81,7 +81,7 @@ export class ConfigureProgramViaCommunicationComponent implements OnInit {
   }
 
   saveProgramConfiguration() {
-    console.log('ConfigureProgramViaCommunicationComponent save');
+    console.log('ProgramConfigByCommComponent save');
     console.log(this.newPgmConfig, ' program id: ', this.selectedProgram);
 
     this.newPgmConfig.program = this.findProgram(this.selectedProgram);

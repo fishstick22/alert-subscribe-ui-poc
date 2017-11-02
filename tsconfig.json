@@ -2,6 +2,7 @@
   "$schema": "./schema/tsconfig/schema.json",
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./src",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,

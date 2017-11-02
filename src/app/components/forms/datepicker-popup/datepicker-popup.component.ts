@@ -3,7 +3,7 @@ import { Component, OnInit, Input,
 import { NgbDateStruct }            from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'ngbd-datepicker-popup',
+  selector: 'app-datepicker-popup',
   template: `
   <div class="col-xs-2">
     <input class="form-control form-control-sm" placeholder="yyyy-mm-dd" (click)="d.toggle()"

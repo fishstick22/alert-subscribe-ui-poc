@@ -10,7 +10,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     multi: true
 };
 @Component({
-  selector: 'select-channel-mandatory',
+  selector: 'app-select-channel-mandatory',
   template: `
   <div class="flex-justify-right">
     <select id="{{id}}" name="{{name}}" [(ngModel)]="value" required

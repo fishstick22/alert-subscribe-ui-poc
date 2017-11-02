@@ -4,7 +4,7 @@ import { DatepickerPopupComponent } from '../datepicker-popup/datepicker-popup.c
 import { ProgramConfiguration }     from './../../../model/program-configuration';
 
 @Component({
-  selector: 'date-eff-exp',
+  selector: 'app-date-eff-exp',
   template: `
     <div *ngIf="i !== lastPgmConfigRow">
       <!-- not the last (new) row, this could be the current effective row -->
@@ -25,8 +25,8 @@ import { ProgramConfiguration }     from './../../../model/program-configuration
 
       <div *ngIf="dateType == 'effective'" class="flex-justify-center">
         <!-- set the effective date for the new row -->
-        <ngbd-datepicker-popup [dateValue]="progConfig.effective"
-          (newDateValue)="updateDateValue($event)"></ngbd-datepicker-popup></div>
+        <app-datepicker-popup [dateValue]="progConfig.effective"
+          (newDateValue)="updateDateValue($event)"></app-datepicker-popup></div>
 
       <div *ngIf="dateType == 'expiration'" class="flex-justify-center">
         <!-- the expiration date of the new row -->

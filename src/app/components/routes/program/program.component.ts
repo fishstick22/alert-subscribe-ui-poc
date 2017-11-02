@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit }      from '@angular/core';
+import { NgbModal,
+         ModalDismissReasons }    from '@ng-bootstrap/ng-bootstrap';
 
-import { AddProgramComponent }    from '../modal/addprogram/addprogram.component';
-import { EditProgramComponent }   from '../modal/editprogram/editprogram.component';
-import { DeleteProgramComponent } from '../modal/deleteprogram/deleteprogram.component';
+import { AddProgramComponent }    from 'app/components/modal/addprogram/addprogram.component';
+import { EditProgramComponent }   from 'app/components/modal/editprogram/editprogram.component';
+import { DeleteProgramComponent } from 'app/components/modal/deleteprogram/deleteprogram.component';
 
-import { Program }                from './../../model/program';
-import { ProgramService }         from './../../services/program.service';
+import { Program }                from 'app/model/program';
+import { ProgramService }         from 'app/services/program.service';
 
 @Component({
-  selector: 'app-program',
+  // selector: 'app-program', selector not needed on routed components
   templateUrl: './program.component.html',
   styleUrls: ['./program.component.css']
 })

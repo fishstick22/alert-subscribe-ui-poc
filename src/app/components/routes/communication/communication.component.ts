@@ -2,19 +2,19 @@ import { Component, OnInit }           from '@angular/core';
 import { NgbModal, ModalDismissReasons,
          NgbModalOptions }             from '@ng-bootstrap/ng-bootstrap';
 
-import { ConfigureProgramViaCommunicationComponent,
-         ProgramConfigModalResult }    from '../modal/configure-program-via-communication/configure-program-via-communication.component';
+import { ProgramConfigByCommComponent,
+         ProgramConfigModalResult }    from 'app/components/modal/program-config-by-comm/program-config-by-comm.component';
 //
 
-import { Communication }               from './../../model/communication';
-import { CommunicationService }        from './../../services/communication.service';
-import { Program }                     from './../../model/program';
-import { ProgramService }              from './../../services/program.service';
-import { ProgramConfiguration }        from './../../model/program-configuration';
-import { ProgramConfigurationService } from './../../services/program-configuration.service';
+import { Communication }               from 'app/model/communication';
+import { CommunicationService }        from 'app/services/communication.service';
+import { Program }                     from 'app/model/program';
+import { ProgramService }              from 'app/services/program.service';
+import { ProgramConfiguration }        from 'app/model/program-configuration';
+import { ProgramConfigurationService } from 'app/services/program-configuration.service';
 
 @Component({
-  selector: 'app-communication',
+  // selector: 'app-communication', selector not needed on routed components
   templateUrl: './communication.component.html',
   styleUrls: ['./communication.component.css']
 })
@@ -123,8 +123,8 @@ export class CommunicationComponent implements OnInit {
     const modalOpts: NgbModalOptions = {
       size: 'lg'
     };
-    const modalRef = this.modalService.open(ConfigureProgramViaCommunicationComponent, modalOpts);
-    const modalComp: ConfigureProgramViaCommunicationComponent  = modalRef.componentInstance;
+    const modalRef = this.modalService.open(ProgramConfigByCommComponent, modalOpts);
+    const modalComp: ProgramConfigByCommComponent  = modalRef.componentInstance;
 
     // modalComp.name = 'Configure Program';
     modalComp.communication = this.findCommunication(commId);
