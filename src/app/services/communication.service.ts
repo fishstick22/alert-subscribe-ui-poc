@@ -1,12 +1,12 @@
 import { Injectable, Inject }    from '@angular/core';
 import { Headers, Http }         from '@angular/http';
 
-import { APP_CONFIG }            from '../app.config';
-import { IAppConfig }            from '../iapp-config';
+import { APP_CONFIG }            from 'app/app.config';
+import { IAppConfig }            from 'app/iapp-config';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Communication } from './../model/communication';
+import { Communication } from 'app/model/communication';
 
 @Injectable()
 export class CommunicationService {

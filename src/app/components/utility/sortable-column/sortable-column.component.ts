@@ -3,7 +3,7 @@ import { Component, OnInit, Input,
 
 import { Subscription }                          from 'rxjs/Subscription';
 
-import { SortableColumnService }                 from '../../../services/sortable-column.service';
+import { SortableColumnService }                 from 'app/services/sortable-column.service';
 
 // http://www.carbonatethis.com/sort-table-columns-with-angular-and-typescript/
 
