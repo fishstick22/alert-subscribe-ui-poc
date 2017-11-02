@@ -1,12 +1,12 @@
 <h4>Manage Communications</h4>
 <table class="table table-responsive table-sm table-striped table-bordered table-hover"
-  sortable-table (sorted)="onSorted($event)">
+  appSortableTable (sorted)="onSorted($event)">
   <caption></caption>
   <thead>
     <tr class="thead-dark"><!-- column sorting header row -->
-      <th sortable-column="id" sort-direction="asc">ID</th>
-      <th sortable-column="name">Name</th>
-      <th sortable-column="description">Description</th>
+      <th><app-sortable-column columnName="id" sortDirection="asc">ID</app-sortable-column></th>
+      <th><app-sortable-column columnName="name">Name</app-sortable-column></th>
+      <th><app-sortable-column columnName="description">Description</app-sortable-column></th>
       <th>Status</th>
       <th>Actions</th>
     </tr>

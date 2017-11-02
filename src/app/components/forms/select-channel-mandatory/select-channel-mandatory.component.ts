@@ -10,7 +10,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     multi: true
 };
 @Component({
-  selector: 'select-channel-mandatory',
+  selector: 'app-select-channel-mandatory',
   template: `
   <div class="flex-justify-right">
     <select id="{{id}}" name="{{name}}" [(ngModel)]="value" required
@@ -27,6 +27,10 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
 export class SelectChannelMandatoryComponent implements OnInit, ControlValueAccessor {
+  // Placeholders for the callbacks which are later providesd
+  // by the Control Value Accessor
+  private onTouchedCallback: () => void = noop;
+  private onChangeCallback: (_: any) => void = noop;
 
   @Input() id: string;
   @Input() name: string;
@@ -41,17 +45,12 @@ export class SelectChannelMandatoryComponent implements OnInit, ControlValueAcce
   ngOnInit() {
   }
 
-  //Placeholders for the callbacks which are later providesd
-  //by the Control Value Accessor
-  private onTouchedCallback: () => void = noop;
-  private onChangeCallback: (_: any) => void = noop;
-
-  //get accessor
+  // get accessor
   get value(): any {
     return this.innerValue;
-  };
+  }
 
-  //set accessor including call the onchange callback
+  // set accessor including call the onchange callback
   set value(v: any) {
     if (v !== this.innerValue) {
         this.innerValue = v;
@@ -59,24 +58,24 @@ export class SelectChannelMandatoryComponent implements OnInit, ControlValueAcce
     }
   }
 
-  //Set touched on blur
+  // Set touched on blur
   onBlur() {
     this.onTouchedCallback();
   }
 
-  //From ControlValueAccessor interface
+  // From ControlValueAccessor interface
   writeValue(value: any) {
     if (value !== this.innerValue) {
         this.innerValue = value;
     }
   }
 
-  //From ControlValueAccessor interface
+  // From ControlValueAccessor interface
   registerOnChange(fn: any) {
     this.onChangeCallback = fn;
   }
 
-  //From ControlValueAccessor interface
+  // From ControlValueAccessor interface
   registerOnTouched(fn: any) {
     this.onTouchedCallback = fn;
   }

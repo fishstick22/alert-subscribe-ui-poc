@@ -51,32 +51,32 @@
               http://blog.rangle.io/angular-2-ngmodel-and-custom-form-components/
               or http://almerosteyn.com/2016/04/linkup-custom-control-to-ngcontrol-ngmodel
             -->
-            <td><select-channel-priority 
+            <td><app-select-channel-priority 
                   id="chanEmailPriority" name="chanEmailPriority" [(ngModel)]="pc.chanEmailPriority"
-                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority></td>
-            <td><select-channel-priority 
+                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></app-select-channel-priority></td>
+            <td><app-select-channel-priority 
                   id="chanIvrPriority" name="chanIvrPriority" [(ngModel)]="pc.chanIvrPriority"
-                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority></td>
-            <td><select-channel-priority 
+                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></app-select-channel-priority></td>
+            <td><app-select-channel-priority 
                   id="chanSmsPriority" name="chanSmsPriority" [(ngModel)]="pc.chanSmsPriority"
-                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority></td>  
-            <td><select-channel-priority 
+                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></app-select-channel-priority></td>  
+            <td><app-select-channel-priority 
                   id="chanMailPriority" name="chanMailPriority" [(ngModel)]="pc.chanMailPriority"
-                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority></td> 
-            <td><select-channel-priority 
+                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></app-select-channel-priority></td> 
+            <td><app-select-channel-priority 
                   id="chanMobilePriority" name="chanMobilePriority" [(ngModel)]="pc.chanMobilePriority"
-                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-priority></td> 
-            <td><select-channel-mandatory
+                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></app-select-channel-priority></td> 
+            <td><app-select-channel-mandatory
                   id="chanMandatory" name="chanMandatory" [(ngModel)]="pc.chanMandatory"
-                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></select-channel-mandatory></td>
-            <td><date-eff-exp
+                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></app-select-channel-mandatory></td>
+            <td><app-date-eff-exp
                   dateType="effective" [progConfig]="pc"
                   [i]="i" [lastPgmConfigRow]="lastPgmConfigRow"
-                  (newDateValue)="updateDateValue($event, pc, 'effective')"></date-eff-exp></td>
-            <td><date-eff-exp
+                  (newDateValue)="updateDateValue($event, pc, 'effective')"></app-date-eff-exp></td>
+            <td><app-date-eff-exp
                   dateType="expiration" [progConfig]="pc"
                   [i]="i" [lastPgmConfigRow]="lastPgmConfigRow"
-                  (newDateValue)="updateDateValue($event, pc, 'expiration')"></date-eff-exp></td>
+                  (newDateValue)="updateDateValue($event, pc, 'expiration')"></app-date-eff-exp></td>
           </tr>
       </table>
     </div>

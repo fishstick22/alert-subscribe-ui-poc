@@ -10,7 +10,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     multi: true
 };
 @Component({
-  selector: 'select-channel-priority',
+  selector: 'app-select-channel-priority',
   template: `
   <div class="flex-justify-right">
     <select id="{{id}}" name="{{name}}" [(ngModel)]="value" required
@@ -27,18 +27,22 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
 export class SelectChannelPriorityComponent implements OnInit, ControlValueAccessor {
+  // Placeholders for the callbacks which are later providesd
+  // by the Control Value Accessor
+  private onTouchedCallback: () => void = noop;
+  private onChangeCallback: (_: any) => void = noop;
 
   @Input() id: string;
   @Input() name: string;
   @Input() i: number;
   @Input() lastPgmConfigRow: number;
 
-  channelPriortyOpts: number[] = [0,1,2,3];
-  
-  //http://almerosteyn.com/2016/04/linkup-custom-control-to-ngcontrol-ngmodel
-  //The internal data model
+  channelPriortyOpts: number[] = [0, 1, 2, 3];
+
+  // http://almerosteyn.com/2016/04/linkup-custom-control-to-ngcontrol-ngmodel
+  // The internal data model
   private innerValue: any = '';
-    
+
   constructor() { }
 
   ngOnInit() {
@@ -49,17 +53,14 @@ export class SelectChannelPriorityComponent implements OnInit, ControlValueAcces
     // console.log("lastPgmConfigRow: ", this.lastPgmConfigRow);
   }
 
-  //Placeholders for the callbacks which are later providesd
-  //by the Control Value Accessor
-  private onTouchedCallback: () => void = noop;
-  private onChangeCallback: (_: any) => void = noop;
 
-  //get accessor
+
+  // get accessor
   get value(): any {
     return this.innerValue;
-  };
+  }
 
-  //set accessor including call the onchange callback
+  // set accessor including call the onchange callback
   set value(v: any) {
     if (v !== this.innerValue) {
         this.innerValue = v;
@@ -67,27 +68,26 @@ export class SelectChannelPriorityComponent implements OnInit, ControlValueAcces
     }
   }
 
-  //Set touched on blur
+  // Set touched on blur
   onBlur() {
     this.onTouchedCallback();
   }
 
-  //From ControlValueAccessor interface
+  // From ControlValueAccessor interface
   writeValue(value: any) {
     if (value !== this.innerValue) {
         this.innerValue = value;
     }
   }
 
-  //From ControlValueAccessor interface
+  // From ControlValueAccessor interface
   registerOnChange(fn: any) {
     this.onChangeCallback = fn;
   }
 
-  //From ControlValueAccessor interface
+  // From ControlValueAccessor interface
   registerOnTouched(fn: any) {
     this.onTouchedCallback = fn;
   }
-
 
 }

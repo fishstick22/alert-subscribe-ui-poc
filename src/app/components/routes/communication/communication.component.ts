@@ -2,19 +2,19 @@ import { Component, OnInit }           from '@angular/core';
 import { NgbModal, ModalDismissReasons,
          NgbModalOptions }             from '@ng-bootstrap/ng-bootstrap';
 
-import { ConfigureProgramViaCommunicationComponent,
-         ProgramConfigModalResult }    from '../modal/configure-program-via-communication/configure-program-via-communication.component';
+import { ProgramConfigByCommComponent,
+         ProgramConfigModalResult }    from 'app/components/modal/program-config-by-comm/program-config-by-comm.component';
 //
 
-import { Communication }               from './../../model/communication';
-import { CommunicationService }        from './../../services/communication.service';
-import { Program }                     from './../../model/program';
-import { ProgramService }              from './../../services/program.service';
-import { ProgramConfiguration }        from './../../model/program-configuration';
-import { ProgramConfigurationService } from './../../services/program-configuration.service';
+import { Communication }               from 'app/model/communication';
+import { CommunicationService }        from 'app/services/communication.service';
+import { Program }                     from 'app/model/program';
+import { ProgramService }              from 'app/services/program.service';
+import { ProgramConfiguration }        from 'app/model/program-configuration';
+import { ProgramConfigurationService } from 'app/services/program-configuration.service';
 
 @Component({
-  selector: 'app-communication',
+  // selector: 'app-communication', selector not needed on routed components
   templateUrl: './communication.component.html',
   styleUrls: ['./communication.component.css']
 })
@@ -37,7 +37,6 @@ export class CommunicationComponent implements OnInit {
     private programConfigurationService: ProgramConfigurationService,
     private modalService: NgbModal) { }
 
-    
   async ngOnInit() {
     console.log('CommunicationComponent ngOnInit...');
     await this.getCommunications();
@@ -51,7 +50,7 @@ export class CommunicationComponent implements OnInit {
     try {
       this.communications = await this.communicationService.getCommunications();
     } catch (error) {
-      console.log('getCommunications error: ', error)
+      console.log('getCommunications error: ', error);
     }
   }
 
@@ -65,15 +64,14 @@ export class CommunicationComponent implements OnInit {
     try {
       this.programConfigurations = await this.programConfigurationService.getProgramConfigurations();
     } catch (error) {
-      console.log('getProgramConfigurations error: ', error)
+      console.log('getProgramConfigurations error: ', error);
     }
   }
 
   searchCommId() {
     console.log('CommunicationComponent searchCommId user entered: ', this.commId);
     this.displayComm = this.displayComm.filter(comm => {
-      return (String(comm.id).indexOf(this.commId) !== -1 )
-    
+      return (String(comm.id).indexOf(this.commId) !== -1 );
     });
   }
 
@@ -88,10 +86,9 @@ export class CommunicationComponent implements OnInit {
     console.log('CommunicationComponent searchCommDesc user entered: ', this.commDesc);
     this.displayComm = this.displayComm.filter(comm => {
       return (comm.description.indexOf(this.commDesc) !== -1 );
-    
     });
   }
-  
+
   containsString(columnValue: string, searchValue: string): boolean {
     return (columnValue.toLocaleLowerCase().indexOf(searchValue.toLocaleLowerCase()) !== -1);
   }
@@ -99,24 +96,22 @@ export class CommunicationComponent implements OnInit {
   getCommunicationsSorted(criteria: CommunicationSortCriteria, commArray: Communication[]): Communication[] {
 
     return commArray
-      .sort((a,b) => {
-        if(criteria.sortDirection === 'asc') {
-          //return  a[criteria.sortColumn] < b[criteria.sortColumn] ? -1 : 1;
-          if ( a[criteria.sortColumn] < b[criteria.sortColumn]) return -1;
-          if ( a[criteria.sortColumn] > b[criteria.sortColumn]) return 1;
+      .sort((a, b) => {
+        if (criteria.sortDirection === 'asc') {
+          if ( a[criteria.sortColumn] < b[criteria.sortColumn]) { return -1; }
+          if ( a[criteria.sortColumn] > b[criteria.sortColumn]) { return 1; }
           return 0;
-        } else if(criteria.sortDirection === 'desc') {
-          //return  a[criteria.sortColumn] > b[criteria.sortColumn] ? -1 : 1;
-          if ( a[criteria.sortColumn] > b[criteria.sortColumn]) return -1;
-          if ( a[criteria.sortColumn] < b[criteria.sortColumn]) return 1;
+        } else if (criteria.sortDirection === 'desc') {
+          if ( a[criteria.sortColumn] > b[criteria.sortColumn]) { return -1; }
+          if ( a[criteria.sortColumn] < b[criteria.sortColumn]) { return 1; }
           return 0;
-        } else return 0;
+        } else { return 0; }
       });
 
   }
 
-  onSorted($event){
-    console.log('CommunicationComponent onSorted...')
+  onSorted($event) {
+    console.log('CommunicationComponent onSorted...');
     this.displayComm = this.getCommunicationsSorted($event, this.displayComm);
   }
 
@@ -128,16 +123,16 @@ export class CommunicationComponent implements OnInit {
     const modalOpts: NgbModalOptions = {
       size: 'lg'
     };
-    const modalRef = this.modalService.open(ConfigureProgramViaCommunicationComponent, modalOpts);
-    const modalComp: ConfigureProgramViaCommunicationComponent  = modalRef.componentInstance;
+    const modalRef = this.modalService.open(ProgramConfigByCommComponent, modalOpts);
+    const modalComp: ProgramConfigByCommComponent  = modalRef.componentInstance;
 
-    //modalComp.name = 'Configure Program';
+    // modalComp.name = 'Configure Program';
     modalComp.communication = this.findCommunication(commId);
     modalComp.programs = this.programs;
     modalComp.programConfigurations = this.findProgramConfigurations(commId);
 
     modalRef.result.then((result) => {
-      if (result.resultTxt == modalComp.SAVESUCCESS) {
+      if (result.resultTxt === modalComp.SAVESUCCESS) {
         console.log('configureProgramModal result: ', result.modalResult);
         this.closeResult = `Closed with: ${result.resultTxt}`;
         if (result.modalResult) {
@@ -146,7 +141,7 @@ export class CommunicationComponent implements OnInit {
             this.updateProgramConfiguration(modalResult.prevProgConfig);
           }
           if (modalResult.newProgConfig) {
-            this.addProgramConfiguration(modalResult.newProgConfig);  
+            this.addProgramConfiguration(modalResult.newProgConfig);
           }
         } else {
           // this would be some kind of exception
@@ -161,7 +156,7 @@ export class CommunicationComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       this.setClickedRow(null);
       console.log('addNewProgram result: ', this.closeResult);
-    });    
+    });
   }
 
   private findProgram(id: number): Program {
@@ -176,27 +171,26 @@ export class CommunicationComponent implements OnInit {
     return this.programConfigurations.filter(pc => {
       if (pc.communication.id === id) {
         console.log(pc, 'Program: ', typeof(pc.program));
-        if (typeof(pc.program) == 'number') {
+        if (typeof(pc.program) === 'number') {
           const programId = <number> pc.program;
           pc.program = this.findProgram(programId);
         }
         return true;
       }
-       
     });
   }
 
   private addProgramConfiguration(programConfiguration: ProgramConfiguration): void {
-    
+
     this.programConfigurationService.createProgramConfiguration(programConfiguration)
-          .then(programConfiguration => console.log('addProgramConfiguration:', programConfiguration, this.programConfigurations))
+          .then(pc => console.log('addProgramConfiguration:', programConfiguration, this.programConfigurations))
           .catch(error =>  console.log('addProgramConfiguration error: ', error));
   }
 
   private updateProgramConfiguration(programConfiguration: ProgramConfiguration): void {
-    
+
     this.programConfigurationService.updateProgramConfiguration(programConfiguration)
-          .then(programConfiguration => console.log('updateProgramConfiguration:', programConfiguration, this.programConfigurations))
+          .then(pc => console.log('updateProgramConfiguration:', programConfiguration, this.programConfigurations))
           .catch(error =>  console.log('updateProgramConfiguration error: ', error));
   }
 

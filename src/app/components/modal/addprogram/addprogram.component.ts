@@ -11,7 +11,7 @@ import { Program }         from './../../../model/program';
 export class AddProgramComponent implements OnInit {
 
   @Input() programId;
-  
+
   public SAVESUCCESS: string = 'Close on succesful save';
 
   program: Program;

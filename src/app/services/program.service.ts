@@ -1,8 +1,8 @@
 import { Injectable, Inject }    from '@angular/core';
 import { Headers, Http }         from '@angular/http';
 
-import { APP_CONFIG }            from '../app.config'
-import { IAppConfig }            from '../iapp-config'
+import { APP_CONFIG }            from '../app.config';
+import { IAppConfig }            from '../iapp-config';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -15,12 +15,12 @@ export class ProgramService {
   private headers = new Headers({'Content-Type': 'application/json'});
   private progApiEndpoint;
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig, private http: Http) { 
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig, private http: Http) {
     this.progApiEndpoint = this.config.apiEndpoint + 'api/program';  // URL to web api
   }
 
   public async getPrograms(): Promise<Program[]> {
-    if(this.programs) {
+    if (this.programs) {
       return this.programs;
     } else {
       this.programs = await this.getProgramsThruApi();
@@ -31,13 +31,13 @@ export class ProgramService {
   private removeProgramConfigurationCruft(programs: Program[]): Program[] {
     // some reason spring rest is giving empty array objects of programConfiguration property
     // get rid of them all
-    for (var i = 0, len = programs.length; i < len; i++) {
+    for (let i = 0, len = programs.length; i < len; i++) {
       if (programs[i].programConfiguration && programs[i].programConfiguration.length) {
           programs[i].programConfiguration = [];
       }
     }
     return programs;
-  } 
+  }
 
   private async getProgramsThruApi(): Promise<Program[]> {
     try {
@@ -65,11 +65,11 @@ export class ProgramService {
         return response.json() as Program;
       } catch (error) {
         // some reason spring is returning only headers
-        //if (response.url) {
+        // if (response.url) {
         //  console.log('createProgramThruApi: ', response.url)
-        //}
+        // }
         return program;
-      }    
+      }
     } catch (error) {
       this.handleError(error);
     }
@@ -98,8 +98,8 @@ export class ProgramService {
   }
 
   private removeProgram(program: Program): void {
-    let index = this.programs.indexOf(program);
-    if(index > -1){
+    const index = this.programs.indexOf(program);
+    if (index > -1) {
       this.programs.splice(index, 1);
     }
   }
