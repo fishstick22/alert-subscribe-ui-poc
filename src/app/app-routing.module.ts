@@ -3,7 +3,7 @@ import { Routes, RouterModule }   from '@angular/router';
 
 import { HomeComponent }          from './components/home/home.component';
 import { DashboardComponent }     from './components/dashboard/dashboard.component';
-import { CommunicationComponent } from './components/communication/communication.component'
+import { CommunicationComponent } from './components/communication/communication.component';
 import { ModalComponent }         from './components/modal/modal.component';
 import { PageNotFoundComponent }  from './components/page-not-found/page-not-found.component';
 import { ProgramComponent }       from './components/program/program.component';
