@@ -1,8 +1,8 @@
 import { Injectable, Inject }    from '@angular/core';
 import { Headers, Http }         from '@angular/http';
 
-import { APP_CONFIG }            from '../app.config'
-import { IAppConfig }            from '../iapp-config'
+import { APP_CONFIG }            from '../app.config';
+import { IAppConfig }            from '../iapp-config';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -15,12 +15,12 @@ export class ProgramConfigurationService {
   private headers = new Headers({'Content-Type': 'application/json'});
   private progConfigApiEndpoint;
 
-  constructor(@Inject(APP_CONFIG) private config: IAppConfig, private http: Http) { 
+  constructor(@Inject(APP_CONFIG) private config: IAppConfig, private http: Http) {
     this.progConfigApiEndpoint = this.config.apiEndpoint + 'api/programconfiguration';  // URL to web api
   }
 
   public async getProgramConfigurations(): Promise<ProgramConfiguration[]> {
-    if(this.programConfigurations) {
+    if (this.programConfigurations) {
       return this.programConfigurations;
     } else {
       this.programConfigurations = await this.getProgramConfigurationsThruApi();
@@ -49,7 +49,11 @@ export class ProgramConfigurationService {
 
   private async createProgramConfigurationThruApi(programConfiguration: ProgramConfiguration): Promise<ProgramConfiguration> {
     try {
-      const response = await this.http.post(this.progConfigApiEndpoint, JSON.stringify(programConfiguration), {headers: this.headers}).toPromise();
+      const response = await this.http.post(
+        this.progConfigApiEndpoint,
+        JSON.stringify(programConfiguration),
+        {headers: this.headers}
+      ).toPromise();
       return response.json() as ProgramConfiguration;
     } catch (error) {
       this.handleError(error);

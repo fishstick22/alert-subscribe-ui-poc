@@ -15,7 +15,7 @@ export class ConfigureProgramViaCommunicationComponent implements OnInit {
   @Input() communication: Communication;
   @Input() programs: Program[];
   @Input() programConfigurations: ProgramConfiguration[];
-  
+
   public SAVESUCCESS: string = 'Close on succesful save';
 
   newPgmConfig: ProgramConfiguration;
@@ -32,28 +32,28 @@ export class ConfigureProgramViaCommunicationComponent implements OnInit {
     console.log(this.programConfigurations);
     // get the list of programs to populate the dropdown (covered in @Input() programs: Program[];)
     // check if there are progConfig already (for now just checking for first one, have to check for eff dates)
-    if(this.programConfigurations.length === 0) { // no existing configs for comm
+    if (this.programConfigurations.length === 0) { // no existing configs for comm
       this.addProgramConfig();
     } else {
-      let indxOfLast = this.programConfigurations.length-1;
-      if(this.programConfigurations[indxOfLast] && this.programConfigurations[indxOfLast].program) {
+      const indxOfLast = this.programConfigurations.length - 1;
+      if (this.programConfigurations[indxOfLast] && this.programConfigurations[indxOfLast].program) {
         // why? this shows up as Object when it is ProgramConfiguration
         this.prevPgmConfig = <ProgramConfiguration> this.programConfigurations[indxOfLast];
         this.selectedProgram = this.prevPgmConfig.program.id;
-        this.addProgramConfig(this.programConfigurations[indxOfLast])
+        this.addProgramConfig(this.programConfigurations[indxOfLast]);
       }
-    }   
+    }
   }
 
   addProgramConfig(lastPgmConfig?: ProgramConfiguration) {
 
     const today = new Date();
-    let tomorrow = new Date();
+    const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
 
-    if(lastPgmConfig) {
+    if (lastPgmConfig) {
       // adding a new row, expiring the previous, copying the previous values
-      lastPgmConfig.expiration = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      lastPgmConfig.expiration = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
       this.newPgmConfig = new ProgramConfiguration(lastPgmConfig);
 
     } else {
@@ -62,14 +62,14 @@ export class ConfigureProgramViaCommunicationComponent implements OnInit {
 
     }
 
-    this.newPgmConfig.effective = tomorrow.getFullYear()+'-'+(tomorrow.getMonth()+1)+'-'+tomorrow.getDate();
+    this.newPgmConfig.effective = tomorrow.getFullYear() + '-' + (tomorrow.getMonth() + 1) + '-' + tomorrow.getDate();
     this.newPgmConfig.expiration = '9999-12-31';
 
     this.lastPgmConfigRow = this.programConfigurations.length;
     this.programConfigurations[this.programConfigurations.length] = this.newPgmConfig;
- 
+
   }
-  
+
   updateDateValue(newDate, pc: ProgramConfiguration, dateType: string) {
     console.log('ConfigureProgramViaCommunicationComponent updateDateValue: ', newDate.newDateValue, pc, dateType);
     if (dateType === 'effective') {

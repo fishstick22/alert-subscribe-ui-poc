@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, 
+import { Component, OnInit, Input,
          Output, EventEmitter }     from '@angular/core';
 import { DatepickerPopupComponent } from '../datepicker-popup/datepicker-popup.component';
-import { ProgramConfiguration }     from './../../../model/program-configuration'
+import { ProgramConfiguration }     from './../../../model/program-configuration';
 
 @Component({
   selector: 'date-eff-exp',
@@ -10,26 +10,26 @@ import { ProgramConfiguration }     from './../../../model/program-configuration
       <!-- not the last (new) row, this could be the current effective row -->
 
       <div *ngIf="dateType == 'effective'" class="flex-justify-center">
-        <!-- the effective date of the current effective row -->  
+        <!-- the effective date of the current effective row -->
         <input class="form-control form-control-sm" value="{{progConfig.effective}}" readonly>
       </div>
 
       <div *ngIf="dateType == 'expiration'" class="flex-justify-center">
-        <!-- the expiration date of the current/previous row -->  
+        <!-- the expiration date of the current/previous row -->
         <input class="form-control form-control-sm" value="{{progConfig.expiration}}" readonly>
       </div>
     </div>
 
     <div *ngIf="i === lastPgmConfigRow" >
       <!-- this _is_ the last (new) row that will be inserted -->
-      
+
       <div *ngIf="dateType == 'effective'" class="flex-justify-center">
-        <!-- set the effective date for the new row --> 
+        <!-- set the effective date for the new row -->
         <ngbd-datepicker-popup [dateValue]="progConfig.effective"
           (newDateValue)="updateDateValue($event)"></ngbd-datepicker-popup></div>
-  
+
       <div *ngIf="dateType == 'expiration'" class="flex-justify-center">
-        <!-- the expiration date of the new row -->  
+        <!-- the expiration date of the new row -->
         <input class="form-control form-control-sm" value="{{progConfig.expiration}}" readonly>
       </div>
     </div>
@@ -58,6 +58,6 @@ export class DateEffExpComponent implements OnInit {
     console.log('DateEffExpComponent updateDateValue: ', newDate.newDateValue);
     this.newDateValue.emit({
       newDateValue: newDate.newDateValue
-    })
+    });
   }
 }

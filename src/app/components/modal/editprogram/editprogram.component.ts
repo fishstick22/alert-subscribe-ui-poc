@@ -11,7 +11,7 @@ import { Program }         from './../../../model/program';
 export class EditProgramComponent implements OnInit {
 
   @Input() program: Program;
-  
+
   public SAVESUCCESS: string = 'Close on succesful save';
 
   constructor(public editProgramModal: NgbActiveModal) { }
