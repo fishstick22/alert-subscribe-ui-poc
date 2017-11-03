@@ -1,19 +1,9 @@
-import {
-  Directive,
-  ElementRef,
-  EventEmitter,
-  Inject,
-  Injectable,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  PLATFORM_ID,
-  SimpleChanges
-} from '@angular/core';
+import { Directive, ElementRef, EventEmitter,
+         Inject, Injectable, Input,
+         OnChanges, OnDestroy, OnInit, Output,
+         PLATFORM_ID, SimpleChanges } from '@angular/core';
 
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser }          from '@angular/common';
 
 // https://github.com/arkon/ng-click-outside
 
