@@ -23,6 +23,7 @@ import { HomeComponent }          from 'app/components/routes/home/home.componen
 import { DashboardComponent }     from 'app/components/routes/dashboard/dashboard.component';
 import { CommunicationComponent } from 'app/components/routes/communication/communication.component';
 import { ProgramComponent }       from 'app/components/routes/program/program.component';
+import { ClientComponent }        from 'app/components/routes/client/client.component';
 
 // Modal stuff
 import { AddProgramComponent }         from 'app/components/modal/addprogram/addprogram.component';
@@ -42,6 +43,7 @@ import { SelectChannelPriorityComponent
 import { SortableColumnComponent }     from 'app/components/utility/sortable-column/sortable-column.component';
 
 // Services
+import { ClientService }               from 'app/services/client.service';
 import { CommunicationService }        from 'app/services/communication.service';
 import { ProgramService }              from 'app/services/program.service';
 import { ProgramConfigurationService } from 'app/services/program-configuration.service';
@@ -57,6 +59,7 @@ import { InMemoryDataService }         from 'app/services/in-memory-data.service
 import { NgClickOutsideDirective }     from 'app/directives/ng-click-outside.directive';
 import { SortableTableDirective }      from 'app/directives/sortable-table.directive';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,6 +71,7 @@ import { SortableTableDirective }      from 'app/directives/sortable-table.direc
     DashboardComponent,
     CommunicationComponent,
     ProgramComponent,
+    ClientComponent,
 
     AddProgramComponent,
     EditProgramComponent,
@@ -99,6 +103,7 @@ import { SortableTableDirective }      from 'app/directives/sortable-table.direc
     ProgramConfigByCommComponent
   ],
   providers: [
+    ClientService,
     CommunicationService,
     ProgramService,
     ProgramConfigurationService,

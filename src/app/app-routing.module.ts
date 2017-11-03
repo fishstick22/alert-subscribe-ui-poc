@@ -1,10 +1,11 @@
 import { NgModule }               from '@angular/core';
 import { Routes, RouterModule }   from '@angular/router';
 
+import { PageNotFoundComponent }  from 'app/components/page-not-found/page-not-found.component';
 import { HomeComponent }          from 'app/components/routes/home/home.component';
 import { DashboardComponent }     from 'app/components/routes/dashboard/dashboard.component';
 import { CommunicationComponent } from 'app/components/routes/communication/communication.component';
-import { PageNotFoundComponent }  from 'app/components/page-not-found/page-not-found.component';
+import { ClientComponent }       from 'app/components/routes/client/client.component';
 import { ProgramComponent }       from 'app/components/routes/program/program.component';
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'dashboard',      component: DashboardComponent },
   { path: 'communication',  component: CommunicationComponent },
   { path: 'program',        component: ProgramComponent },
+  { path: 'client',         component: ClientComponent },
   { path: '**',             component: PageNotFoundComponent }
 ];
 
