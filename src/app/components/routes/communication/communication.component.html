@@ -13,15 +13,15 @@
     <tr class="thead-light"><!-- search/filter header row -->
       <th width="7%">
         <input type="text" id="seachCommId" class="form-control form-control-sm" placeholder="search"
-               name="commId" [(ngModel)]="commId" (keyup)="searchCommId()"/>
+               name="commId" [(ngModel)]="commIdSearch" (keyup)="searchCommId()"/>
       </th>
       <th width="23%">
         <input type="text" id="seachName" class="form-control form-control-sm" placeholder="search Name"
-               name="commName" [(ngModel)]="commName" (keyup)="searchCommName()"/>
+               name="commName" [(ngModel)]="commNameSearch" (keyup)="searchCommName()"/>
       </th>
       <th>
         <input type="text" id="seachDescription" class="form-control form-control-sm" placeholder="search Description"
-               name="commDesc" [(ngModel)]="commDesc" (keyup)="searchCommDesc()"/>
+               name="commDesc" [(ngModel)]="commDescSearch" (keyup)="searchCommDesc()"/>
       </th>
       <th></th>
       <th></th>
@@ -35,11 +35,7 @@
       <td><span>{{communication.name}}</span></td>
       <td><span>{{communication.description}}</span></td>
       <td><span *ngIf="communication.id === 261"><i class="fa fa-check" aria-hidden="true" title="{{communication.name}} Configured (Date)"></i></span></td>
-      <td><!--
-       <a href="javascript:void(0)" title="click here to configure the Program for this Communication">
-        <span class="badge badge-success" *ngIf="i == selectedRow" (click)="configureProgramModal(communication.id)" >
-          Configure Program
-        </span></a>-->
+      <td>
       </td>
     </tr>
   </tbody>

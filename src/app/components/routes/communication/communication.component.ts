@@ -25,9 +25,12 @@ export class CommunicationComponent implements OnInit {
   programConfigurations: ProgramConfiguration[];
 
   displayComm: Communication[];
-  commId: string = '';
-  commName: string = '';
-  commDesc: string = '';
+  commIdSearch: string = '';
+  commIdSearchLast: string = '';
+  commNameSearch: string = '';
+  commNameSearchLast: string = '';
+  commDescSearch: string = '';
+  commDescSearchLast: string = '';
   selectedRow: number;
   closeResult: string;
 
@@ -35,7 +38,8 @@ export class CommunicationComponent implements OnInit {
     private communicationService: CommunicationService,
     private programService: ProgramService,
     private programConfigurationService: ProgramConfigurationService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal
+  ) { }
 
   async ngOnInit() {
     console.log('CommunicationComponent ngOnInit...');
@@ -68,29 +72,9 @@ export class CommunicationComponent implements OnInit {
     }
   }
 
-  searchCommId() {
-    console.log('CommunicationComponent searchCommId user entered: ', this.commId);
-    this.displayComm = this.displayComm.filter(comm => {
-      return (String(comm.id).indexOf(this.commId) !== -1 );
-    });
-  }
-
-  searchCommName() {
-    console.log('CommunicationComponent searchCommName user entered: ', this.commName);
-    this.displayComm = this.displayComm.filter(comm => {
-      return this.containsString(comm.name, this.commName);
-    });
-  }
-
-  searchCommDesc() {
-    console.log('CommunicationComponent searchCommDesc user entered: ', this.commDesc);
-    this.displayComm = this.displayComm.filter(comm => {
-      return (comm.description.indexOf(this.commDesc) !== -1 );
-    });
-  }
-
-  containsString(columnValue: string, searchValue: string): boolean {
-    return (columnValue.toLocaleLowerCase().indexOf(searchValue.toLocaleLowerCase()) !== -1);
+  onSorted($event) {
+    console.log('CommunicationComponent onSorted...');
+    this.displayComm = this.getCommunicationsSorted($event, this.displayComm);
   }
 
   getCommunicationsSorted(criteria: CommunicationSortCriteria, commArray: Communication[]): Communication[] {
@@ -110,9 +94,55 @@ export class CommunicationComponent implements OnInit {
 
   }
 
-  onSorted($event) {
-    console.log('CommunicationComponent onSorted...');
-    this.displayComm = this.getCommunicationsSorted($event, this.displayComm);
+  searchCommId() {
+    console.log('CommunicationComponent searchCommId user entered: ', this.commIdSearch, this.commIdSearchLast);
+    this.searchCommunicatonTable();
+    this.commIdSearchLast = this.commIdSearch;
+  }
+
+  searchCommName() {
+    console.log('CommunicationComponent searchCommName user entered: ', this.commNameSearch, this.commNameSearchLast);
+    this.searchCommunicatonTable();
+    this.commNameSearchLast = this.commNameSearch;
+  }
+
+  searchCommDesc() {
+    console.log('CommunicationComponent searchCommDesc user entered: ', this.commDescSearch, this.commDescSearchLast);
+    this.searchCommunicatonTable();
+    this.commDescSearchLast = this.commDescSearch;
+  }
+
+  private searchCommunicatonTable() {
+    // align/chain the filter pattern across all searchable rows
+    const commIdAdded     = this.commIdSearch.indexOf(this.commIdSearchLast) === 0;
+    const commNameAdded   = this.commNameSearch.indexOf(this.commNameSearchLast) === 0;
+    const commDescAdded   = this.commDescSearch.indexOf(this.commDescSearchLast) === 0;
+
+    if ( !commIdAdded || !commNameAdded || !commDescAdded ) {
+      console.log('user deleting something...');
+      // refresh the list, reapply each filter, gonna guess mostly searching on names
+      this.displayComm = this.communications.filter(comm => {
+        return this.containsString(comm.name, this.commNameSearch);
+      });
+    } else {
+      this.displayComm = this.displayComm.filter(comm => {
+        return this.containsString(comm.name, this.commNameSearch);
+      });
+    }
+    if (this.commDescSearch !== '') {
+      this.displayComm = this.displayComm.filter(comm => {
+        return (comm.description.indexOf(this.commDescSearch) !== -1 );
+      });
+    }
+    if (this.commIdSearch !== '') {
+      this.displayComm = this.displayComm.filter(comm => {
+        return (String(comm.id).indexOf(this.commIdSearch) !== -1 );
+      });
+    }
+  }
+
+  private containsString(columnValue: string, searchValue: string): boolean {
+    return (columnValue.toLocaleLowerCase().indexOf(searchValue.toLocaleLowerCase()) !== -1);
   }
 
   private setClickedRow(index) {
@@ -181,17 +211,15 @@ export class CommunicationComponent implements OnInit {
   }
 
   private addProgramConfiguration(programConfiguration: ProgramConfiguration): void {
-
     this.programConfigurationService.createProgramConfiguration(programConfiguration)
-          .then(pc => console.log('addProgramConfiguration:', programConfiguration, this.programConfigurations))
-          .catch(error =>  console.log('addProgramConfiguration error: ', error));
+      .then(pc => console.log('addProgramConfiguration:', programConfiguration, this.programConfigurations))
+      .catch(error =>  console.log('addProgramConfiguration error: ', error));
   }
 
   private updateProgramConfiguration(programConfiguration: ProgramConfiguration): void {
-
     this.programConfigurationService.updateProgramConfiguration(programConfiguration)
-          .then(pc => console.log('updateProgramConfiguration:', programConfiguration, this.programConfigurations))
-          .catch(error =>  console.log('updateProgramConfiguration error: ', error));
+      .then(pc => console.log('updateProgramConfiguration:', programConfiguration, this.programConfigurations))
+      .catch(error =>  console.log('updateProgramConfiguration error: ', error));
   }
 
   private getDismissReason(reason: any): string {
