@@ -25,7 +25,7 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Deploying to GitHub Pages
 
 Install `npm i -g angular-cli-ghpages` 
-Run `ng build --prod --base-href "https://{username}.github.io/alert-subscribe-ui-poc/"`
+Run `ng build --env=prod-ngh --base-href "https://{username}.github.io/alert-subscribe-ui-poc/"`
 Run `ngh`
 
 ## Further help

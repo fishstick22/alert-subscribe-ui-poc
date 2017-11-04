@@ -54,10 +54,12 @@ import { SortableColumnService }       from 'app/services/sortable-column.servic
 // https://stackoverflow.com/questions/40214211/disable-angular2-in-memory-web-api-for-production
 import { InMemoryWebApiModule }        from 'angular-in-memory-web-api';
 import { InMemoryDataService }         from 'app/services/in-memory-data.service';
+import { environment }                 from 'environments/environment';
 
 // Directives
 import { NgClickOutsideDirective }     from 'app/directives/ng-click-outside.directive';
 import { SortableTableDirective }      from 'app/directives/sortable-table.directive';
+
 
 
 @NgModule({
@@ -94,7 +96,7 @@ import { SortableTableDirective }      from 'app/directives/sortable-table.direc
     FormsModule,
     HttpModule,
     NgbModule.forRoot(),
-    InMemoryWebApiModule.forRoot(InMemoryDataService),
+    (environment.inMemAPI) ? InMemoryWebApiModule.forRoot(InMemoryDataService) : [],
   ],
   entryComponents: [
     AddProgramComponent,
