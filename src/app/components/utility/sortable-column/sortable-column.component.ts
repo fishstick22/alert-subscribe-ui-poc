@@ -10,7 +10,7 @@ import { SortableColumnService }                 from 'app/services/sortable-col
 @Component({
   selector: 'app-sortable-column',
   templateUrl: './sortable-column.component.html',
-  styleUrls: ['./sortable-column.component.css']
+  styleUrls: ['./sortable-column.component.scss']
 })
 export class SortableColumnComponent implements OnInit, OnDestroy {
 

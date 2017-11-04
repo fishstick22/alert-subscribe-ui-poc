@@ -12,7 +12,7 @@ import { ClientService }               from 'app/services/client.service';
 @Component({
   // selector: 'app-client', selector not needed on routed components
   templateUrl: './client.component.html',
-  styleUrls: ['./client.component.css']
+  styleUrls: ['./client.component.scss']
 })
 export class ClientComponent implements OnInit {
 

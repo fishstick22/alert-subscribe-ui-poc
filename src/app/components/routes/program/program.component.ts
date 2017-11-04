@@ -12,7 +12,7 @@ import { ProgramService }         from 'app/services/program.service';
 @Component({
   // selector: 'app-program', selector not needed on routed components
   templateUrl: './program.component.html',
-  styleUrls: ['./program.component.css']
+  styleUrls: ['./program.component.scss']
 })
 export class ProgramComponent implements OnInit {
 

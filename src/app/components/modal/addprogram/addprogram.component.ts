@@ -6,7 +6,7 @@ import { Program }         from 'app/model/program';
 @Component({
   selector: 'app-addprogram',
   templateUrl: './addprogram.component.html',
-  styleUrls: ['./addprogram.component.css']
+  styleUrls: ['./addprogram.component.scss']
 })
 export class AddProgramComponent implements OnInit {
 

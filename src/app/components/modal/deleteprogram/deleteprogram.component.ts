@@ -6,7 +6,7 @@ import { Program }         from 'app/model/program';
 @Component({
   selector: 'app-deleteprogram',
   templateUrl: './deleteprogram.component.html',
-  styleUrls: ['./deleteprogram.component.css']
+  styleUrls: ['./deleteprogram.component.scss']
 })
 export class DeleteProgramComponent implements OnInit {
 

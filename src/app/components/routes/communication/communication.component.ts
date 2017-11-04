@@ -16,7 +16,7 @@ import { ProgramConfigurationService } from 'app/services/program-configuration.
 @Component({
   // selector: 'app-communication', selector not needed on routed components
   templateUrl: './communication.component.html',
-  styleUrls: ['./communication.component.css']
+  styleUrls: ['./communication.component.scss']
 })
 export class CommunicationComponent implements OnInit {
 

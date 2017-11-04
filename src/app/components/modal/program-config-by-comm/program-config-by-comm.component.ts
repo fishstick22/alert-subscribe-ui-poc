@@ -8,7 +8,7 @@ import { Communication }         from 'app/model/communication';
 @Component({
   // selector: 'app-program-config-by-comm', Entry Component needs no selector?
   templateUrl: './program-config-by-comm.component.html',
-  styleUrls: ['./program-config-by-comm.component.css']
+  styleUrls: ['./program-config-by-comm.component.scss']
 })
 export class ProgramConfigByCommComponent implements OnInit {
 
