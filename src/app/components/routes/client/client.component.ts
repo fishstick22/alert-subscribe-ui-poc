@@ -29,6 +29,9 @@ export class ClientComponent implements OnInit {
   clientCodeSearch: string = '';
   clientCodeSearchLast: string = '';
 
+  selectedRow: number;
+  closeResult: string;
+
   constructor(
     private clientService: ClientService,
     private modalService: NgbModal
@@ -48,6 +51,8 @@ export class ClientComponent implements OnInit {
       console.log('getClients error: ', error);
     }
   }
+
+  getClientConfigurations() {}
 
   onSorted($event) {
     console.log('CommunicationComponent onSorted...');
@@ -126,6 +131,16 @@ export class ClientComponent implements OnInit {
 
   private containsString(columnValue: string, searchValue: string): boolean {
     return (columnValue.toLocaleLowerCase().indexOf(searchValue.toLocaleLowerCase()) !== -1);
+  }
+
+  private setClickedRow(index) {
+    this.selectedRow = index;
+  }
+
+  private configureClientModal(clientId) {
+    const modalOpts: NgbModalOptions = {
+      size: 'lg'
+    };
   }
 }
 
