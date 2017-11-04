@@ -9,7 +9,7 @@ import { NgbModule }              from '@ng-bootstrap/ng-bootstrap';
 // AppConfig
 // https://stackoverflow.com/questions/34986922/define-global-constants-in-angular-2/40287063#40287063
 import { APP_CONFIG, AppConfig }  from 'app/app.config';
-import { IAppConfig }             from 'app/iapp-config';
+
 import { AppComponent }           from 'app/app.component';
 import { AppRoutingModule }       from 'app/app-routing.module';
 

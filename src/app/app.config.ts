@@ -1,6 +1,11 @@
 import { InjectionToken } from '@angular/core';
-import { IAppConfig }     from 'app/iapp-config';
+
 import { environment }    from 'environments/environment';
+
+// https://github.com/angular/angular-cli/issues/2034
+export interface IAppConfig {
+  apiEndpoint: string;
+}
 
 // https://github.com/angular/angular-cli/issues/2034
 export let APP_CONFIG = new InjectionToken('app.config');
