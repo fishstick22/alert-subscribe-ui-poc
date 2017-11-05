@@ -26,6 +26,7 @@ import { ProgramComponent }       from 'app/components/routes/program/program.co
 import { ClientComponent }        from 'app/components/routes/client/client.component';
 
 // Modal stuff
+import { ClientConfigByCommComponent } from 'app/components/modal/client-config-by-comm/client-config-by-comm.component';
 import { AddProgramComponent }         from 'app/components/modal/addprogram/addprogram.component';
 import { EditProgramComponent }        from 'app/components/modal/editprogram/editprogram.component';
 import { DeleteProgramComponent }      from 'app/components/modal/deleteprogram/deleteprogram.component';
@@ -45,9 +46,11 @@ import { SortableColumnComponent }     from 'app/components/utility/sortable-col
 // Services
 import { DataApiService }              from 'app/services/data-api/data-api.service';
 import { ClientService }               from 'app/services/data-api/client/client.service';
+import { ClientConfigurationService }  from 'app/services/data-api/client-configuration/client-configuration.service';
 import { CommunicationService }        from 'app/services/data-api/communication/communication.service';
 import { ProgramService }              from 'app/services/data-api/program/program.service';
 import { ProgramConfigurationService } from 'app/services/data-api/program-configuration/program-configuration.service';
+
 import { SortableColumnService }       from 'app/services/sortable-column.service';
 
 // Imports for loading & configuring the in-memory web api
@@ -60,8 +63,6 @@ import { environment }                 from 'environments/environment';
 // Directives
 import { NgClickOutsideDirective }     from 'app/directives/ng-click-outside.directive';
 import { SortableTableDirective }      from 'app/directives/sortable-table.directive';
-
-
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { SortableTableDirective }      from 'app/directives/sortable-table.direc
     ProgramComponent,
     ClientComponent,
 
+    ClientConfigByCommComponent,
     AddProgramComponent,
     EditProgramComponent,
     DeleteProgramComponent,
@@ -100,6 +102,7 @@ import { SortableTableDirective }      from 'app/directives/sortable-table.direc
     (environment.inMemAPI) ? InMemoryWebApiModule.forRoot(InMemoryDataService) : [],
   ],
   entryComponents: [
+    ClientConfigByCommComponent,
     AddProgramComponent,
     EditProgramComponent,
     DeleteProgramComponent,
@@ -108,6 +111,7 @@ import { SortableTableDirective }      from 'app/directives/sortable-table.direc
   providers: [
     DataApiService,
     ClientService,
+    ClientConfigurationService,
     CommunicationService,
     ProgramService,
     ProgramConfigurationService,

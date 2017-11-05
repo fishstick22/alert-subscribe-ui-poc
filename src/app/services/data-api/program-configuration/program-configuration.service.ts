@@ -1,11 +1,11 @@
-import { Injectable, Inject }    from '@angular/core';
-import { Headers, Http }         from '@angular/http';
+import { Injectable, Inject }     from '@angular/core';
+import { Headers, Http }          from '@angular/http';
 
 import { APP_CONFIG, IAppConfig } from 'app/app.config';
 
 import 'rxjs/add/operator/toPromise';
 
-import { ProgramConfiguration } from 'app/model/program-configuration';
+import { ProgramConfiguration }   from 'app/model/program-configuration';
 
 @Injectable()
 export class ProgramConfigurationService {

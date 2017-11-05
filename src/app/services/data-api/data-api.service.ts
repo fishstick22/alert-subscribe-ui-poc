@@ -1,6 +1,7 @@
 import { Injectable }                  from '@angular/core';
 
 import { ClientService }               from 'app/services/data-api/client/client.service';
+import { ClientConfigurationService }  from 'app/services/data-api/client-configuration/client-configuration.service';
 import { CommunicationService }        from 'app/services/data-api/communication/communication.service';
 import { ProgramService }              from 'app/services/data-api/program/program.service';
 import { ProgramConfigurationService } from 'app/services/data-api/program-configuration/program-configuration.service';
@@ -8,6 +9,7 @@ import { ProgramConfigurationService } from 'app/services/data-api/program-confi
 import { IProgramConfig }              from 'app/model/iprog-config';
 
 import { Communication }               from 'app/model/communication';
+import { ClientConfiguration }         from 'app/model/client-configuration';
 import { Program }                     from 'app/model/program';
 import { ProgramConfiguration }        from 'app/model/program-configuration';
 import { Client }                      from 'app/model/client';
@@ -15,17 +17,48 @@ import { Client }                      from 'app/model/client';
 @Injectable()
 export class DataApiService {
 
+  clients: Client[];
+  clientConfigurations: ClientConfiguration[];
   communications: Communication[];
   programs: Program[];
   programConfigurations: ProgramConfiguration[];
-  clients: Client[];
 
   constructor(
+    private clientService: ClientService,
+    private clientConfigurationService: ClientConfigurationService,
     private communicationService: CommunicationService,
     private programService: ProgramService,
-    private programConfigurationService: ProgramConfigurationService,
-    private clientService: ClientService
+    private programConfigurationService: ProgramConfigurationService
   ) { }
+
+  public async getClients(): Promise<Client[]> {
+    if (this.clients) {
+      return this.clients;
+    } else {
+      this.clients = await this.clientService.getClientsThruApi();
+      return this.removeClientConfigurationCruft(this.clients);
+    }
+  }
+
+  public async getClientConfigurations(): Promise<ClientConfiguration[]> {
+    if (this.clientConfigurations) {
+      return this.clientConfigurations;
+    } else {
+      this.clientConfigurations = await this.clientConfigurationService.getClientConfigurationsThruApi();
+      return this.clientConfigurations;
+    }
+  }
+
+  public async createClientConfiguration(clientConfiguration: ClientConfiguration): Promise<ClientConfiguration> {
+    clientConfiguration = await this.clientConfigurationService.createClientConfigurationThruApi(clientConfiguration);
+    this.insertClientConfiguration(clientConfiguration);
+    return clientConfiguration;
+  }
+
+  public async updateClientConfiguration(clientConfiguration: ClientConfiguration): Promise<ClientConfiguration> {
+    clientConfiguration = await this.clientConfigurationService.updateClientConfigurationThruApi(clientConfiguration);
+    return clientConfiguration;
+  }
 
   public async getCommunications(): Promise<Communication[]> {
     if (this.communications) {
@@ -71,6 +104,7 @@ export class DataApiService {
       return this.programConfigurations;
     }
   }
+
   public async createProgramConfiguration(programConfiguration: ProgramConfiguration): Promise<ProgramConfiguration> {
     programConfiguration = await this.programConfigurationService.createProgramConfigurationThruApi(programConfiguration);
     this.insertProgramConfiguration(programConfiguration);
@@ -82,14 +116,8 @@ export class DataApiService {
     return programConfiguration;
   }
 
-  public async getClients(): Promise<Client[]> {
-    if (this.clients) {
-      return this.clients;
-    } else {
-      this.clients = await this.clientService.getClientsThruApi();
-      return this.removeClientConfigurationCruft(this.clients);
-    }
-  }
+  /*
+  */
   private insertProgram(program: Program): void {
     this.programs.push(program);
   }
@@ -114,6 +142,10 @@ export class DataApiService {
       }
     }
     return progConfigableObjs;
+  }
+
+  private insertClientConfiguration(clientConfiguration: ClientConfiguration): void {
+    this.clientConfigurations.push(clientConfiguration);
   }
 
   private removeClientConfigurationCruft(clients: Client[]): Client[] {
