@@ -3,4 +3,5 @@ export class Communication {
     name: string;
     description: string;
     programConfiguration: number[];
+    clientConfiguration: number[];
 }

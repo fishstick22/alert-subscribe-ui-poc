@@ -1,19 +1,19 @@
-import { Program }              from 'app/model/program';
+import { Client }               from 'app/model/client';
 import { Communication }        from 'app/model/communication';
 import { ICommunicationConfig } from 'app/model/icomm-config';
 
-export class ProgramConfiguration implements ICommunicationConfig {
+export class ClientConfiguration implements ICommunicationConfig {
 
-    constructor(programConfig?: ProgramConfiguration) {
+    constructor(clientConfig?: ClientConfiguration) {
 
-        if (programConfig) {
-            this.chanEmailPriority  = programConfig.chanEmailPriority;
-            this.name               = programConfig.name;
-            this.chanIvrPriority    = programConfig.chanIvrPriority;
-            this.chanSmsPriority    = programConfig.chanSmsPriority;
-            this.chanMailPriority   = programConfig.chanMailPriority;
-            this.chanMobilePriority = programConfig.chanMobilePriority;
-            this.chanMandatory      = programConfig.chanMandatory;
+        if (clientConfig) {
+            this.name               = clientConfig.name;
+            this.chanEmailPriority  = clientConfig.chanEmailPriority;
+            this.chanIvrPriority    = clientConfig.chanIvrPriority;
+            this.chanSmsPriority    = clientConfig.chanSmsPriority;
+            this.chanMailPriority   = clientConfig.chanMailPriority;
+            this.chanMobilePriority = clientConfig.chanMobilePriority;
+            this.chanMandatory      = clientConfig.chanMandatory;
         } else {
             this.chanEmailPriority  = 0;
             this.chanIvrPriority    = 0;
@@ -35,16 +35,16 @@ export class ProgramConfiguration implements ICommunicationConfig {
     chanMandatory: 'No' | 'Email' | 'IVR' | 'SMS';
     effective: string;
     expiration: string;
-    program: Program;
+    client: Client;
     communication: Communication;
 }
 // https://stackoverflow.com/questions/4511705/how-to-parse-json-to-receive-a-date-object-in-javascript
 
 // sample here to validate the model
-const programConfigSample: ProgramConfiguration = {
+const clientConfigSample: ClientConfiguration = {
      'id': 1,
      'name': 'Prescription Alerts Order Status',
-     'description': 'Order Status Program-level Configuration',
+     'description': 'Order Status Client-level Configuration',
      'chanEmailPriority': 2,
      'chanIvrPriority': 3,
      'chanSmsPriority': 1,
@@ -53,11 +53,11 @@ const programConfigSample: ProgramConfiguration = {
      'chanMandatory': 'Email',
      'effective': '2017-1-1',
      'expiration': '9999-12-31',
-     'program':
-       {'id': 1,
-        'name': 'Prescription Alerts',
-        'description': 'PBM Communications including Order Status and Refill Reminder alerts',
-        'programConfiguration': [1]
+     'client':
+       {'id': 259,
+        'code': 'BCC',
+        'name': 'BLUE CROSS OF CONNECTICUT',
+        'clientConfiguration': []
        },
      'communication':
        {'id': 261,
