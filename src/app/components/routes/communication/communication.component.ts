@@ -7,11 +7,10 @@ import { ProgramConfigByCommComponent,
 //
 
 import { Communication }               from 'app/model/communication';
-import { CommunicationService }        from 'app/services/communication.service';
 import { Program }                     from 'app/model/program';
-import { ProgramService }              from 'app/services/program.service';
 import { ProgramConfiguration }        from 'app/model/program-configuration';
-import { ProgramConfigurationService } from 'app/services/program-configuration.service';
+
+import { DataApiService }              from 'app/services/data-api/data-api.service';
 
 @Component({
   // selector: 'app-communication', selector not needed on routed components
@@ -35,9 +34,7 @@ export class CommunicationComponent implements OnInit {
   closeResult: string;
 
   constructor(
-    private communicationService: CommunicationService,
-    private programService: ProgramService,
-    private programConfigurationService: ProgramConfigurationService,
+    private dataApiService: DataApiService,
     private modalService: NgbModal
   ) { }
 
@@ -52,21 +49,21 @@ export class CommunicationComponent implements OnInit {
 
   async getCommunications() {
     try {
-      this.communications = await this.communicationService.getCommunications();
+      this.communications = await this.dataApiService.getCommunications();
     } catch (error) {
       console.log('getCommunications error: ', error);
     }
   }
 
   getPrograms(): void {
-    this.programService.getPrograms()
+    this.dataApiService.getPrograms()
       .then(programs => this.programs = programs)
       .catch(error => console.log('getPrograms error: ', error));
   }
 
   async getProgramConfigurations() {
     try {
-      this.programConfigurations = await this.programConfigurationService.getProgramConfigurations();
+      this.programConfigurations = await this.dataApiService.getProgramConfigurations();
     } catch (error) {
       console.log('getProgramConfigurations error: ', error);
     }
@@ -211,13 +208,13 @@ export class CommunicationComponent implements OnInit {
   }
 
   private addProgramConfiguration(programConfiguration: ProgramConfiguration): void {
-    this.programConfigurationService.createProgramConfiguration(programConfiguration)
+    this.dataApiService.createProgramConfiguration(programConfiguration)
       .then(pc => console.log('addProgramConfiguration:', programConfiguration, this.programConfigurations))
       .catch(error =>  console.log('addProgramConfiguration error: ', error));
   }
 
   private updateProgramConfiguration(programConfiguration: ProgramConfiguration): void {
-    this.programConfigurationService.updateProgramConfiguration(programConfiguration)
+    this.dataApiService.updateProgramConfiguration(programConfiguration)
       .then(pc => console.log('updateProgramConfiguration:', programConfiguration, this.programConfigurations))
       .catch(error =>  console.log('updateProgramConfiguration error: ', error));
   }

@@ -7,7 +7,8 @@ import { ProgramConfigByCommComponent,
 //
 
 import { Client }                      from 'app/model/client';
-import { ClientService }               from 'app/services/client.service';
+
+import { DataApiService }              from 'app/services/data-api/data-api.service';
 
 @Component({
   // selector: 'app-client', selector not needed on routed components
@@ -33,7 +34,7 @@ export class ClientComponent implements OnInit {
   closeResult: string;
 
   constructor(
-    private clientService: ClientService,
+    private dataApiService: DataApiService,
     private modalService: NgbModal
   ) { }
 
@@ -46,7 +47,7 @@ export class ClientComponent implements OnInit {
 
   async getClients() {
     try {
-      this.clients = await this.clientService.getClients();
+      this.clients = await this.dataApiService.getClients();
     } catch (error) {
       console.log('getClients error: ', error);
     }

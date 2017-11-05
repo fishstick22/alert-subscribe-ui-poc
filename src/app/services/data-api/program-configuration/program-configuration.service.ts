@@ -18,16 +18,7 @@ export class ProgramConfigurationService {
     this.progConfigApiEndpoint = this.config.apiEndpoint + 'api/programconfiguration';  // URL to web api
   }
 
-  public async getProgramConfigurations(): Promise<ProgramConfiguration[]> {
-    if (this.programConfigurations) {
-      return this.programConfigurations;
-    } else {
-      this.programConfigurations = await this.getProgramConfigurationsThruApi();
-      return this.programConfigurations;
-    }
-  }
-
-  private async getProgramConfigurationsThruApi(): Promise<ProgramConfiguration[]> {
+  async getProgramConfigurationsThruApi(): Promise<ProgramConfiguration[]> {
     try {
       const response = await this.http.get(this.progConfigApiEndpoint).toPromise();
       return response.json() as ProgramConfiguration[];
@@ -36,17 +27,7 @@ export class ProgramConfigurationService {
     }
   }
 
-  public async createProgramConfiguration(programConfiguration: ProgramConfiguration): Promise<ProgramConfiguration> {
-    programConfiguration = await this.createProgramConfigurationThruApi(programConfiguration);
-    this.insertProgramConfiguration(programConfiguration);
-    return programConfiguration;
-  }
-
-  private insertProgramConfiguration(programConfiguration: ProgramConfiguration): void {
-    this.programConfigurations.push(programConfiguration);
-  }
-
-  private async createProgramConfigurationThruApi(programConfiguration: ProgramConfiguration): Promise<ProgramConfiguration> {
+  async createProgramConfigurationThruApi(programConfiguration: ProgramConfiguration): Promise<ProgramConfiguration> {
     try {
       const response = await this.http.post(
         this.progConfigApiEndpoint,
@@ -59,12 +40,7 @@ export class ProgramConfigurationService {
     }
   }
 
-  public async updateProgramConfiguration(programConfiguration: ProgramConfiguration): Promise<ProgramConfiguration> {
-    programConfiguration = await this.updateProgramConfigurationThruApi(programConfiguration);
-    return programConfiguration;
-  }
-
-  private async updateProgramConfigurationThruApi(programConfiguration: ProgramConfiguration): Promise<ProgramConfiguration> {
+  async updateProgramConfigurationThruApi(programConfiguration: ProgramConfiguration): Promise<ProgramConfiguration> {
     try {
       const url = `${this.progConfigApiEndpoint}/${programConfiguration.id}`;
       const response = await this.http.put(url, JSON.stringify(programConfiguration), {headers: this.headers}).toPromise();

@@ -18,27 +18,7 @@ export class ProgramService {
     this.progApiEndpoint = this.config.apiEndpoint + 'api/program';  // URL to web api
   }
 
-  public async getPrograms(): Promise<Program[]> {
-    if (this.programs) {
-      return this.programs;
-    } else {
-      this.programs = await this.getProgramsThruApi();
-      return this.removeProgramConfigurationCruft(this.programs);
-    }
-  }
-
-  private removeProgramConfigurationCruft(programs: Program[]): Program[] {
-    // some reason spring rest is giving empty array objects of programConfiguration property
-    // get rid of them all
-    for (let i = 0, len = programs.length; i < len; i++) {
-      if (programs[i].programConfiguration && programs[i].programConfiguration.length) {
-          programs[i].programConfiguration = [];
-      }
-    }
-    return programs;
-  }
-
-  private async getProgramsThruApi(): Promise<Program[]> {
+  async getProgramsThruApi(): Promise<Program[]> {
     try {
       const response = await this.http.get(this.progApiEndpoint).toPromise();
       return response.json() as Program[];
@@ -47,17 +27,7 @@ export class ProgramService {
     }
   }
 
-  public async createProgram(program: Program): Promise<Program> {
-    program = await this.createProgramThruApi(program);
-    this.insertProgram(program);
-    return program;
-  }
-
-  private insertProgram(program: Program): void {
-    this.programs.push(program);
-  }
-
-  private async createProgramThruApi(program: Program): Promise<Program> {
+  async createProgramThruApi(program: Program): Promise<Program> {
     try {
       const response = await this.http.post(this.progApiEndpoint, JSON.stringify(program), {headers: this.headers}).toPromise();
       try {
@@ -74,12 +44,7 @@ export class ProgramService {
     }
   }
 
-  public async updateProgram(program: Program): Promise<Program> {
-    await this.updateProgramThruApi(program);
-    return program;
-  }
-
-  private async updateProgramThruApi(program: Program): Promise<Program> {
+  async updateProgramThruApi(program: Program): Promise<Program> {
     const url = `${this.progApiEndpoint}/${program.id}`;
     try {
       const response = await this.http.put(url, JSON.stringify(program), {headers: this.headers}).toPromise();
@@ -89,21 +54,7 @@ export class ProgramService {
     }
   }
 
-  public async deleteProgram(program: Program): Promise<Program> {
-    await this.deleteProgramThruApi(program);
-    this.removeProgram(program);
-    program = null;
-    return program;
-  }
-
-  private removeProgram(program: Program): void {
-    const index = this.programs.indexOf(program);
-    if (index > -1) {
-      this.programs.splice(index, 1);
-    }
-  }
-
-  private async deleteProgramThruApi(program: Program): Promise<Program> {
+  async deleteProgramThruApi(program: Program): Promise<Program> {
     const url = `${this.progApiEndpoint}/${program.id}`;
     try {
       const response = await this.http.delete(url, {headers: this.headers}).toPromise();

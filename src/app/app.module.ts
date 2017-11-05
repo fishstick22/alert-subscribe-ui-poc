@@ -43,17 +43,18 @@ import { SelectChannelPriorityComponent
 import { SortableColumnComponent }     from 'app/components/utility/sortable-column/sortable-column.component';
 
 // Services
-import { ClientService }               from 'app/services/client.service';
-import { CommunicationService }        from 'app/services/communication.service';
-import { ProgramService }              from 'app/services/program.service';
-import { ProgramConfigurationService } from 'app/services/program-configuration.service';
+import { DataApiService }              from 'app/services/data-api/data-api.service';
+import { ClientService }               from 'app/services/data-api/client/client.service';
+import { CommunicationService }        from 'app/services/data-api/communication/communication.service';
+import { ProgramService }              from 'app/services/data-api/program/program.service';
+import { ProgramConfigurationService } from 'app/services/data-api/program-configuration/program-configuration.service';
 import { SortableColumnService }       from 'app/services/sortable-column.service';
 
 // Imports for loading & configuring the in-memory web api
 // TODO want some way to turn it on and off without commenting out code
 // https://stackoverflow.com/questions/40214211/disable-angular2-in-memory-web-api-for-production
 import { InMemoryWebApiModule }        from 'angular-in-memory-web-api';
-import { InMemoryDataService }         from 'app/services/in-memory-data.service';
+import { InMemoryDataService }         from 'app/services/data-api/in-memory-data.service';
 import { environment }                 from 'environments/environment';
 
 // Directives
@@ -105,6 +106,7 @@ import { SortableTableDirective }      from 'app/directives/sortable-table.direc
     ProgramConfigByCommComponent
   ],
   providers: [
+    DataApiService,
     ClientService,
     CommunicationService,
     ProgramService,
