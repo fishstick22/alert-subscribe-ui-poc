@@ -17,6 +17,7 @@ import { DataApiService }         from 'app/services/data-api/data-api.service';
 export class ProgramComponent implements OnInit {
 
   programs: Program[];
+  selectedRow: number;
   closeResult: string;
 
   constructor(
@@ -63,6 +64,19 @@ export class ProgramComponent implements OnInit {
 
   }
 
+  private setClickedRow(index) {
+    this.selectedRow = index;
+  }
+
+  configureProgram(progConfigAction: ProgramConfigAction) {
+    if (progConfigAction.configType === 'edit') {
+      this.editProgramModal(progConfigAction.progId);
+    }
+    if (progConfigAction.configType === 'delete') {
+      this.deleteProgramModal(progConfigAction.progId);
+    }
+  }
+
   addProgramModal() {
     const modalRef = this.modalService.open(AddProgramComponent);
     const modalComp: AddProgramComponent  = modalRef.componentInstance;
@@ -78,9 +92,11 @@ export class ProgramComponent implements OnInit {
       } else {
         this.closeResult = `Closed with: ${result}`;
       }
+      this.setClickedRow(null);
       console.log('addNewProgram result: ', this.closeResult);
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.setClickedRow(null);
       console.log('addNewProgram result: ', this.closeResult);
     });
   }
@@ -100,8 +116,10 @@ export class ProgramComponent implements OnInit {
       } else {
         this.closeResult = `Closed with: ${result}`;
       }
+      this.setClickedRow(null);
       console.log('editProgram result: ', this.closeResult);
     }, (reason) => {
+      this.setClickedRow(null);
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       console.log('editProgram result: ', this.closeResult);
     });
@@ -122,8 +140,10 @@ export class ProgramComponent implements OnInit {
       } else {
         this.closeResult = `Closed with: ${result}`;
       }
+      this.setClickedRow(null);
       console.log('deleteProgram result: ', this.closeResult);
     }, (reason) => {
+      this.setClickedRow(null);
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       console.log('deleteProgram result: ', this.closeResult);
     });
@@ -142,4 +162,13 @@ export class ProgramComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
+}
+
+export class ProgramConfigAction {
+  constructor(id: string, type: string) {
+    this.progId = id;
+    this.configType = type;
+  }
+  progId: string;
+  configType: string;
 }

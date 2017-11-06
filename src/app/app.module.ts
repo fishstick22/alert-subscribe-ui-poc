@@ -63,7 +63,8 @@ import { environment }                 from 'environments/environment';
 // Directives
 import { NgClickOutsideDirective }     from 'app/directives/ng-click-outside.directive';
 import { SortableTableDirective }      from 'app/directives/sortable-table.directive';
-import { CommActionsPopoverComponent } from './components/routes/communication/actions-popover/actions-popover.component';
+import { CommActionsPopoverComponent } from 'app/components/routes/communication/actions-popover/actions-popover.component';
+import { ProgActionsPopoverComponent } from 'app/components/routes/program/actions-popover/actions-popover.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,9 @@ import { CommActionsPopoverComponent } from './components/routes/communication/a
 
     NgClickOutsideDirective,
     SortableTableDirective,
-    CommActionsPopoverComponent
+
+    CommActionsPopoverComponent,
+    ProgActionsPopoverComponent
   ],
   imports: [
     BrowserModule,

@@ -1,12 +1,10 @@
 import { Component, OnInit, Input,
          Output, EventEmitter }       from '@angular/core';
 
-import { CommunicationConfigAction }  from 'app/components/routes/communication/communication.component';
-
-// https://ng-bootstrap.github.io/#/components/popover/examples
+import { ProgramConfigAction }        from 'app/components/routes/program/program.component';
 
 @Component({
-  selector: 'app-comm-actions-popover',
+  selector: 'app-prog-actions-popover',
   template: `
     <ng-template #popContent>
       <div class="w-100 outer-popover"
@@ -18,17 +16,17 @@ import { CommunicationConfigAction }  from 'app/components/routes/communication/
         [exclude]="exclude"
         [excludeBeforeClick]="excludeBeforeClick">
 
-        <div class="float-left inner-popover">
-            <span class="badge badge-success clickable"
-                 (click)="configure(commId, 'program'); p.close();"
-                  title="Configure Program for CommId {{commId}}: {{commName}} ">
-              Program</span></div>
-        <div class="float-right inner-popover">
-            <span class="badge badge-success clickable"
-                 (click)="configure(commId, 'clients'); p.close();"
-                  title="Configure Client(s) for CommId {{commId}}: {{commName}} ">
-              Clients</span>
-          </div>
+      <div class="float-left inner-popover">
+          <span class="badge badge-success clickable"
+               (click)="configure(progId, 'edit'); p.close();"
+                title="Configure/Edit Program {{progId}}: {{progName}} ">
+            Edit</span></div>
+      <div class="float-right inner-popover">
+          <span class="badge badge-success clickable"
+               (click)="configure(progId, 'delete'); p.close();"
+                title="Delete Program {{progId}}: {{progName}} ">
+            Delete</span>
+        </div>
       </div>
     </ng-template>
     <div [ngbPopover]="popContent"
@@ -36,7 +34,7 @@ import { CommunicationConfigAction }  from 'app/components/routes/communication/
          popoverTitle=""
          placement="left">
       <ng-content></ng-content>
-    </div>
+  </div>
   `,
   styles: [
     '.outer-popover, .inner-popover { display: block; }',
@@ -45,7 +43,7 @@ import { CommunicationConfigAction }  from 'app/components/routes/communication/
     '.clickable { cursor: pointer; }'
   ]
 })
-export class CommActionsPopoverComponent implements OnInit {
+export class ProgActionsPopoverComponent implements OnInit {
 
   private attachOutsideOnClick = false;
   private delayClickOutsideInit = true;
@@ -53,8 +51,8 @@ export class CommActionsPopoverComponent implements OnInit {
   private exclude = 'ngbPopover ngb-popover';
   private excludeBeforeClick = false;
 
-  @Input() commId: string;
-  @Input() commName: string;
+  @Input() progId: string;
+  @Input() progName: string;
   @Output() configAction = new EventEmitter<any>();
 
   constructor() { }
@@ -64,8 +62,8 @@ export class CommActionsPopoverComponent implements OnInit {
 
   configure(id, config) {
     console.log('ActionsPopoverComponent configure: ', id, config);
-    const commConfigAction:  CommunicationConfigAction = new CommunicationConfigAction(id, config);
-    this.configAction.emit(commConfigAction);
+    const progConfigAction:  ProgramConfigAction = new ProgramConfigAction(id, config);
+    this.configAction.emit(progConfigAction);
   }
 
   private onClick(e: Event) {
