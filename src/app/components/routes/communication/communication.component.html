@@ -29,7 +29,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let communication of displayComm; let i = index"
-        title="Click to configure {{communication.name}} Program or Client settings" 
+        title="" 
         (click)="setClickedRow(i)" 
         [class.table-success]="i == selectedRow">
         <!--; configureProgramModal(communication.id)-->
@@ -42,6 +42,7 @@
             [commId]="communication.id"
             [commName]="communication.name"
             (configAction)="configureCommunication($event)">
+            <i class="fa fa-pencil-square-o" aria-hidden="true" title="Click to configure {{communication.name}} Program or Client settings"></i>
           </app-comm-actions-popover>
       </td>
     </tr>

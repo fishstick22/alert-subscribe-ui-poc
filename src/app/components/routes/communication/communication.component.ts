@@ -183,11 +183,11 @@ export class CommunicationComponent implements OnInit {
     };
     const modalRef = this.modalService.open(ClientConfigByCommComponent, modalOpts);
     const modalComp: ClientConfigByCommComponent  = modalRef.componentInstance;
-
+    const selectedComm: Communication  = this.findCommunication(commId);
     // modalComp.name = 'Configure Clients';
-    modalComp.communication = this.findCommunication(commId);
+    modalComp.communication = selectedComm;
     modalComp.clients = this.clients;
-    modalComp.clientConfigurations = this.findClientConfigurations(commId);
+    modalComp.clientConfigurations = this.findClientConfigurations(selectedComm);
 
     modalRef.result.then((result) => {
       if (result.resultTxt === modalComp.SAVESUCCESS) {
@@ -256,13 +256,19 @@ export class CommunicationComponent implements OnInit {
     return this.communications.find(c => c.id === id);
   }
 
-  private findClientConfigurations(id): ClientConfiguration[] {
+  private findClientConfigurations(selectedComm: Communication): ClientConfiguration[] {
     return this.clientConfigurations.filter(cc => {
-      if (cc.communication.id === id) {
-        console.log(cc, 'Client: ', typeof(cc.client));
+      if (typeof(cc.communication) === 'number') {
+        if (cc.communication === selectedComm.id) {
+          cc.communication = selectedComm;
+          if (typeof(cc.client) === 'number') {
+            cc.client = this.findClient(<number> cc.client);
+          }
+          return true;
+        } else { return false; }
+      } else if (cc.communication.id === selectedComm.id) {
         if (typeof(cc.client) === 'number') {
-          const clientId = <number> cc.client;
-          cc.client = this.findClient(clientId);
+          cc.client = this.findClient(<number> cc.client);
         }
         return true;
       }

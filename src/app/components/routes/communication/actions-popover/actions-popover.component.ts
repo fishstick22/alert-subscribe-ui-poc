@@ -19,7 +19,9 @@ import { CommunicationConfigAction } from 'app/components/routes/communication/c
     <div [ngbPopover]="popContent"
          #p="ngbPopover"
          popoverTitle="Configure {{commName}}"
-         placement="left">&nbsp;</div>
+         placement="left">
+      <ng-content></ng-content>
+    </div>
   `,
   styles: [
     'input { width: 80px; }',
