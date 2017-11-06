@@ -1,3 +1,29 @@
-<p>
-  client-config-by-comm works!
-</p>
+<form #clientConfigurationViaCommunicationForm="ngForm" 
+(ngSubmit)="saveClientConfiguration()" >
+
+  <div class="modal-header bg-gradient-dark">
+    <h4 class="modal-title text-white">
+      Configure Client(s)
+      <small>for CommId {{communication.id}}: {{communication.name}}</small>
+    </h4>
+    <button type="button" class="close text-white" aria-label="Close" (click)="configureClientModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+    
+  <div class="modal-body">
+
+  </div>
+
+  <div class="modal-footer">
+    <div class="w-100">
+      <span class="float-left">Some instructional content or condition message goes here: </span>
+      <div class="float-right">
+          <button type="submit" class="btn btn-outline-dark" [disabled]="!clientConfigurationViaCommunicationForm.valid">Save</button>
+          <button type="button" class="btn btn-outline-dark" (click)="configureClientModal.close('Close click')">Close</button>
+      </div>
+    </div>
+    
+  </div>
+  
+</form>

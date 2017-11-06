@@ -63,6 +63,7 @@ import { environment }                 from 'environments/environment';
 // Directives
 import { NgClickOutsideDirective }     from 'app/directives/ng-click-outside.directive';
 import { SortableTableDirective }      from 'app/directives/sortable-table.directive';
+import { CommActionsPopoverComponent } from './components/routes/communication/actions-popover/actions-popover.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { SortableTableDirective }      from 'app/directives/sortable-table.direc
     SelectChannelPriorityComponent,
 
     NgClickOutsideDirective,
-    SortableTableDirective
+    SortableTableDirective,
+    CommActionsPopoverComponent
   ],
   imports: [
     BrowserModule,

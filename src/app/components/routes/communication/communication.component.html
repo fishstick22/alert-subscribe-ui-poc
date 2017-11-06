@@ -29,13 +29,20 @@
   </thead>
   <tbody>
     <tr *ngFor="let communication of displayComm; let i = index"
-        title="Click to configure {{communication.name}} Program settings" 
-        (click)="setClickedRow(i); configureProgramModal(communication.id)" [class.table-success]="i == selectedRow">
+        title="Click to configure {{communication.name}} Program or Client settings" 
+        (click)="setClickedRow(i)" 
+        [class.table-success]="i == selectedRow">
+        <!--; configureProgramModal(communication.id)-->
       <td><span class="badge badge-secondary">{{communication.id}}</span></td>
       <td><span>{{communication.name}}</span></td>
       <td><span>{{communication.description}}</span></td>
       <td><span *ngIf="communication.id === 261"><i class="fa fa-check" aria-hidden="true" title="{{communication.name}} Configured (Date)"></i></span></td>
       <td>
+          <app-comm-actions-popover 
+            [commId]="communication.id"
+            [commName]="communication.name"
+            (configAction)="configureCommunication($event)">
+          </app-comm-actions-popover>
       </td>
     </tr>
   </tbody>

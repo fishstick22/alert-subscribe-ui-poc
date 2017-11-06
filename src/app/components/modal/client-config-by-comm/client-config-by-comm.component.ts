@@ -30,16 +30,16 @@ export class ClientConfigByCommComponent implements OnInit {
     console.log('ClientConfigByCommComponent init: ');
     console.log(this.communication);
     console.log(this.clientConfigurations);
-    if (this.clientConfigurations.length === 0) { // no existing configs for comm
-      this.addClientConfig();
-    } else {
-      const indxOfLast = this.clientConfigurations.length - 1;
-      if (this.clientConfigurations[indxOfLast] && this.clientConfigurations[indxOfLast].client) {
-        this.prevClientConfig = <ClientConfiguration> this.clientConfigurations[indxOfLast];
-        this.selectedClient = this.prevClientConfig.client.id;
-        this.addClientConfig(this.clientConfigurations[indxOfLast]);
-      }
-    }
+    // if (this.clientConfigurations.length === 0) { // no existing configs for comm
+    //   this.addClientConfig();
+    // } else {
+    //   const indxOfLast = this.clientConfigurations.length - 1;
+    //   if (this.clientConfigurations[indxOfLast] && this.clientConfigurations[indxOfLast].client) {
+    //     this.prevClientConfig = <ClientConfiguration> this.clientConfigurations[indxOfLast];
+    //     this.selectedClient = this.prevClientConfig.client.id;
+    //     this.addClientConfig(this.clientConfigurations[indxOfLast]);
+    //   }
+    // }
   }
 
   addClientConfig(lastClientConfig?: ClientConfiguration) {

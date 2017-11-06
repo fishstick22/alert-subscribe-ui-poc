@@ -5,7 +5,7 @@ import { PageNotFoundComponent }  from 'app/components/page-not-found/page-not-f
 import { HomeComponent }          from 'app/components/routes/home/home.component';
 import { DashboardComponent }     from 'app/components/routes/dashboard/dashboard.component';
 import { CommunicationComponent } from 'app/components/routes/communication/communication.component';
-import { ClientComponent }       from 'app/components/routes/client/client.component';
+import { ClientComponent }        from 'app/components/routes/client/client.component';
 import { ProgramComponent }       from 'app/components/routes/program/program.component';
 
 const routes: Routes = [

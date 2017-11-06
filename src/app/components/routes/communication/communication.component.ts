@@ -2,6 +2,8 @@ import { Component, OnInit }           from '@angular/core';
 import { NgbModal, ModalDismissReasons,
          NgbModalOptions }             from '@ng-bootstrap/ng-bootstrap';
 
+import { ClientConfigByCommComponent,
+         ClientConfigModalResult }     from 'app/components/modal/client-config-by-comm/client-config-by-comm.component';
 import { ProgramConfigByCommComponent,
          ProgramConfigModalResult }    from 'app/components/modal/program-config-by-comm/program-config-by-comm.component';
 //
@@ -9,6 +11,8 @@ import { ProgramConfigByCommComponent,
 import { Communication }               from 'app/model/communication';
 import { Program }                     from 'app/model/program';
 import { ProgramConfiguration }        from 'app/model/program-configuration';
+import { Client }                      from 'app/model/client';
+import { ClientConfiguration }         from 'app/model/client-configuration';
 
 import { DataApiService }              from 'app/services/data-api/data-api.service';
 
@@ -22,6 +26,8 @@ export class CommunicationComponent implements OnInit {
   communications: Communication[];
   programs: Program[];
   programConfigurations: ProgramConfiguration[];
+  clients: Client[];
+  clientConfigurations: ClientConfiguration[];
 
   displayComm: Communication[];
   commIdSearch: string = '';
@@ -43,6 +49,8 @@ export class CommunicationComponent implements OnInit {
     await this.getCommunications();
     this.getPrograms();
     await this.getProgramConfigurations();
+    this.getClients();
+    await this.getClientConfigurations();
 
     this.displayComm = this.communications;
   }
@@ -66,6 +74,20 @@ export class CommunicationComponent implements OnInit {
       this.programConfigurations = await this.dataApiService.getProgramConfigurations();
     } catch (error) {
       console.log('getProgramConfigurations error: ', error);
+    }
+  }
+
+  getClients(): void {
+    this.dataApiService.getClients()
+      .then(clients => this.clients = clients)
+      .catch(error => console.log('getClients error: ', error));
+  }
+
+  async getClientConfigurations() {
+    try {
+      this.clientConfigurations = await this.dataApiService.getClientConfigurations();
+    } catch (error) {
+      console.log('getClientConfigurations error: ', error);
     }
   }
 
@@ -146,6 +168,42 @@ export class CommunicationComponent implements OnInit {
     this.selectedRow = index;
   }
 
+  private configureCommunication(commConfigAction: CommunicationConfigAction) {
+    if (commConfigAction.configType === 'program') {
+      this.configureProgramModal(commConfigAction.commId);
+    }
+    if (commConfigAction.configType === 'clients') {
+      this.configureClientModal(commConfigAction.commId);
+    }
+  }
+
+  private configureClientModal(commId) {
+    const modalOpts: NgbModalOptions = {
+      size: 'lg'
+    };
+    const modalRef = this.modalService.open(ClientConfigByCommComponent, modalOpts);
+    const modalComp: ClientConfigByCommComponent  = modalRef.componentInstance;
+
+    // modalComp.name = 'Configure Clients';
+    modalComp.communication = this.findCommunication(commId);
+    modalComp.clients = this.clients;
+    modalComp.clientConfigurations = this.findClientConfigurations(commId);
+
+    modalRef.result.then((result) => {
+      if (result.resultTxt === modalComp.SAVESUCCESS) {
+        console.log('configureClientModal result: ', result.modalResult);
+      } else {
+        this.closeResult = `Closed with: ${result}`;
+      }
+      this.setClickedRow(null);
+      console.log('configureClient result: ', this.closeResult);
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.setClickedRow(null);
+      // console.log('addNewClient result: ', this.closeResult);
+    });
+  }
+
   private configureProgramModal(commId) {
     const modalOpts: NgbModalOptions = {
       size: 'lg'
@@ -186,12 +244,29 @@ export class CommunicationComponent implements OnInit {
     });
   }
 
+  private findClient(id: number): Client {
+    return this.clients.find(c => c.id === id);
+  }
+
   private findProgram(id: number): Program {
     return this.programs.find(p => p.id === id);
   }
 
   private findCommunication(id: number): Communication {
     return this.communications.find(c => c.id === id);
+  }
+
+  private findClientConfigurations(id): ClientConfiguration[] {
+    return this.clientConfigurations.filter(cc => {
+      if (cc.communication.id === id) {
+        console.log(cc, 'Client: ', typeof(cc.client));
+        if (typeof(cc.client) === 'number') {
+          const clientId = <number> cc.client;
+          cc.client = this.findClient(clientId);
+        }
+        return true;
+      }
+    });
   }
 
   private findProgramConfigurations(id): ProgramConfiguration[] {
@@ -233,4 +308,13 @@ export class CommunicationComponent implements OnInit {
 export class CommunicationSortCriteria {
   sortColumn: string;
   sortDirection: string;
+}
+
+export class CommunicationConfigAction {
+  constructor(id: string, type: string) {
+    this.commId = id;
+    this.configType = type;
+  }
+  commId: string;
+  configType: string;
 }
