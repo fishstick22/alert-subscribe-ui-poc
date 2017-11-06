@@ -7,23 +7,26 @@ import { EditProgramComponent }   from 'app/components/modal/editprogram/editpro
 import { DeleteProgramComponent } from 'app/components/modal/deleteprogram/deleteprogram.component';
 
 import { Program }                from 'app/model/program';
-import { ProgramService }         from 'app/services/program.service';
+import { DataApiService }         from 'app/services/data-api/data-api.service';
 
 @Component({
   // selector: 'app-program', selector not needed on routed components
   templateUrl: './program.component.html',
-  styleUrls: ['./program.component.css']
+  styleUrls: ['./program.component.scss']
 })
 export class ProgramComponent implements OnInit {
 
   programs: Program[];
   closeResult: string;
 
-  constructor(private programService: ProgramService, private modalService: NgbModal) { }
+  constructor(
+    private dataApiService: DataApiService,
+    private modalService: NgbModal
+  ) { }
 
   ngOnInit(): void {
     console.log('ProgramComponent ngOnInit...');
-    this.programService.getPrograms()
+    this.dataApiService.getPrograms()
       .then(programs => this.programs = programs)
       .catch(error => console.log('getPrograms error: ', error));
   }
@@ -34,7 +37,7 @@ export class ProgramComponent implements OnInit {
       program.id = this.programs.length + 1;
     }
 
-    this.programService.createProgram(program)
+    this.dataApiService.createProgram(program)
       .then(p => console.log('addNewProgram: ', program, this.programs))
       .catch(error =>  console.log('addNewProgram error: ', error));
 
@@ -42,7 +45,7 @@ export class ProgramComponent implements OnInit {
 
   editProgram(program: Program): void {
 
-    this.programService.updateProgram(program)
+    this.dataApiService.updateProgram(program)
       .then(p => console.log('editProgram: ', program))
       .catch(error =>  console.log('editProgram error: ', error));
 
@@ -50,7 +53,7 @@ export class ProgramComponent implements OnInit {
 
   deleteProgram(program: Program): void {
 
-    this.programService.deleteProgram(program)
+    this.dataApiService.deleteProgram(program)
       .then(result => {
         console.log('deleteProgram: ', program, this.programs);
       })

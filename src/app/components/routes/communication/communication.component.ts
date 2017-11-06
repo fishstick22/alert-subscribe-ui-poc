@@ -2,27 +2,32 @@ import { Component, OnInit }           from '@angular/core';
 import { NgbModal, ModalDismissReasons,
          NgbModalOptions }             from '@ng-bootstrap/ng-bootstrap';
 
+import { ClientConfigByCommComponent,
+         ClientConfigModalResult }     from 'app/components/modal/client-config-by-comm/client-config-by-comm.component';
 import { ProgramConfigByCommComponent,
          ProgramConfigModalResult }    from 'app/components/modal/program-config-by-comm/program-config-by-comm.component';
 //
 
 import { Communication }               from 'app/model/communication';
-import { CommunicationService }        from 'app/services/communication.service';
 import { Program }                     from 'app/model/program';
-import { ProgramService }              from 'app/services/program.service';
 import { ProgramConfiguration }        from 'app/model/program-configuration';
-import { ProgramConfigurationService } from 'app/services/program-configuration.service';
+import { Client }                      from 'app/model/client';
+import { ClientConfiguration }         from 'app/model/client-configuration';
+
+import { DataApiService }              from 'app/services/data-api/data-api.service';
 
 @Component({
   // selector: 'app-communication', selector not needed on routed components
   templateUrl: './communication.component.html',
-  styleUrls: ['./communication.component.css']
+  styleUrls: ['./communication.component.scss']
 })
 export class CommunicationComponent implements OnInit {
 
   communications: Communication[];
   programs: Program[];
   programConfigurations: ProgramConfiguration[];
+  clients: Client[];
+  clientConfigurations: ClientConfiguration[];
 
   displayComm: Communication[];
   commIdSearch: string = '';
@@ -35,9 +40,7 @@ export class CommunicationComponent implements OnInit {
   closeResult: string;
 
   constructor(
-    private communicationService: CommunicationService,
-    private programService: ProgramService,
-    private programConfigurationService: ProgramConfigurationService,
+    private dataApiService: DataApiService,
     private modalService: NgbModal
   ) { }
 
@@ -46,29 +49,45 @@ export class CommunicationComponent implements OnInit {
     await this.getCommunications();
     this.getPrograms();
     await this.getProgramConfigurations();
+    this.getClients();
+    await this.getClientConfigurations();
 
     this.displayComm = this.communications;
   }
 
   async getCommunications() {
     try {
-      this.communications = await this.communicationService.getCommunications();
+      this.communications = await this.dataApiService.getCommunications();
     } catch (error) {
       console.log('getCommunications error: ', error);
     }
   }
 
   getPrograms(): void {
-    this.programService.getPrograms()
+    this.dataApiService.getPrograms()
       .then(programs => this.programs = programs)
       .catch(error => console.log('getPrograms error: ', error));
   }
 
   async getProgramConfigurations() {
     try {
-      this.programConfigurations = await this.programConfigurationService.getProgramConfigurations();
+      this.programConfigurations = await this.dataApiService.getProgramConfigurations();
     } catch (error) {
       console.log('getProgramConfigurations error: ', error);
+    }
+  }
+
+  getClients(): void {
+    this.dataApiService.getClients()
+      .then(clients => this.clients = clients)
+      .catch(error => console.log('getClients error: ', error));
+  }
+
+  async getClientConfigurations() {
+    try {
+      this.clientConfigurations = await this.dataApiService.getClientConfigurations();
+    } catch (error) {
+      console.log('getClientConfigurations error: ', error);
     }
   }
 
@@ -149,6 +168,42 @@ export class CommunicationComponent implements OnInit {
     this.selectedRow = index;
   }
 
+  private configureCommunication(commConfigAction: CommunicationConfigAction) {
+    if (commConfigAction.configType === 'program') {
+      this.configureProgramModal(commConfigAction.commId);
+    }
+    if (commConfigAction.configType === 'clients') {
+      this.configureClientModal(commConfigAction.commId);
+    }
+  }
+
+  private configureClientModal(commId) {
+    const modalOpts: NgbModalOptions = {
+      size: 'lg'
+    };
+    const modalRef = this.modalService.open(ClientConfigByCommComponent, modalOpts);
+    const modalComp: ClientConfigByCommComponent  = modalRef.componentInstance;
+    const selectedComm: Communication  = this.findCommunication(commId);
+    // modalComp.name = 'Configure Clients';
+    modalComp.communication = selectedComm;
+    modalComp.clients = this.clients;
+    modalComp.clientConfigurations = this.findClientConfigurations(selectedComm);
+
+    modalRef.result.then((result) => {
+      if (result.resultTxt === modalComp.SAVESUCCESS) {
+        console.log('configureClientModal result: ', result.modalResult);
+      } else {
+        this.closeResult = `Closed with: ${result}`;
+      }
+      this.setClickedRow(null);
+      console.log('configureClient result: ', this.closeResult);
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.setClickedRow(null);
+      // console.log('addNewClient result: ', this.closeResult);
+    });
+  }
+
   private configureProgramModal(commId) {
     const modalOpts: NgbModalOptions = {
       size: 'lg'
@@ -189,12 +244,35 @@ export class CommunicationComponent implements OnInit {
     });
   }
 
+  private findClient(id: number): Client {
+    return this.clients.find(c => c.id === id);
+  }
+
   private findProgram(id: number): Program {
     return this.programs.find(p => p.id === id);
   }
 
   private findCommunication(id: number): Communication {
     return this.communications.find(c => c.id === id);
+  }
+
+  private findClientConfigurations(selectedComm: Communication): ClientConfiguration[] {
+    return this.clientConfigurations.filter(cc => {
+      if (typeof(cc.communication) === 'number') {
+        if (cc.communication === selectedComm.id) {
+          cc.communication = selectedComm;
+          if (typeof(cc.client) === 'number') {
+            cc.client = this.findClient(<number> cc.client);
+          }
+          return true;
+        } else { return false; }
+      } else if (cc.communication.id === selectedComm.id) {
+        if (typeof(cc.client) === 'number') {
+          cc.client = this.findClient(<number> cc.client);
+        }
+        return true;
+      }
+    });
   }
 
   private findProgramConfigurations(id): ProgramConfiguration[] {
@@ -211,13 +289,13 @@ export class CommunicationComponent implements OnInit {
   }
 
   private addProgramConfiguration(programConfiguration: ProgramConfiguration): void {
-    this.programConfigurationService.createProgramConfiguration(programConfiguration)
+    this.dataApiService.createProgramConfiguration(programConfiguration)
       .then(pc => console.log('addProgramConfiguration:', programConfiguration, this.programConfigurations))
       .catch(error =>  console.log('addProgramConfiguration error: ', error));
   }
 
   private updateProgramConfiguration(programConfiguration: ProgramConfiguration): void {
-    this.programConfigurationService.updateProgramConfiguration(programConfiguration)
+    this.dataApiService.updateProgramConfiguration(programConfiguration)
       .then(pc => console.log('updateProgramConfiguration:', programConfiguration, this.programConfigurations))
       .catch(error =>  console.log('updateProgramConfiguration error: ', error));
   }
@@ -236,4 +314,13 @@ export class CommunicationComponent implements OnInit {
 export class CommunicationSortCriteria {
   sortColumn: string;
   sortDirection: string;
+}
+
+export class CommunicationConfigAction {
+  constructor(id: string, type: string) {
+    this.commId = id;
+    this.configType = type;
+  }
+  commId: string;
+  configType: string;
 }

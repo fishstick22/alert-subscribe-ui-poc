@@ -6,7 +6,7 @@ import { Program }         from 'app/model/program';
 @Component({
   selector: 'app-editprogram',
   templateUrl: './editprogram.component.html',
-  styleUrls: ['./editprogram.component.css']
+  styleUrls: ['./editprogram.component.scss']
 })
 export class EditProgramComponent implements OnInit {
 

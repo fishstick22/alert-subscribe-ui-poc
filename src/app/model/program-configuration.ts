@@ -1,18 +1,19 @@
-import { Program }       from './program';
-import { Communication } from './communication';
+import { Program }              from 'app/model/program';
+import { Communication }        from 'app/model/communication';
+import { ICommunicationConfig } from 'app/model/icomm-config';
 
-export class ProgramConfiguration {
+export class ProgramConfiguration implements ICommunicationConfig {
 
-    constructor(prgConf?: ProgramConfiguration) {
+    constructor(programConfig?: ProgramConfiguration) {
 
-        if (prgConf) {
-            this.name               = prgConf.name;
-            this.chanEmailPriority  = prgConf.chanEmailPriority;
-            this.chanIvrPriority    = prgConf.chanIvrPriority;
-            this.chanSmsPriority    = prgConf.chanSmsPriority;
-            this.chanMailPriority   = prgConf.chanMailPriority;
-            this.chanMobilePriority = prgConf.chanMobilePriority;
-            this.chanMandatory      = prgConf.chanMandatory;
+        if (programConfig) {
+            this.chanEmailPriority  = programConfig.chanEmailPriority;
+            this.name               = programConfig.name;
+            this.chanIvrPriority    = programConfig.chanIvrPriority;
+            this.chanSmsPriority    = programConfig.chanSmsPriority;
+            this.chanMailPriority   = programConfig.chanMailPriority;
+            this.chanMobilePriority = programConfig.chanMobilePriority;
+            this.chanMandatory      = programConfig.chanMandatory;
         } else {
             this.chanEmailPriority  = 0;
             this.chanIvrPriority    = 0;
@@ -40,7 +41,7 @@ export class ProgramConfiguration {
 // https://stackoverflow.com/questions/4511705/how-to-parse-json-to-receive-a-date-object-in-javascript
 
 // sample here to validate the model
-const progConfig: ProgramConfiguration = {
+const programConfigSample: ProgramConfiguration = {
      'id': 1,
      'name': 'Prescription Alerts Order Status',
      'description': 'Order Status Program-level Configuration',
@@ -62,6 +63,7 @@ const progConfig: ProgramConfiguration = {
        {'id': 261,
         'name': 'Order Received',
         'description': 'Notifies a member when their order is received',
-        'programConfiguration': [1]
+        'programConfiguration': [1],
+        'clientConfiguration': []
        }
     };

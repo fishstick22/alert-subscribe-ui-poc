@@ -1,8 +1,7 @@
 import { Injectable, Inject }    from '@angular/core';
 import { Headers, Http }         from '@angular/http';
 
-import { APP_CONFIG }            from 'app/app.config';
-import { IAppConfig }            from 'app/iapp-config';
+import { APP_CONFIG, IAppConfig } from 'app/app.config';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -20,27 +19,7 @@ export class ClientService {
     this.clientApiEndpoint = this.config.apiEndpoint + 'api/client';  // URL to web api
   }
 
-  public async getClients(): Promise<Client[]> {
-    if (this.clients) {
-      return this.clients;
-    } else {
-      this.clients = await this.getClientsThruApi();
-      return this.removeClientConfigurationCruft(this.clients);
-    }
-  }
-
-  private removeClientConfigurationCruft(clients: Client[]): Client[] {
-    // some reason spring rest is giving empty array objects of programConfiguration property
-    // get rid of them all
-    // for (let i = 0, len = clients.length; i < len; i++) {
-    //   if (clients[i].programConfiguration && clients[i].programConfiguration.length) {
-    //     clients[i].programConfiguration = [];
-    //   }
-    // }
-    return clients;
-  }
-
-  private async getClientsThruApi(): Promise<Client[]> {
+  async getClientsThruApi(): Promise<Client[]> {
     try {
       const response = await this.http.get(this.clientApiEndpoint).toPromise();
       return response.json() as Client[];

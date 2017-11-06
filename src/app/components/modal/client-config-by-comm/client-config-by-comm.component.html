@@ -1,0 +1,68 @@
+<form #clientConfigurationViaCommunicationForm="ngForm" 
+(ngSubmit)="saveClientConfiguration()" >
+
+  <div class="modal-header bg-gradient-dark">
+    <h4 class="modal-title text-white">
+      Configure Client(s)
+      <small>for CommId {{communication.id}}: {{communication.name}}</small>
+    </h4>
+    <button type="button" class="close text-white" aria-label="Close" (click)="configureClientModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+    
+  <div class="modal-body">
+    <div id="configuredClients">
+
+
+            <table class="table table-responsive table-sm table-striped table-bordered table-hover">
+              <caption></caption>
+              <thead class="bg-gradient-dark text-white">
+                <tr>
+                  <th>ID</th>
+                  <th>C<small>ode</small></th>
+                  <th>N<small>ame</small></th>
+                  <th>E<small>mail</small></th>
+                  <th>IVR</th>
+                  <th>SMS</th>
+                  <th>M<small>ail</small></th>
+                  <th>M<small>obile</small></th>
+                  <th>M<small>andatory</small></th>
+                  <th>E<small>ffective</small></th>
+                  <th>E<small>xpiration</small></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let cc of clientConfigurations; let i = index"> 
+                    <!--[class.table-success]="i == lastPgmConfigRow">-->
+                  <td><span class="badge badge-secondary">{{cc.client.id}}</span></td>
+                  <td><span >{{cc.client.code}}</span></td>
+                  <td><span >{{cc.client.name}}</span></td>
+                  <td><span >{{cc.chanEmailPriority}}</span></td>
+                  <td><span >{{cc.chanIvrPriority}}</span></td>
+                  <td><span >{{cc.chanSmsPriority}}</span></td>
+                  <td><span >{{cc.chanMailPriority}}</span></td>
+                  <td><span >{{cc.chanMobilePriority}}</span></td>
+                  <td><span >{{cc.chanMandatory}}</span></td>
+                  <td><span >{{cc.effective}}</span></td>
+                  <td><span >{{cc.expiration}}</span></td>
+                </tr>
+              </tbody>
+            </table>
+
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <div class="w-100">
+      <span class="float-left">Some instructional content or condition message goes here: </span>
+      <div class="float-right">
+          <button type="submit" class="btn btn-outline-dark" [disabled]="!clientConfigurationViaCommunicationForm.valid">Save</button>
+          <button type="button" class="btn btn-outline-dark" (click)="configureClientModal.close('Close click')">Close</button>
+      </div>
+    </div>
+    
+  </div>
+  
+</form>

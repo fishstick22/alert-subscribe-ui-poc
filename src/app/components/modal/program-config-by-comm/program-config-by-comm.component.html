@@ -2,7 +2,7 @@
   <form #programConfigurationViaCommunicationForm="ngForm" 
     (ngSubmit)="saveProgramConfiguration()" >
 
-    <div class="modal-header bg-dark">
+    <div class="modal-header bg-gradient-dark">
       <h4 class="modal-title text-white">
         Configure Program
         <small>for CommId {{communication.id}}: {{communication.name}}</small>
@@ -21,7 +21,7 @@
       </div>
       <table class="table table-responsive table-sm table-striped table-bordered table-hover">
         <caption></caption>
-        <thead class="thead-dark">
+        <thead class="bg-gradient-dark text-white">
           <tr>
             <th>ID</th>
             <th>N<small>ame</small></th>
@@ -78,6 +78,7 @@
                   [i]="i" [lastPgmConfigRow]="lastPgmConfigRow"
                   (newDateValue)="updateDateValue($event, pc, 'expiration')"></app-date-eff-exp></td>
           </tr>
+        </tbody>
       </table>
     </div>
 

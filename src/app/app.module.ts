@@ -9,7 +9,7 @@ import { NgbModule }              from '@ng-bootstrap/ng-bootstrap';
 // AppConfig
 // https://stackoverflow.com/questions/34986922/define-global-constants-in-angular-2/40287063#40287063
 import { APP_CONFIG, AppConfig }  from 'app/app.config';
-import { IAppConfig }             from 'app/iapp-config';
+
 import { AppComponent }           from 'app/app.component';
 import { AppRoutingModule }       from 'app/app-routing.module';
 
@@ -26,6 +26,7 @@ import { ProgramComponent }       from 'app/components/routes/program/program.co
 import { ClientComponent }        from 'app/components/routes/client/client.component';
 
 // Modal stuff
+import { ClientConfigByCommComponent } from 'app/components/modal/client-config-by-comm/client-config-by-comm.component';
 import { AddProgramComponent }         from 'app/components/modal/addprogram/addprogram.component';
 import { EditProgramComponent }        from 'app/components/modal/editprogram/editprogram.component';
 import { DeleteProgramComponent }      from 'app/components/modal/deleteprogram/deleteprogram.component';
@@ -43,24 +44,26 @@ import { SelectChannelPriorityComponent
 import { SortableColumnComponent }     from 'app/components/utility/sortable-column/sortable-column.component';
 
 // Services
-import { ClientService }               from 'app/services/client.service';
-import { CommunicationService }        from 'app/services/communication.service';
-import { ProgramService }              from 'app/services/program.service';
-import { ProgramConfigurationService } from 'app/services/program-configuration.service';
+import { DataApiService }              from 'app/services/data-api/data-api.service';
+import { ClientService }               from 'app/services/data-api/client/client.service';
+import { ClientConfigurationService }  from 'app/services/data-api/client-configuration/client-configuration.service';
+import { CommunicationService }        from 'app/services/data-api/communication/communication.service';
+import { ProgramService }              from 'app/services/data-api/program/program.service';
+import { ProgramConfigurationService } from 'app/services/data-api/program-configuration/program-configuration.service';
+
 import { SortableColumnService }       from 'app/services/sortable-column.service';
 
 // Imports for loading & configuring the in-memory web api
 // TODO want some way to turn it on and off without commenting out code
 // https://stackoverflow.com/questions/40214211/disable-angular2-in-memory-web-api-for-production
 import { InMemoryWebApiModule }        from 'angular-in-memory-web-api';
-import { InMemoryDataService }         from 'app/services/in-memory-data.service';
+import { InMemoryDataService }         from 'app/services/data-api/in-memory-data.service';
 import { environment }                 from 'environments/environment';
 
 // Directives
 import { NgClickOutsideDirective }     from 'app/directives/ng-click-outside.directive';
 import { SortableTableDirective }      from 'app/directives/sortable-table.directive';
-
-
+import { CommActionsPopoverComponent } from './components/routes/communication/actions-popover/actions-popover.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +78,7 @@ import { SortableTableDirective }      from 'app/directives/sortable-table.direc
     ProgramComponent,
     ClientComponent,
 
+    ClientConfigByCommComponent,
     AddProgramComponent,
     EditProgramComponent,
     DeleteProgramComponent,
@@ -88,7 +92,8 @@ import { SortableTableDirective }      from 'app/directives/sortable-table.direc
     SelectChannelPriorityComponent,
 
     NgClickOutsideDirective,
-    SortableTableDirective
+    SortableTableDirective,
+    CommActionsPopoverComponent
   ],
   imports: [
     BrowserModule,
@@ -99,13 +104,16 @@ import { SortableTableDirective }      from 'app/directives/sortable-table.direc
     (environment.inMemAPI) ? InMemoryWebApiModule.forRoot(InMemoryDataService) : [],
   ],
   entryComponents: [
+    ClientConfigByCommComponent,
     AddProgramComponent,
     EditProgramComponent,
     DeleteProgramComponent,
     ProgramConfigByCommComponent
   ],
   providers: [
+    DataApiService,
     ClientService,
+    ClientConfigurationService,
     CommunicationService,
     ProgramService,
     ProgramConfigurationService,

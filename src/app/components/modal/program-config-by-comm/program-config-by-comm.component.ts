@@ -1,14 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { Program }               from 'app/model/program';
-import { ProgramConfiguration }  from 'app/model/program-configuration';
-import { Communication }         from 'app/model/communication';
+import { Program }                  from 'app/model/program';
+import { ProgramConfiguration }     from 'app/model/program-configuration';
+import { Communication }            from 'app/model/communication';
 
 @Component({
   // selector: 'app-program-config-by-comm', Entry Component needs no selector?
   templateUrl: './program-config-by-comm.component.html',
-  styleUrls: ['./program-config-by-comm.component.css']
+  styleUrls: ['./program-config-by-comm.component.scss']
 })
 export class ProgramConfigByCommComponent implements OnInit {
 

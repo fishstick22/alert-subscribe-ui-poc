@@ -3,7 +3,7 @@
   appSortableTable (sorted)="onSorted($event)">
   <caption></caption>
   <thead>
-    <tr class="thead-dark"><!-- column sorting header row -->
+    <tr class="bg-gradient-dark text-white"><!-- column sorting header row -->
       <th><app-sortable-column columnName="id" sortDirection="asc">ID</app-sortable-column></th>
       <th><app-sortable-column columnName="code">Code</app-sortable-column></th>
       <th><app-sortable-column columnName="name">Name</app-sortable-column></th>
@@ -30,7 +30,7 @@
   <tbody>
     <tr *ngFor="let client of displayClient; let i = index"
         title="Click to configure {{client.name}} Program settings" 
-        (click)="setClickedRow(i); configureClientModal(client.id)" [class.table-success]="i == selectedRow">
+        (click)="setClickedRow(i); configureClientModal(client.id)" [class.bg-gradient-success]="i == selectedRow">
       <td><span class="badge badge-secondary">{{client.id}}</span></td>
       <td><span>{{client.code}}</span></td>
       <td><span>{{client.name}}</span></td>

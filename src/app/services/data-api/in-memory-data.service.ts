@@ -117,6 +117,55 @@ export class InMemoryDataService implements InMemoryDbService {
       {'id': 22921, 'code': 'X7771', 'name': 'AETNA-MED-D MAPD H0318'},
       {'id': 22922, 'code': 'X7772', 'name': 'AETNA-MED-D MAPD H0523'}
     ];
-    return { communication: communication, program: program, programconfiguration: programconfiguration, client: client};
+    const clientconfiguration = [
+      {'id': 1,
+       'name': 'Prescription Alerts Order Status',
+       'description': 'Order Status Client-level Configuration',
+       'chanEmailPriority': 2,
+       'chanIvrPriority': 3,
+       'chanSmsPriority': 1,
+       'chanMailPriority': 0,
+       'chanMobilePriority': 0,
+       'chanMandatory': 'Email',
+       'effective': '2017-01-01',
+       'expiration': '9999-12-31',
+       'client':
+         {'id': 142,
+          'code': 'AMD',
+          'name': 'AT&T INC.'
+         },
+      'communication':
+         {'id': 261,
+          'name': 'Order Received ',
+          'description': 'Notifies a member when their order is received',
+          'programConfiguration': [1]
+         }
+      },
+      {'id': 2,
+       'name': 'Prescription Alerts Order Status',
+       'description': 'Order Status Client-level Configuration',
+       'chanEmailPriority': 2,
+       'chanIvrPriority': 3,
+       'chanSmsPriority': 1,
+       'chanMailPriority': 0,
+       'chanMobilePriority': 0,
+       'chanMandatory': 'Email',
+       'effective': '2017-01-01',
+       'expiration': '9999-12-31',
+       'client':
+         {'id': 259,
+          'code': 'BCC',
+          'name': 'BLUE CROSS OF CONNECTICUT'
+         },
+      'communication': 261
+      }
+    ];
+    return {
+      communication: communication,
+      program: program,
+      programconfiguration: programconfiguration,
+      client: client,
+      clientconfiguration: clientconfiguration
+    };
   }
 }

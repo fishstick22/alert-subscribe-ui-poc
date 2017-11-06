@@ -1,8 +1,7 @@
 import { Injectable, Inject }    from '@angular/core';
 import { Headers, Http }         from '@angular/http';
 
-import { APP_CONFIG }            from 'app/app.config';
-import { IAppConfig }            from 'app/iapp-config';
+import { APP_CONFIG, IAppConfig } from 'app/app.config';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -19,27 +18,7 @@ export class CommunicationService {
     this.commApiEndpoint = this.config.apiEndpoint + 'api/communication';  // URL to web api
   }
 
-  public async getCommunications(): Promise<Communication[]> {
-    if (this.communications) {
-      return this.communications;
-    } else {
-      this.communications = await this.getCommunicationsThruApi();
-      return this.removeProgramConfigurationCruft(this.communications);
-    }
-  }
-
-  private removeProgramConfigurationCruft(communications: Communication[]): Communication[] {
-    // some reason spring rest is giving empty array objects of programConfiguration property
-    // get rid of them all
-    for (let i = 0, len = communications.length; i < len; i++) {
-      if (communications[i].programConfiguration && communications[i].programConfiguration.length) {
-          communications[i].programConfiguration = [];
-      }
-    }
-    return communications;
-  }
-
-  private async getCommunicationsThruApi(): Promise<Communication[]> {
+  async getCommunicationsThruApi(): Promise<Communication[]> {
     try {
       const response = await this.http.get(this.commApiEndpoint).toPromise();
       return response.json() as Communication[];
