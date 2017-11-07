@@ -22,7 +22,7 @@ export class ClientConfigByCommComponent implements OnInit {
     prevClientConfig: ClientConfiguration;
 
     selectedClient: number;
-    lastClientConfigRow: number;
+    // lastClientConfigRow: number;
 
     constructor(public configureClientModal: NgbActiveModal) { }
 
@@ -62,8 +62,8 @@ export class ClientConfigByCommComponent implements OnInit {
     this.newClientConfig.effective = tomorrow.getFullYear() + '-' + (tomorrow.getMonth() + 1) + '-' + tomorrow.getDate();
     this.newClientConfig.expiration = '9999-12-31';
 
-    this.lastClientConfigRow = this.clientConfigurations.length;
-    this.clientConfigurations[this.clientConfigurations.length] = this.newClientConfig;
+    // this.lastClientConfigRow = this.clientConfigurations.length;
+    // this.clientConfigurations[this.clientConfigurations.length] = this.newClientConfig;
 
   }
 

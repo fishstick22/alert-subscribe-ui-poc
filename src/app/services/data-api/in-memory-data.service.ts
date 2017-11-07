@@ -59,7 +59,25 @@ export class InMemoryDataService implements InMemoryDbService {
             'programConfiguration': []},
       {'id': 1907, 'name': 'Future Fill Release Reminder',
             'description': 'Notifies a member when a prescription is released from future fill',
-            'programConfiguration' : []}
+            'programConfiguration' : []},
+      {'id': 2514, 'name': 'Refill Available Reminder',
+            'description': 'Notifies a member when one or more of their Rx\'s is eligible for refill',
+            'programConfiguration': []},
+      {'id': 2515, 'name': 'Refill Available Warning',
+            'description': 'Notifies a member when one or more of their Rx\'s is eligible for refill',
+            'programConfiguration': []},
+      {'id': 2516, 'name': 'Refill Expiring Reminder',
+            'description': 'Notifies a member when one or more of their Rx\'s is about to expire but has at least 1 refill left',
+            'programConfiguration': []},
+      {'id': 2517, 'name': 'Refill Expiring Warning',
+            'description': 'Notifies a member when one or more of their Rx\'s is about to expire but has at least 1 refill left',
+            'programConfiguration': []},
+      {'id': 2518, 'name': 'Zero Refills Reminder',
+            'description': 'Notifies a member when one or more of their Rx\'s has no more refills available',
+            'programConfiguration': []},
+      {'id': 2519, 'name': 'Zero Refills Warning',
+            'description': 'Notifies a member when one or more of their Rx\'s has no more refills available',
+            'programConfiguration': []}
     ];
     const program = [
       {'id': 1, 'name': 'Prescription Alerts',     'description': 'PBM Communications including Order Status and Refill Reminder alerts'},

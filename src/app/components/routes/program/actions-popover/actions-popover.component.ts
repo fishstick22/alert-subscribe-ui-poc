@@ -39,8 +39,7 @@ import { ProgramConfigAction }        from 'app/components/routes/program/progra
   styles: [
     '.outer-popover, .inner-popover { display: block; }',
     '.outer-popover { width: 300px; padding: 0; }',
-    '.inner-popover { padding: 5px; }',
-    '.clickable { cursor: pointer; }'
+    '.inner-popover { padding: 5px; }'
   ]
 })
 export class ProgActionsPopoverComponent implements OnInit {

@@ -1,7 +1,9 @@
 import { Component, OnInit, Input,
          Output, EventEmitter }       from '@angular/core';
 
-import { CommunicationConfigAction }  from 'app/components/routes/communication/communication.component';
+ import { Communication,
+          CommunicationSortCriteria,
+          CommunicationConfigAction } from 'app/model/communication';
 
 // https://ng-bootstrap.github.io/#/components/popover/examples
 
@@ -41,8 +43,7 @@ import { CommunicationConfigAction }  from 'app/components/routes/communication/
   styles: [
     '.outer-popover, .inner-popover { display: block; }',
     '.outer-popover { width: 300px; padding: 0; }',
-    '.inner-popover { padding: 5px; }',
-    '.clickable { cursor: pointer; }'
+    '.inner-popover { padding: 5px; }'
   ]
 })
 export class CommActionsPopoverComponent implements OnInit {

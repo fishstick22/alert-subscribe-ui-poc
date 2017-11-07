@@ -7,8 +7,9 @@ import { ClientConfigByCommComponent,
 import { ProgramConfigByCommComponent,
          ProgramConfigModalResult }    from 'app/components/modal/program-config-by-comm/program-config-by-comm.component';
 //
-
-import { Communication }               from 'app/model/communication';
+import { Communication,
+         CommunicationSortCriteria,
+         CommunicationConfigAction }   from 'app/model/communication';
 import { Program }                     from 'app/model/program';
 import { ProgramConfiguration }        from 'app/model/program-configuration';
 import { Client }                      from 'app/model/client';
@@ -30,12 +31,6 @@ export class CommunicationComponent implements OnInit {
   clientConfigurations: ClientConfiguration[];
 
   displayComm: Communication[];
-  commIdSearch: string = '';
-  commIdSearchLast: string = '';
-  commNameSearch: string = '';
-  commNameSearchLast: string = '';
-  commDescSearch: string = '';
-  commDescSearchLast: string = '';
   selectedRow: number;
   closeResult: string;
 
@@ -91,83 +86,6 @@ export class CommunicationComponent implements OnInit {
     }
   }
 
-  onSorted($event) {
-    console.log('CommunicationComponent onSorted...');
-    this.displayComm = this.getCommunicationsSorted($event, this.displayComm);
-  }
-
-  getCommunicationsSorted(criteria: CommunicationSortCriteria, commArray: Communication[]): Communication[] {
-
-    return commArray
-      .sort((a, b) => {
-        if (criteria.sortDirection === 'asc') {
-          if ( a[criteria.sortColumn] < b[criteria.sortColumn]) { return -1; }
-          if ( a[criteria.sortColumn] > b[criteria.sortColumn]) { return 1; }
-          return 0;
-        } else if (criteria.sortDirection === 'desc') {
-          if ( a[criteria.sortColumn] > b[criteria.sortColumn]) { return -1; }
-          if ( a[criteria.sortColumn] < b[criteria.sortColumn]) { return 1; }
-          return 0;
-        } else { return 0; }
-      });
-
-  }
-
-  searchCommId() {
-    console.log('CommunicationComponent searchCommId user entered: ', this.commIdSearch, this.commIdSearchLast);
-    this.searchCommunicatonTable();
-    this.commIdSearchLast = this.commIdSearch;
-  }
-
-  searchCommName() {
-    console.log('CommunicationComponent searchCommName user entered: ', this.commNameSearch, this.commNameSearchLast);
-    this.searchCommunicatonTable();
-    this.commNameSearchLast = this.commNameSearch;
-  }
-
-  searchCommDesc() {
-    console.log('CommunicationComponent searchCommDesc user entered: ', this.commDescSearch, this.commDescSearchLast);
-    this.searchCommunicatonTable();
-    this.commDescSearchLast = this.commDescSearch;
-  }
-
-  private searchCommunicatonTable() {
-    // align/chain the filter pattern across all searchable rows
-    const commIdAdded     = this.commIdSearch.indexOf(this.commIdSearchLast) === 0;
-    const commNameAdded   = this.commNameSearch.indexOf(this.commNameSearchLast) === 0;
-    const commDescAdded   = this.commDescSearch.indexOf(this.commDescSearchLast) === 0;
-
-    if ( !commIdAdded || !commNameAdded || !commDescAdded ) {
-      console.log('user deleting something...');
-      // refresh the list, reapply each filter, gonna guess mostly searching on names
-      this.displayComm = this.communications.filter(comm => {
-        return this.containsString(comm.name, this.commNameSearch);
-      });
-    } else {
-      this.displayComm = this.displayComm.filter(comm => {
-        return this.containsString(comm.name, this.commNameSearch);
-      });
-    }
-    if (this.commDescSearch !== '') {
-      this.displayComm = this.displayComm.filter(comm => {
-        return (comm.description.indexOf(this.commDescSearch) !== -1 );
-      });
-    }
-    if (this.commIdSearch !== '') {
-      this.displayComm = this.displayComm.filter(comm => {
-        return (String(comm.id).indexOf(this.commIdSearch) !== -1 );
-      });
-    }
-  }
-
-  private containsString(columnValue: string, searchValue: string): boolean {
-    return (columnValue.toLocaleLowerCase().indexOf(searchValue.toLocaleLowerCase()) !== -1);
-  }
-
-  private setClickedRow(index) {
-    this.selectedRow = index;
-  }
-
   private configureCommunication(commConfigAction: CommunicationConfigAction) {
     if (commConfigAction.configType === 'program') {
       this.configureProgramModal(commConfigAction.commId);
@@ -202,6 +120,10 @@ export class CommunicationComponent implements OnInit {
       this.setClickedRow(null);
       // console.log('addNewClient result: ', this.closeResult);
     });
+  }
+
+  private setClickedRow(index) {
+    this.selectedRow = index;
   }
 
   private configureProgramModal(commId) {
@@ -309,18 +231,4 @@ export class CommunicationComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
-}
-
-export class CommunicationSortCriteria {
-  sortColumn: string;
-  sortDirection: string;
-}
-
-export class CommunicationConfigAction {
-  constructor(id: string, type: string) {
-    this.commId = id;
-    this.configType = type;
-  }
-  commId: string;
-  configType: string;
 }
