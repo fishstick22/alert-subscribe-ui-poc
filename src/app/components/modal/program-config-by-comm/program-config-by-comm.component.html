@@ -13,12 +13,7 @@
     </div>
     
     <div class="modal-body">
-      <div class="form-group">
-        <label for="programName">Choose Program</label>
-        <select id="program" name="program" [(ngModel)]="selectedProgram" required>
-          <option *ngFor="let p of programs" [ngValue]="p.id">{{p.name}}</option>
-        </select>
-      </div>
+
       <table class="table table-responsive table-sm table-striped table-bordered table-hover">
         <caption></caption>
         <thead class="bg-gradient-dark text-white">
@@ -38,19 +33,18 @@
         <tbody>
           <tr *ngFor="let pc of programConfigurations; let i = index" 
               [class.table-success]="i == lastPgmConfigRow">
-            <td><span class="badge badge-secondary">{{pc.id}}</span></td>
-            <td *ngIf="i !== lastPgmConfigRow">
+            <td>
+              <span *ngIf="i !== lastPgmConfigRow" class="badge badge-secondary">{{pc.id}}</span>
+              <span *ngIf="i === lastPgmConfigRow">
+                  <i class="fa fa-file-o clickable" aria-hidden="true" 
+                     title="New Program configuration for {{communication.name}}"></i></span></td>
+            <td>
+              <span *ngIf="i !== lastPgmConfigRow">
                 <input type="text" class="form-control form-control-sm" name="name" [(ngModel)]="pc.name" readonly
-                id="pgmConfigName" aria-describedby="pgmConfigNamelHelp" placeholder="Enter Program Configuration Name">
-            </td>
-            <td *ngIf="i === lastPgmConfigRow">
-              <input type="text" class="form-control form-control-sm" name="name" [(ngModel)]="pc.name" required
-              id="pgmConfigName" aria-describedby="pgmConfigNamelHelp" placeholder="Enter Program Configuration Name">
-            </td>
-            <!-- TODO Make this custom select component NgModel aware
-              http://blog.rangle.io/angular-2-ngmodel-and-custom-form-components/
-              or http://almerosteyn.com/2016/04/linkup-custom-control-to-ngcontrol-ngmodel
-            -->
+                       id="pgmConfigName" aria-describedby="pgmConfigNameHelp" placeholder="Enter Program Configuration Name"></span>
+              <span *ngIf="i === lastPgmConfigRow">
+                <input type="text" class="form-control form-control-sm" name="name" [(ngModel)]="pc.name" required
+                       id="pgmConfigName" aria-describedby="pgmConfigNameHelp" placeholder="Enter Program Configuration Name"></span></td>
             <td><app-select-channel-priority 
                   id="chanEmailPriority" name="chanEmailPriority" [(ngModel)]="pc.chanEmailPriority"
                   [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></app-select-channel-priority></td>
@@ -80,6 +74,12 @@
           </tr>
         </tbody>
       </table>
+      <div class="form-group">
+          <label for="programName">Choose Program</label>
+          <select id="program" name="program" [(ngModel)]="selectedProgram" required>
+            <option *ngFor="let p of programs" [ngValue]="p.id">{{p.name}}</option>
+          </select>
+        </div>
     </div>
 
     <div class="modal-footer">
@@ -89,7 +89,7 @@
         <span class="float-left">Some instructional content or condition message goes here: {{newPgmConfig.effective}}</span>
         <div class="float-right">
             <button type="submit" class="btn btn-outline-dark" [disabled]="!programConfigurationViaCommunicationForm.valid">Save</button>
-            <button type="button" class="btn btn-outline-dark" (click)="configureProgramModal.close('Close click')">Close</button>
+            <button type="button" class="btn btn-outline-dark" (click)="configureProgramModal.close('Close click')">Cancel</button>
         </div>
       </div>
       
