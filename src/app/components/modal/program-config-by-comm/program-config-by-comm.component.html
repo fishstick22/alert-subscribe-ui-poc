@@ -36,7 +36,7 @@
             <td>
               <span *ngIf="i !== lastPgmConfigRow" class="badge badge-secondary">{{pc.id}}</span>
               <span *ngIf="i === lastPgmConfigRow">
-                  <i class="fa fa-plus-square-o clickable" aria-hidden="true" 
+                  <i class="fa fa-file-o clickable" aria-hidden="true" 
                      title="New Program configuration for {{communication.name}}"></i></span></td>
             <td>
               <span *ngIf="i !== lastPgmConfigRow">
@@ -89,7 +89,7 @@
         <span class="float-left">Some instructional content or condition message goes here: {{newPgmConfig.effective}}</span>
         <div class="float-right">
             <button type="submit" class="btn btn-outline-dark" [disabled]="!programConfigurationViaCommunicationForm.valid">Save</button>
-            <button type="button" class="btn btn-outline-dark" (click)="configureProgramModal.close('Close click')">Close</button>
+            <button type="button" class="btn btn-outline-dark" (click)="configureProgramModal.close('Close click')">Cancel</button>
         </div>
       </div>
       
