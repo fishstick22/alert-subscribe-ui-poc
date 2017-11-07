@@ -22,6 +22,7 @@ export class CommActionTableComponent implements OnInit {
 
   @Output() selRowOut = new EventEmitter<any>();
   @Output() commConfigAction = new EventEmitter<any>();
+  @Output() displayCommCurrent = new EventEmitter<any>();
 
   commIdSearch: string = '';
   commIdSearchLast: string = '';
@@ -35,6 +36,7 @@ export class CommActionTableComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log('CommActionTableComponent:', this.communications);
   }
 
   setClickedRow(index) {
@@ -44,6 +46,7 @@ export class CommActionTableComponent implements OnInit {
 
   private configureCommunication(commConfigAction: CommunicationConfigAction) {
     this.commConfigAction.emit(commConfigAction);
+    this.displayCommCurrent.emit(this.displayComm);
   }
 
   onSorted($event) {

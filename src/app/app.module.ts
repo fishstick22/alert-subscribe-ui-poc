@@ -67,6 +67,7 @@ import { SortableTableDirective }      from 'app/directives/sortable-table.direc
 import { CommActionsPopoverComponent } from 'app/components/routes/communication/actions-popover/actions-popover.component';
 import { ProgActionsPopoverComponent } from 'app/components/routes/program/actions-popover/actions-popover.component';
 import { CommActionTableComponent }    from 'app/components/routes/communication/action-table/action-table.component';
+import { ClientActionTableComponent }  from 'app/components/routes/client/action-table/action-table.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { CommActionTableComponent }    from 'app/components/routes/communication
 
     CommActionsPopoverComponent,
     ProgActionsPopoverComponent,
-    CommActionTableComponent
+    CommActionTableComponent,
+    ClientActionTableComponent
   ],
   imports: [
     BrowserModule,

@@ -4,3 +4,8 @@ export class Client {
     name: string;
     clientConfiguration: number[];
 }
+
+export class ClientSortCriteria {
+  sortColumn: string;
+  sortDirection: string;
+}

@@ -13,6 +13,8 @@ import { Communication }            from 'app/model/communication';
 export class ClientConfigByCommComponent implements OnInit {
 
   @Input() communication: Communication;
+  @Input() communications: Communication[];
+
   @Input() clients: Client[];
   @Input() clientConfigurations: ClientConfiguration[];
 
@@ -22,6 +24,7 @@ export class ClientConfigByCommComponent implements OnInit {
     prevClientConfig: ClientConfiguration;
 
     selectedClient: number;
+    displayClient: Client[];
     // lastClientConfigRow: number;
 
     constructor(public configureClientModal: NgbActiveModal) { }
@@ -29,6 +32,7 @@ export class ClientConfigByCommComponent implements OnInit {
   ngOnInit() {
     console.log('ClientConfigByCommComponent init: ');
     console.log(this.communication);
+    console.log(this.clients);
     console.log(this.clientConfigurations);
     // if (this.clientConfigurations.length === 0) { // no existing configs for comm
     //   this.addClientConfig();
@@ -40,6 +44,7 @@ export class ClientConfigByCommComponent implements OnInit {
     //     this.addClientConfig(this.clientConfigurations[indxOfLast]);
     //   }
     // }
+    this.displayClient = this.clients;
   }
 
   addClientConfig(lastClientConfig?: ClientConfiguration) {
