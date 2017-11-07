@@ -104,7 +104,7 @@ export class CommunicationComponent implements OnInit {
     const selectedComm: Communication  = this.findCommunication(commId);
     // modalComp.name = 'Configure Clients';
     modalComp.communication = selectedComm;
-    modalComp.communications = this.communications;
+    // modalComp.communications = this.communications;
 
     modalComp.clients = this.clients;
     modalComp.clientConfigurations = this.findClientConfigurations(selectedComm);

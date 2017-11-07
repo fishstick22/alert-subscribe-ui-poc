@@ -6,7 +6,8 @@ import { AddProgramComponent }    from 'app/components/modal/addprogram/addprogr
 import { EditProgramComponent }   from 'app/components/modal/editprogram/editprogram.component';
 import { DeleteProgramComponent } from 'app/components/modal/deleteprogram/deleteprogram.component';
 
-import { Program }                from 'app/model/program';
+import { Program,
+         ProgramConfigAction }    from 'app/model/program';
 import { DataApiService }         from 'app/services/data-api/data-api.service';
 
 @Component({
@@ -162,13 +163,4 @@ export class ProgramComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
-}
-
-export class ProgramConfigAction {
-  constructor(id: string, type: string) {
-    this.progId = id;
-    this.configType = type;
-  }
-  progId: string;
-  configType: string;
 }

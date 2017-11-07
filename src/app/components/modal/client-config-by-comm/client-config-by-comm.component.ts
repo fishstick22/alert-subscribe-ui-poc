@@ -13,7 +13,7 @@ import { Communication }            from 'app/model/communication';
 export class ClientConfigByCommComponent implements OnInit {
 
   @Input() communication: Communication;
-  @Input() communications: Communication[];
+ // @Input() communications: Communication[];
 
   @Input() clients: Client[];
   @Input() clientConfigurations: ClientConfiguration[];
@@ -25,7 +25,8 @@ export class ClientConfigByCommComponent implements OnInit {
 
     selectedClient: number;
     displayClient: Client[];
-    // lastClientConfigRow: number;
+    lastClientConfigRow: number;
+    configureState: 'start' | 'pick' | 'configure' | 'save';
 
     constructor(public configureClientModal: NgbActiveModal) { }
 
@@ -44,28 +45,41 @@ export class ClientConfigByCommComponent implements OnInit {
     //     this.addClientConfig(this.clientConfigurations[indxOfLast]);
     //   }
     // }
-    this.displayClient = this.clients;
+    // this.displayClient = this.clients;
+    this.displayClient = [];
+    this.configureState = 'start';
   }
 
-  addClientConfig(lastClientConfig?: ClientConfiguration) {
+  addClientConfig() {
 
     const today = new Date();
     const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
 
-    if (lastClientConfig) {
-      // adding a new row, expiring the previous, copying the previous values
-      lastClientConfig.expiration = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-      this.newClientConfig = new ClientConfiguration(lastClientConfig);
-
-    } else {
-      // this is a first-time row for this communication, set some defaults
+    if (this.configureState === 'start') {
       this.newClientConfig = new ClientConfiguration();
-
+      this.newClientConfig.effective = tomorrow.getFullYear() + '-' + (tomorrow.getMonth() + 1) + '-' + tomorrow.getDate();
+      this.newClientConfig.expiration = '9999-12-31';
+      this.newClientConfig.client = new Client();
+      this.newClientConfig.communication = this.communication;
+      this.lastClientConfigRow = this.clientConfigurations.length;
+      this.clientConfigurations[this.clientConfigurations.length] = this.newClientConfig;
+      this.configureState = 'pick';
     }
 
-    this.newClientConfig.effective = tomorrow.getFullYear() + '-' + (tomorrow.getMonth() + 1) + '-' + tomorrow.getDate();
-    this.newClientConfig.expiration = '9999-12-31';
+    // if (lastClientConfig) {
+    //   // adding a new row, expiring the previous, copying the previous values
+    //   lastClientConfig.expiration = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    //   this.newClientConfig = new ClientConfiguration(lastClientConfig);
+
+    // } else {
+    //   // this is a first-time row for this communication, set some defaults
+    //   this.newClientConfig = new ClientConfiguration();
+
+    // }
+
+    // this.newClientConfig.effective = tomorrow.getFullYear() + '-' + (tomorrow.getMonth() + 1) + '-' + tomorrow.getDate();
+    // this.newClientConfig.expiration = '9999-12-31';
 
     // this.lastClientConfigRow = this.clientConfigurations.length;
     // this.clientConfigurations[this.clientConfigurations.length] = this.newClientConfig;

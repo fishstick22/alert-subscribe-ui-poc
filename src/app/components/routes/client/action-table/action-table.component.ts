@@ -91,21 +91,40 @@ export class ClientActionTableComponent implements OnInit {
     } else {
       console.log('just adding to what was there');
       if (this.clientNameSearch !== '') {
-        this.displayClient = this.displayClient.filter(client => {
-          return this.containsString(client.name, this.clientNameSearch);
-        });
+        // we may be starting empty, if so use the full array first
+        if (this.displayClient.length === 0) {
+          this.displayClient = this.clients.filter(client => {
+            return this.containsString(client.name, this.clientNameSearch);
+          });
+        } else {
+          this.displayClient = this.displayClient.filter(client => {
+            return this.containsString(client.name, this.clientNameSearch);
+          });
+        }
       }
     }
     if (this.clientCodeSearch !== '') {
-      this.displayClient = this.displayClient.filter(client => {
-        return this.containsString(client.code, this.clientCodeSearch);
-      });
+      if (this.displayClient.length === 0) {
+        this.displayClient = this.clients.filter(client => {
+          return this.containsString(client.code, this.clientCodeSearch);
+        });
+      } else {
+        this.displayClient = this.displayClient.filter(client => {
+          return this.containsString(client.code, this.clientCodeSearch);
+        });
+      }
     }
     // least likely to search on client id specifically
     if (this.clientIdSearch !== '') {
-      this.displayClient = this.displayClient.filter(client => {
-        return (String(client.id).indexOf(this.clientIdSearch) !== -1 );
-      });
+      if (this.displayClient.length === 0) {
+        this.displayClient = this.clients.filter(client => {
+          return (String(client.id).indexOf(this.clientIdSearch) !== -1 );
+        });
+      } else {
+        this.displayClient = this.displayClient.filter(client => {
+          return (String(client.id).indexOf(this.clientIdSearch) !== -1 );
+        });
+      }
     }
   }
 

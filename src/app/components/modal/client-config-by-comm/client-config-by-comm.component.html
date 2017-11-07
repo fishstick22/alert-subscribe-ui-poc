@@ -34,8 +34,12 @@
               </thead>
               <tbody>
                 <tr *ngFor="let cc of clientConfigurations; let i = index"> 
-                    <!--[class.table-success]="i == lastPgmConfigRow">-->
-                  <td><span class="badge badge-secondary">{{cc.client.id}}</span></td>
+                  
+                  <td>
+                    <span *ngIf="i !== lastClientConfigRow" class="badge badge-secondary">{{cc.client.id}}</span>
+                    <span *ngIf="i === lastClientConfigRow">
+                      <i class="fa fa-file-o clickable" aria-hidden="true" 
+                         title="New Client configuration for {{communication.name}}"></i></span></td>
                   <td><span >{{cc.client.code}}</span></td>
                   <td><span >{{cc.client.name}}</span></td>
                   <td><span >{{cc.chanEmailPriority}}</span></td>
@@ -47,21 +51,11 @@
                   <td><span >{{cc.effective}}</span></td>
                   <td><span >{{cc.expiration}}</span></td>
                 </tr>
-                <tr>
+                <tr *ngIf="configureState === 'start'">
                   <td>
                     <i class="fa fa-plus-square-o clickable" aria-hidden="true" 
                       (click)="addClientConfig()" title="Add New Client Configuration to {{communication.name}}"></i>
                   </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
                 </tr>
               </tbody>
             </table>
@@ -70,7 +64,7 @@
 
     <div id=ActionTable>
 
-      <app-client-action-table 
+      <app-client-action-table  *ngIf="configureState === 'pick'" 
         [clients]="clients"
         [displayClient]="displayClient"
         [showClientId]="true"

@@ -1,7 +1,8 @@
 import { Component, OnInit, Input,
          Output, EventEmitter }       from '@angular/core';
 
-import { ProgramConfigAction }        from 'app/components/routes/program/program.component';
+import { Program,
+          ProgramConfigAction }    from 'app/model/program';
 
 @Component({
   selector: 'app-prog-actions-popover',
