@@ -70,13 +70,13 @@ export class ProgramConfigByCommComponent implements OnInit {
 
   }
 
-  updateDateValue(newDate, pc: ProgramConfiguration, dateType: string) {
-    console.log('ProgramConfigByCommComponent updateDateValue: ', newDate.newDateValue, pc, dateType);
+  updateDateValue(newDateValue, pc: ProgramConfiguration, dateType: string) {
+    console.log('ProgramConfigByCommComponent updateDateValue: ', newDateValue, pc, dateType);
     if (dateType === 'effective') {
-      pc.effective = newDate.newDateValue;
+      pc.effective = newDateValue;
     }
     if (dateType === 'expiration') {
-      pc.expiration = newDate.newDateValue;
+      pc.expiration = newDateValue;
     }
   }
 
