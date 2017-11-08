@@ -28,7 +28,7 @@
 </thead>
 <tbody>
   <tr *ngFor="let client of displayClient; let i = index"
-      title="Click to configure {{client.name}} Program settings" 
+      title="Click to configure {{client.name}} {{displayCommunication}} settings" 
       (click)="setClickedRow(i); " [class.table-info]="i == selectedRow">
     <td *ngIf="showClientId">
       <span class="badge badge-secondary clickable"
