@@ -19,7 +19,8 @@ import { NgbDateStruct }            from '@ng-bootstrap/ng-bootstrap';
     [excludeBeforeClick]="excludeBeforeClick">
 
     <input name="dp" [(ngModel)]="dateModel" class="form-control form-control-sm" placeholder="yyyy-mm-dd"
-           (click)="d.toggle()" (ngModelChange)="saveDate($event)" ngbDatepicker #d="ngbDatepicker">
+           (click)="d.toggle()" (ngModelChange)="saveDate($event)" ngbDatepicker #d="ngbDatepicker"
+           [required]="required">
 <!--
     <button class="input-group-addon" (click)="d.toggle()"  type="button">
       <img src="assets/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
@@ -48,6 +49,7 @@ export class DatepickerPopupComponent implements OnInit {
   private excludeBeforeClick = false;
 
   @Input() dateValue: string;
+  @Input() required: true;
   @Output() newDateValue = new EventEmitter<any>();
 
   dateModel: NgbDateStruct;
@@ -61,7 +63,10 @@ export class DatepickerPopupComponent implements OnInit {
   }
 
   saveDate(newDateValue: NgbDateStruct) {
-    const newDate: string = newDateValue.year + '-' + newDateValue.month + '-' + newDateValue.day;
+    const newDate: string =
+      (newDateValue) ?
+        newDateValue.year + '-' + newDateValue.month + '-' + newDateValue.day :
+        '';
     console.log('DatepickerPopupComponent saveDate: ', newDate );
 
     this.newDateValue.emit({

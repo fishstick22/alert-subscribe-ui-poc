@@ -32,7 +32,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let pc of programConfigurations; let i = index" 
-              [class.table-success]="i == lastPgmConfigRow">
+              [class.table-info]="i == lastPgmConfigRow">
             <td>
               <span *ngIf="i !== lastPgmConfigRow" class="badge badge-secondary">{{pc.id}}</span>
               <span *ngIf="i === lastPgmConfigRow">
@@ -47,29 +47,29 @@
                        id="pgmConfigName" aria-describedby="pgmConfigNameHelp" placeholder="Enter Program Configuration Name"></span></td>
             <td><app-select-channel-priority 
                   id="chanEmailPriority" name="chanEmailPriority" [(ngModel)]="pc.chanEmailPriority"
-                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></app-select-channel-priority></td>
+                  [lastConfigRow]="i !== lastPgmConfigRow" ></app-select-channel-priority></td>
             <td><app-select-channel-priority 
                   id="chanIvrPriority" name="chanIvrPriority" [(ngModel)]="pc.chanIvrPriority"
-                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></app-select-channel-priority></td>
+                  [lastConfigRow]="i !== lastPgmConfigRow" ></app-select-channel-priority></td>
             <td><app-select-channel-priority 
                   id="chanSmsPriority" name="chanSmsPriority" [(ngModel)]="pc.chanSmsPriority"
-                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></app-select-channel-priority></td>  
+                  [lastConfigRow]="i !== lastPgmConfigRow" ></app-select-channel-priority></td>  
             <td><app-select-channel-priority 
                   id="chanMailPriority" name="chanMailPriority" [(ngModel)]="pc.chanMailPriority"
-                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></app-select-channel-priority></td> 
+                  [lastConfigRow]="i !== lastPgmConfigRow" ></app-select-channel-priority></td> 
             <td><app-select-channel-priority 
                   id="chanMobilePriority" name="chanMobilePriority" [(ngModel)]="pc.chanMobilePriority"
-                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></app-select-channel-priority></td> 
+                  [lastConfigRow]="i !== lastPgmConfigRow" ></app-select-channel-priority></td> 
             <td><app-select-channel-mandatory
                   id="chanMandatory" name="chanMandatory" [(ngModel)]="pc.chanMandatory"
-                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow" ></app-select-channel-mandatory></td>
+                  [lastConfigRow]="i !== lastPgmConfigRow" ></app-select-channel-mandatory></td>
             <td><app-date-eff-exp
                   dateType="effective" [progConfig]="pc"
-                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow"
+                  [lastConfigRow]="i !== lastPgmConfigRow"
                   (newDateValue)="updateDateValue($event, pc, 'effective')"></app-date-eff-exp></td>
             <td><app-date-eff-exp
                   dateType="expiration" [progConfig]="pc"
-                  [i]="i" [lastPgmConfigRow]="lastPgmConfigRow"
+                  [lastConfigRow]="i !== lastPgmConfigRow"
                   (newDateValue)="updateDateValue($event, pc, 'expiration')"></app-date-eff-exp></td>
           </tr>
         </tbody>

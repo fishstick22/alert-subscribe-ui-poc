@@ -50,11 +50,16 @@ export class ClientConfigByCommComponent implements OnInit {
     this.configureState = 'start';
   }
 
-  addClientConfig() {
+  addClientConfig(client?: Client) {
 
     const today = new Date();
     const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
+
+    if (this.newClientConfig && this.configureState === 'pick') {
+      this.newClientConfig.client = client;
+      this.configureState = 'configure';
+    }
 
     if (this.configureState === 'start') {
       this.newClientConfig = new ClientConfiguration();
@@ -66,6 +71,7 @@ export class ClientConfigByCommComponent implements OnInit {
       this.clientConfigurations[this.clientConfigurations.length] = this.newClientConfig;
       this.configureState = 'pick';
     }
+
 
     // if (lastClientConfig) {
     //   // adding a new row, expiring the previous, copying the previous values
@@ -100,12 +106,11 @@ export class ClientConfigByCommComponent implements OnInit {
     console.log('ClientConfigByCommComponent save');
     console.log(this.newClientConfig, ' client id: ', this.selectedClient);
 
-    this.newClientConfig.client = this.findClient(this.selectedClient);
-    this.newClientConfig.communication = this.communication;
+    // this.newClientConfig.client = this.findClient(this.selectedClient);
+    // this.newClientConfig.communication = this.communication;
 
     const modalResult: ClientConfigModalResult = {
-      prevProgConfig: this.prevClientConfig,
-      newProgConfig: this.newClientConfig
+      newClientConfig: this.newClientConfig
     };
 
     this.configureClientModal.close({resultTxt: this.SAVESUCCESS, modalResult: modalResult});
@@ -118,6 +123,5 @@ export class ClientConfigByCommComponent implements OnInit {
 }
 
 export class ClientConfigModalResult {
-  prevProgConfig: ClientConfiguration;
-  newProgConfig: ClientConfiguration;
+  newClientConfig: ClientConfiguration;
 }

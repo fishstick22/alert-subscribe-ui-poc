@@ -30,7 +30,7 @@ appSortableTable (sorted)="onSorted($event)">
   <tr *ngFor="let communication of displayComm; let i = index"
        title="" 
       (click)="setClickedRow(i)" 
-      [class.table-success]="i == selectedRow">
+      [class.table-info]="i == selectedRow">
     <td *ngIf="showCommId"><span class="badge badge-secondary">{{communication.id}}</span></td>
     <td *ngIf="showCommName"><span>{{communication.name}}</span></td>
     <td *ngIf="showCommDesc"><span>{{communication.description}}</span></td>

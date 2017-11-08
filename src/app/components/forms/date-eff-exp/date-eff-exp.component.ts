@@ -6,29 +6,29 @@ import { ProgramConfiguration }     from 'app/model/program-configuration';
 @Component({
   selector: 'app-date-eff-exp',
   template: `
-    <div *ngIf="i !== lastPgmConfigRow">
+    <div *ngIf="lastConfigRow">
       <!-- not the last (new) row, this could be the current effective row -->
 
-      <div *ngIf="dateType == 'effective'" class="flex-justify-center">
+      <div *ngIf="dateType === 'effective'" class="flex-justify-center">
         <!-- the effective date of the current effective row -->
         <input class="form-control form-control-sm" value="{{progConfig.effective}}" readonly>
       </div>
 
-      <div *ngIf="dateType == 'expiration'" class="flex-justify-center">
+      <div *ngIf="dateType === 'expiration'" class="flex-justify-center">
         <!-- the expiration date of the current/previous row -->
         <input class="form-control form-control-sm" value="{{progConfig.expiration}}" readonly>
       </div>
     </div>
 
-    <div *ngIf="i === lastPgmConfigRow" >
+    <div *ngIf="!lastConfigRow" >
       <!-- this _is_ the last (new) row that will be inserted -->
 
-      <div *ngIf="dateType == 'effective'" class="flex-justify-center">
+      <div *ngIf="dateType === 'effective'" class="flex-justify-center">
         <!-- set the effective date for the new row -->
         <app-datepicker-popup [dateValue]="progConfig.effective"
           (newDateValue)="updateDateValue($event)"></app-datepicker-popup></div>
 
-      <div *ngIf="dateType == 'expiration'" class="flex-justify-center">
+      <div *ngIf="dateType === 'expiration'" class="flex-justify-center">
         <!-- the expiration date of the new row -->
         <input class="form-control form-control-sm" value="{{progConfig.expiration}}" readonly>
       </div>
@@ -44,8 +44,8 @@ export class DateEffExpComponent implements OnInit {
 
   @Input() dateType: string;
   @Input() progConfig: ProgramConfiguration;
-  @Input() i: number;
-  @Input() lastPgmConfigRow: number;
+
+  @Input() lastConfigRow: boolean;
 
   @Output() newDateValue = new EventEmitter<any>();
 

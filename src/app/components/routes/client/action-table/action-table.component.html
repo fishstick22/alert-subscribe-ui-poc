@@ -10,7 +10,7 @@
     <th *ngIf="showAction">Actions</th>
   </tr>
   <tr class="thead-light"><!-- search/filter header row -->
-    <th width="7%" *ngIf="showClientId">
+    <th width="10%" *ngIf="showClientId">
       <input type="text" id="seachClientId" class="form-control form-control-sm" placeholder="search"
              name="clientId" [(ngModel)]="clientIdSearch" (keyup)="searchClientId()"/>
     </th>
@@ -29,8 +29,10 @@
 <tbody>
   <tr *ngFor="let client of displayClient; let i = index"
       title="Click to configure {{client.name}} Program settings" 
-      (click)="setClickedRow(i); configureClientModal(client.id)" [class.bg-gradient-success]="i == selectedRow">
-    <td *ngIf="showClientId"><span class="badge badge-secondary">{{client.id}}</span></td>
+      (click)="setClickedRow(i); " [class.table-info]="i == selectedRow">
+    <td *ngIf="showClientId">
+      <span class="badge badge-secondary clickable"
+           (click)="selectClient(client)">{{client.id}}</span></td>
     <td *ngIf="showClientCode"><span>{{client.code}}</span></td>
     <td *ngIf="showClientName"><span>{{client.name}}</span></td>
     <td *ngIf="showStatus"><span *ngIf="client.id === 142"><i class="fa fa-check" aria-hidden="true" title="{{client.name}} Configured (Date)"></i></span></td>

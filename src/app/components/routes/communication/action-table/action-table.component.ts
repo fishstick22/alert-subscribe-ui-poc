@@ -40,7 +40,11 @@ export class CommActionTableComponent implements OnInit {
   }
 
   setClickedRow(index) {
-    this.selectedRow = index;
+    if (this.selectedRow === index) {
+      this.selectedRow = null;
+    } else {
+      this.selectedRow = index;
+    }
     this.selRowOut.emit(index);
   }
 

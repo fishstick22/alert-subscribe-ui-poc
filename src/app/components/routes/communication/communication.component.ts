@@ -104,14 +104,25 @@ export class CommunicationComponent implements OnInit {
     const selectedComm: Communication  = this.findCommunication(commId);
     // modalComp.name = 'Configure Clients';
     modalComp.communication = selectedComm;
-    // modalComp.communications = this.communications;
-
     modalComp.clients = this.clients;
     modalComp.clientConfigurations = this.findClientConfigurations(selectedComm);
 
     modalRef.result.then((result) => {
       if (result.resultTxt === modalComp.SAVESUCCESS) {
         console.log('configureClientModal result: ', result.modalResult);
+        this.closeResult = `Closed with: ${result.resultTxt}`;
+        if (result.modalResult) {
+          const modalResult: ClientConfigModalResult = result.modalResult;
+          // if (modalResult.prevClientConfig) {
+          //   this.updateClientConfiguration(modalResult.prevClientConfig);
+          // }
+          if (modalResult.newClientConfig) {
+            this.addClientConfiguration(modalResult.newClientConfig);
+          }
+        } else {
+          // this would be some kind of exception
+          console.log('CommunicationComponent configureProgramModal bad result: ', result.modalResult);
+        }
       } else {
         this.closeResult = `Closed with: ${result}`;
       }
@@ -120,7 +131,7 @@ export class CommunicationComponent implements OnInit {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       this.setClickedRow(null);
-      // console.log('addNewClient result: ', this.closeResult);
+      console.log('addNewClientConfig result: ', this.closeResult);
     });
   }
 
@@ -164,7 +175,7 @@ export class CommunicationComponent implements OnInit {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       this.setClickedRow(null);
-      console.log('addNewProgram result: ', this.closeResult);
+      console.log('addNewProgramConfig result: ', this.closeResult);
     });
   }
 
@@ -197,6 +208,12 @@ export class CommunicationComponent implements OnInit {
         return true;
       }
     });
+  }
+
+  private addClientConfiguration(clientConfiguration: ClientConfiguration): void {
+    this.dataApiService.createClientConfiguration(clientConfiguration)
+      .then(pc => console.log('addClientConfiguration:', clientConfiguration, this.programConfigurations))
+      .catch(error =>  console.log('addClientConfiguration error: ', error));
   }
 
   private findProgramConfigurations(id): ProgramConfiguration[] {

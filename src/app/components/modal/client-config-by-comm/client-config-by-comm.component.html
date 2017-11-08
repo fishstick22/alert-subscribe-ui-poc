@@ -33,23 +33,44 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let cc of clientConfigurations; let i = index"> 
+                <tr *ngFor="let cc of clientConfigurations; let i = index"
+                    [class.table-info]="i == lastClientConfigRow"> 
                   
                   <td>
                     <span *ngIf="i !== lastClientConfigRow" class="badge badge-secondary">{{cc.client.id}}</span>
-                    <span *ngIf="i === lastClientConfigRow">
+                    <span *ngIf="i === lastClientConfigRow && !cc.client.id">
                       <i class="fa fa-file-o clickable" aria-hidden="true" 
-                         title="New Client configuration for {{communication.name}}"></i></span></td>
+                         title="New Client configuration for {{communication.name}}"></i></span>
+                    <span *ngIf="i === lastClientConfigRow && cc.client.id" class="badge badge-primary">{{cc.client.id}}</span>
+                  </td>
                   <td><span >{{cc.client.code}}</span></td>
-                  <td><span >{{cc.client.name}}</span></td>
-                  <td><span >{{cc.chanEmailPriority}}</span></td>
-                  <td><span >{{cc.chanIvrPriority}}</span></td>
-                  <td><span >{{cc.chanSmsPriority}}</span></td>
-                  <td><span >{{cc.chanMailPriority}}</span></td>
-                  <td><span >{{cc.chanMobilePriority}}</span></td>
-                  <td><span >{{cc.chanMandatory}}</span></td>
-                  <td><span >{{cc.effective}}</span></td>
-                  <td><span >{{cc.expiration}}</span></td>
+                  <td width="20%"><span >{{cc.client.name}}</span></td>
+                  <td><app-select-channel-priority 
+                    id="chanEmailPriority" name="chanEmailPriority" [(ngModel)]="cc.chanEmailPriority"
+                    [lastConfigRow]="i !== lastClientConfigRow" ></app-select-channel-priority></td>
+              <td><app-select-channel-priority 
+                    id="chanIvrPriority" name="chanIvrPriority" [(ngModel)]="cc.chanIvrPriority"
+                    [lastConfigRow]="i !== lastClientConfigRow" ></app-select-channel-priority></td>
+              <td><app-select-channel-priority 
+                    id="chanSmsPriority" name="chanSmsPriority" [(ngModel)]="cc.chanSmsPriority"
+                    [lastConfigRow]="i !== lastClientConfigRow" ></app-select-channel-priority></td>  
+              <td><app-select-channel-priority 
+                    id="chanMailPriority" name="chanMailPriority" [(ngModel)]="cc.chanMailPriority"
+                    [lastConfigRow]="i !== lastClientConfigRow" ></app-select-channel-priority></td> 
+              <td><app-select-channel-priority 
+                    id="chanMobilePriority" name="chanMobilePriority" [(ngModel)]="cc.chanMobilePriority"
+                    [lastConfigRow]="i !== lastClientConfigRow" ></app-select-channel-priority></td> 
+              <td><app-select-channel-mandatory
+                    id="chanMandatory" name="chanMandatory" [(ngModel)]="cc.chanMandatory"
+                    [lastConfigRow]="i !== lastClientConfigRow" ></app-select-channel-mandatory></td>
+              <td><app-date-eff-exp
+                    dateType="effective" [progConfig]="cc"
+                    [lastConfigRow]="i !== lastClientConfigRow"
+                    (newDateValue)="updateDateValue($event, cc, 'effective')"></app-date-eff-exp></td>
+              <td><app-date-eff-exp
+                    dateType="expiration" [progConfig]="cc"
+                    [lastConfigRow]="i !== lastClientConfigRow"
+                    (newDateValue)="updateDateValue($event, cc, 'expiration')"></app-date-eff-exp></td>
                 </tr>
                 <tr *ngIf="configureState === 'start'">
                   <td>
@@ -71,9 +92,10 @@
         [showClientCode]="true"
         [showClientName]="true"
         [showStatus]="false"
-        [showAction]="true"
+        [showAction]="false"
         (selRowOut)="setClickedRow($event)"
-        (clientConfigAction)="configureClient($event)">
+        (clientConfigAction)="configureClient($event)"
+        (selectedClient)="addClientConfig($event)">
       </app-client-action-table>
 
     </div>
@@ -85,7 +107,7 @@
       <span class="float-left">Some instructional content or condition message goes here: </span>
       <div class="float-right">
           <button type="submit" class="btn btn-outline-dark" [disabled]="!clientConfigurationViaCommunicationForm.valid">Save</button>
-          <button type="button" class="btn btn-outline-dark" (click)="configureClientModal.close('Close click')">Close</button>
+          <button type="button" class="btn btn-outline-dark" (click)="configureClientModal.close('Close click')">Cancel</button>
       </div>
     </div>
     

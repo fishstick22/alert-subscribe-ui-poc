@@ -18,6 +18,8 @@ export class ClientActionTableComponent implements OnInit {
   @Input() showStatus: boolean = false;
   @Input() showAction: boolean = true;
 
+  @Output() selectedClient = new EventEmitter<Client>();
+
   clientIdSearch: string = '';
   clientIdSearchLast: string = '';
 
@@ -33,6 +35,10 @@ export class ClientActionTableComponent implements OnInit {
 
   ngOnInit() {
     console.log('ClientActionTableComponent onInit...', this.clients, this.displayClient);
+  }
+
+  selectClient(client: Client) {
+    this.selectedClient.emit(client);
   }
 
   onSorted($event) {

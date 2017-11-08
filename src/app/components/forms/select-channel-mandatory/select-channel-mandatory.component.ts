@@ -15,7 +15,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   <div class="flex-justify-right">
     <select id="{{id}}" name="{{name}}" [(ngModel)]="value" required
       class="form-control form-control-sm" (blur)="onBlur()"
-      [disabled]="i !== lastPgmConfigRow">
+      [disabled]="lastConfigRow">
       <option *ngFor="let cmo of chanMandatoryOpts" [ngValue]="cmo">{{cmo}}</option>
     </select>
   </div>
@@ -34,8 +34,8 @@ export class SelectChannelMandatoryComponent implements OnInit, ControlValueAcce
 
   @Input() id: string;
   @Input() name: string;
-  @Input() i: number;
-  @Input() lastPgmConfigRow: number;
+
+  @Input() lastConfigRow: number;
 
   chanMandatoryOpts: string[] = ['No', 'Email', 'IVR', 'SMS'];
   private innerValue: any = '';
