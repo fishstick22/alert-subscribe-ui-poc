@@ -22,6 +22,9 @@ body {
   padding: 3rem 1.5rem;
   text-align: left;
 }
+.clickable { 
+  cursor: pointer; 
+}
 /* http://getbootstrap.com/docs/4.0/content/typography/
 @include media-breakpoint-up(sm) {
   html {

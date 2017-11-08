@@ -13,6 +13,8 @@ import { Communication }            from 'app/model/communication';
 export class ClientConfigByCommComponent implements OnInit {
 
   @Input() communication: Communication;
+ // @Input() communications: Communication[];
+
   @Input() clients: Client[];
   @Input() clientConfigurations: ClientConfiguration[];
 
@@ -22,13 +24,16 @@ export class ClientConfigByCommComponent implements OnInit {
     prevClientConfig: ClientConfiguration;
 
     selectedClient: number;
+    displayClient: Client[];
     lastClientConfigRow: number;
+    configureState: 'start' | 'pick' | 'configure' | 'save';
 
     constructor(public configureClientModal: NgbActiveModal) { }
 
   ngOnInit() {
     console.log('ClientConfigByCommComponent init: ');
     console.log(this.communication);
+    console.log(this.clients);
     console.log(this.clientConfigurations);
     // if (this.clientConfigurations.length === 0) { // no existing configs for comm
     //   this.addClientConfig();
@@ -40,30 +45,50 @@ export class ClientConfigByCommComponent implements OnInit {
     //     this.addClientConfig(this.clientConfigurations[indxOfLast]);
     //   }
     // }
+    // this.displayClient = this.clients;
+    this.displayClient = [];
+    this.configureState = 'start';
   }
 
-  addClientConfig(lastClientConfig?: ClientConfiguration) {
+  addClientConfig(client?: Client) {
 
     const today = new Date();
     const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
 
-    if (lastClientConfig) {
-      // adding a new row, expiring the previous, copying the previous values
-      lastClientConfig.expiration = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-      this.newClientConfig = new ClientConfiguration(lastClientConfig);
-
-    } else {
-      // this is a first-time row for this communication, set some defaults
-      this.newClientConfig = new ClientConfiguration();
-
+    if (this.newClientConfig && this.configureState === 'pick') {
+      this.newClientConfig.client = client;
+      this.configureState = 'configure';
     }
 
-    this.newClientConfig.effective = tomorrow.getFullYear() + '-' + (tomorrow.getMonth() + 1) + '-' + tomorrow.getDate();
-    this.newClientConfig.expiration = '9999-12-31';
+    if (this.configureState === 'start') {
+      this.newClientConfig = new ClientConfiguration();
+      this.newClientConfig.effective = tomorrow.getFullYear() + '-' + (tomorrow.getMonth() + 1) + '-' + tomorrow.getDate();
+      this.newClientConfig.expiration = '9999-12-31';
+      this.newClientConfig.client = new Client();
+      this.newClientConfig.communication = this.communication;
+      this.lastClientConfigRow = this.clientConfigurations.length;
+      this.clientConfigurations[this.clientConfigurations.length] = this.newClientConfig;
+      this.configureState = 'pick';
+    }
 
-    this.lastClientConfigRow = this.clientConfigurations.length;
-    this.clientConfigurations[this.clientConfigurations.length] = this.newClientConfig;
+
+    // if (lastClientConfig) {
+    //   // adding a new row, expiring the previous, copying the previous values
+    //   lastClientConfig.expiration = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    //   this.newClientConfig = new ClientConfiguration(lastClientConfig);
+
+    // } else {
+    //   // this is a first-time row for this communication, set some defaults
+    //   this.newClientConfig = new ClientConfiguration();
+
+    // }
+
+    // this.newClientConfig.effective = tomorrow.getFullYear() + '-' + (tomorrow.getMonth() + 1) + '-' + tomorrow.getDate();
+    // this.newClientConfig.expiration = '9999-12-31';
+
+    // this.lastClientConfigRow = this.clientConfigurations.length;
+    // this.clientConfigurations[this.clientConfigurations.length] = this.newClientConfig;
 
   }
 
@@ -81,12 +106,11 @@ export class ClientConfigByCommComponent implements OnInit {
     console.log('ClientConfigByCommComponent save');
     console.log(this.newClientConfig, ' client id: ', this.selectedClient);
 
-    this.newClientConfig.client = this.findClient(this.selectedClient);
-    this.newClientConfig.communication = this.communication;
+    // this.newClientConfig.client = this.findClient(this.selectedClient);
+    // this.newClientConfig.communication = this.communication;
 
     const modalResult: ClientConfigModalResult = {
-      prevProgConfig: this.prevClientConfig,
-      newProgConfig: this.newClientConfig
+      newClientConfig: this.newClientConfig
     };
 
     this.configureClientModal.close({resultTxt: this.SAVESUCCESS, modalResult: modalResult});
@@ -99,6 +123,5 @@ export class ClientConfigByCommComponent implements OnInit {
 }
 
 export class ClientConfigModalResult {
-  prevProgConfig: ClientConfiguration;
-  newProgConfig: ClientConfiguration;
+  newClientConfig: ClientConfiguration;
 }

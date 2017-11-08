@@ -15,7 +15,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   <div class="flex-justify-right">
     <select id="{{id}}" name="{{name}}" [(ngModel)]="value" required
       class="form-control form-control-sm" (blur)="onBlur()"
-      [disabled]="i !== lastPgmConfigRow">
+      [disabled]="lastConfigRow">
       <option *ngFor="let cpo of channelPriortyOpts" [ngValue]="cpo">{{cpo}}</option>
     </select>
   </div>`,
@@ -34,8 +34,8 @@ export class SelectChannelPriorityComponent implements OnInit, ControlValueAcces
 
   @Input() id: string;
   @Input() name: string;
-  @Input() i: number;
-  @Input() lastPgmConfigRow: number;
+
+  @Input() lastConfigRow: boolean;
 
   channelPriortyOpts: number[] = [0, 1, 2, 3];
 

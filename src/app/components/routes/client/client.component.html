@@ -1,45 +1,13 @@
 <h4>Manage Clients</h4>
-<table class="table table-responsive table-sm table-striped table-bordered table-hover"
-  appSortableTable (sorted)="onSorted($event)">
-  <caption></caption>
-  <thead>
-    <tr class="bg-gradient-dark text-white"><!-- column sorting header row -->
-      <th><app-sortable-column columnName="id" sortDirection="asc">ID</app-sortable-column></th>
-      <th><app-sortable-column columnName="code">Code</app-sortable-column></th>
-      <th><app-sortable-column columnName="name">Name</app-sortable-column></th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-    <tr class="thead-light"><!-- search/filter header row -->
-      <th width="7%">
-        <input type="text" id="seachClientId" class="form-control form-control-sm" placeholder="search"
-               name="clientId" [(ngModel)]="clientIdSearch" (keyup)="searchClientId()"/>
-      </th>
-      <th width="15%">
-        <input type="text" id="seachDescription" class="form-control form-control-sm" placeholder="search Code"
-               name="clientCode" [(ngModel)]="clientCodeSearch" (keyup)="searchClientCode()"/>
-      </th>
-      <th>
-        <input type="text" id="seachName" class="form-control form-control-sm" placeholder="search Name"
-               name="clientName" [(ngModel)]="clientNameSearch" (keyup)="searchClientName()"/>
-      </th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let client of displayClient; let i = index"
-        title="Click to configure {{client.name}} Program settings" 
-        (click)="setClickedRow(i); configureClientModal(client.id)" [class.bg-gradient-success]="i == selectedRow">
-      <td><span class="badge badge-secondary">{{client.id}}</span></td>
-      <td><span>{{client.code}}</span></td>
-      <td><span>{{client.name}}</span></td>
-      <td><span *ngIf="client.id === 142"><i class="fa fa-check" aria-hidden="true" title="{{client.name}} Configured (Date)"></i></span></td>
-      <td></td>
-    </tr>
-  </tbody>
-  <tfoot></tfoot>
-</table>
-        
-    
-
+<app-client-action-table 
+  [clients]="clients"
+  [displayClient]="displayClient"
+  [showClientId]="true"
+  [showClientCode]="true"
+  [showClientName]="true"
+  [showStatus]="true"
+  [showAction]="true"
+  (selRowOut)="setClickedRow($event)"
+  (clientConfigAction)="configureClient($event)">
+</app-client-action-table>
+<!-- TODO this can probably get moved into the component -->
