@@ -12,6 +12,7 @@ export class ClientActionTableComponent implements OnInit {
 
   @Input() clients: Client[];
   @Input() displayClient: Client[];
+  @Input() displayCommunication: string = 'Communication';
   @Input() showClientId: boolean = true;
   @Input() showClientCode: boolean = true;
   @Input() showClientName: boolean = true;

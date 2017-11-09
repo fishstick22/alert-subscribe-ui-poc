@@ -68,6 +68,11 @@ import { CommActionsPopoverComponent } from 'app/components/routes/communication
 import { ProgActionsPopoverComponent } from 'app/components/routes/program/actions-popover/actions-popover.component';
 import { CommActionTableComponent }    from 'app/components/routes/communication/action-table/action-table.component';
 import { ClientActionTableComponent }  from 'app/components/routes/client/action-table/action-table.component';
+import { DragDropComponent } from './components/test/drag-drop/drag-drop.component';
+import { DragDropService }         from 'app/services/drag-drop.service';
+import { DraggableDirective } from './directives/draggable.directive';
+import { DroppableDirective } from './directives/droppable.directive';
+import { BootstrapGradientsComponent } from './components/test/bootstrap-gradients/bootstrap-gradients.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +106,11 @@ import { ClientActionTableComponent }  from 'app/components/routes/client/action
     CommActionsPopoverComponent,
     ProgActionsPopoverComponent,
     CommActionTableComponent,
-    ClientActionTableComponent
+    ClientActionTableComponent,
+    DragDropComponent,
+    DraggableDirective,
+    DroppableDirective,
+    BootstrapGradientsComponent
   ],
   imports: [
     BrowserModule,
@@ -126,6 +135,7 @@ import { ClientActionTableComponent }  from 'app/components/routes/client/action
     ProgramService,
     ProgramConfigurationService,
     SortableColumnService,
+    DragDropService,
     { provide: APP_CONFIG, useValue: AppConfig }
   ],
   bootstrap: [AppComponent]

@@ -6,7 +6,7 @@ import { ProgramConfiguration }     from 'app/model/program-configuration';
 @Component({
   selector: 'app-date-eff-exp',
   template: `
-    <div *ngIf="lastConfigRow">
+    <div *ngIf="!lastConfigRow">
       <!-- not the last (new) row, this could be the current effective row -->
 
       <div *ngIf="dateType === 'effective'" class="flex-justify-center">
@@ -20,7 +20,7 @@ import { ProgramConfiguration }     from 'app/model/program-configuration';
       </div>
     </div>
 
-    <div *ngIf="!lastConfigRow" >
+    <div *ngIf="lastConfigRow" >
       <!-- this _is_ the last (new) row that will be inserted -->
 
       <div *ngIf="dateType === 'effective'" class="flex-justify-center">
@@ -56,8 +56,6 @@ export class DateEffExpComponent implements OnInit {
 
   updateDateValue(newDate) {
     console.log('DateEffExpComponent updateDateValue: ', newDate.newDateValue);
-    this.newDateValue.emit({
-      newDateValue: newDate.newDateValue
-    });
+    this.newDateValue.emit(newDate.newDateValue);
   }
 }

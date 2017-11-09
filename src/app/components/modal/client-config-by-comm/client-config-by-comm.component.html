@@ -46,31 +46,43 @@
                   <td><span >{{cc.client.code}}</span></td>
                   <td width="20%"><span >{{cc.client.name}}</span></td>
                   <td><app-select-channel-priority 
-                    id="chanEmailPriority" name="chanEmailPriority" [(ngModel)]="cc.chanEmailPriority"
-                    [lastConfigRow]="i !== lastClientConfigRow" ></app-select-channel-priority></td>
-              <td><app-select-channel-priority 
-                    id="chanIvrPriority" name="chanIvrPriority" [(ngModel)]="cc.chanIvrPriority"
-                    [lastConfigRow]="i !== lastClientConfigRow" ></app-select-channel-priority></td>
-              <td><app-select-channel-priority 
-                    id="chanSmsPriority" name="chanSmsPriority" [(ngModel)]="cc.chanSmsPriority"
-                    [lastConfigRow]="i !== lastClientConfigRow" ></app-select-channel-priority></td>  
-              <td><app-select-channel-priority 
-                    id="chanMailPriority" name="chanMailPriority" [(ngModel)]="cc.chanMailPriority"
-                    [lastConfigRow]="i !== lastClientConfigRow" ></app-select-channel-priority></td> 
-              <td><app-select-channel-priority 
-                    id="chanMobilePriority" name="chanMobilePriority" [(ngModel)]="cc.chanMobilePriority"
-                    [lastConfigRow]="i !== lastClientConfigRow" ></app-select-channel-priority></td> 
-              <td><app-select-channel-mandatory
-                    id="chanMandatory" name="chanMandatory" [(ngModel)]="cc.chanMandatory"
-                    [lastConfigRow]="i !== lastClientConfigRow" ></app-select-channel-mandatory></td>
-              <td><app-date-eff-exp
-                    dateType="effective" [progConfig]="cc"
-                    [lastConfigRow]="i !== lastClientConfigRow"
-                    (newDateValue)="updateDateValue($event, cc, 'effective')"></app-date-eff-exp></td>
-              <td><app-date-eff-exp
-                    dateType="expiration" [progConfig]="cc"
-                    [lastConfigRow]="i !== lastClientConfigRow"
-                    (newDateValue)="updateDateValue($event, cc, 'expiration')"></app-date-eff-exp></td>
+                        id="chanEmailPriority" name="chanEmailPriority" 
+                        [(ngModel)]="cc.chanEmailPriority"
+                        [actualStaticValue]="cc.chanEmailPriority"
+                        [lastConfigRow]="i === lastClientConfigRow" ></app-select-channel-priority></td>
+                  <td><app-select-channel-priority 
+                        id="chanIvrPriority" name="chanIvrPriority" 
+                        [(ngModel)]="cc.chanIvrPriority"
+                        [actualStaticValue]="cc.chanIvrPriority"
+                        [lastConfigRow]="i === lastClientConfigRow" ></app-select-channel-priority></td>
+                  <td><app-select-channel-priority 
+                        id="chanSmsPriority" name="chanSmsPriority" 
+                        [(ngModel)]="cc.chanSmsPriority"
+                        [actualStaticValue]="cc.chanSmsPriority"
+                        [lastConfigRow]="i === lastClientConfigRow" ></app-select-channel-priority></td>  
+                  <td><app-select-channel-priority 
+                        id="chanMailPriority" name="chanMailPriority" 
+                        [(ngModel)]="cc.chanMailPriority"
+                        [actualStaticValue]="cc.chanMailPriority"
+                        [lastConfigRow]="i === lastClientConfigRow" ></app-select-channel-priority></td> 
+                  <td><app-select-channel-priority 
+                        id="chanMobilePriority" name="chanMobilePriority" 
+                        [(ngModel)]="cc.chanMobilePriority"
+                        [actualStaticValue]="cc.chanMobilePriority"
+                        [lastConfigRow]="i === lastClientConfigRow" ></app-select-channel-priority></td> 
+                  <td><app-select-channel-mandatory
+                        id="chanMandatory" name="chanMandatory" 
+                        [(ngModel)]="cc.chanMandatory"
+                        [actualStaticValue]="cc.chanMandatory"
+                        [lastConfigRow]="i === lastClientConfigRow" ></app-select-channel-mandatory></td>
+                  <td><app-date-eff-exp
+                        dateType="effective" [progConfig]="cc"
+                        [lastConfigRow]="i === lastClientConfigRow"
+                        (newDateValue)="updateDateValue($event, cc, 'effective')"></app-date-eff-exp></td>
+                  <td><app-date-eff-exp
+                        dateType="expiration" [progConfig]="cc"
+                        [lastConfigRow]="i === lastClientConfigRow"
+                        (newDateValue)="updateDateValue($event, cc, 'expiration')"></app-date-eff-exp></td>
                 </tr>
                 <tr *ngIf="configureState === 'start'">
                   <td>
@@ -88,6 +100,7 @@
       <app-client-action-table  *ngIf="configureState === 'pick'" 
         [clients]="clients"
         [displayClient]="displayClient"
+        [displayCommunication]="communication.name"
         [showClientId]="true"
         [showClientCode]="true"
         [showClientName]="true"

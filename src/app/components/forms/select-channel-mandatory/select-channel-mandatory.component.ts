@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, forwardRef } from '@angular/core';
+import { Component, OnInit, Input, forwardRef }    from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 const noop = () => {
@@ -12,10 +12,15 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'app-select-channel-mandatory',
   template: `
-  <div class="flex-justify-right">
-    <select id="{{id}}" name="{{name}}" [(ngModel)]="value" required
-      class="form-control form-control-sm" (blur)="onBlur()"
-      [disabled]="lastConfigRow">
+  <div *ngIf="!lastConfigRow" class="flex-justify-right">
+    <select id="{{id}}_{{name}}" name="{{name}}" value="actualStaticValue" required
+      class="form-control form-control-sm" readonly>
+      <option value="actualStaticValue">{{actualStaticValue}}</option>
+    </select>
+  </div>
+  <div *ngIf="lastConfigRow" class="flex-justify-right">
+    <select id="{{id}}_{{name}}" name="{{name}}" [(ngModel)]="value" required
+      class="form-control form-control-sm" (blur)="onBlur()">
       <option *ngFor="let cmo of chanMandatoryOpts" [ngValue]="cmo">{{cmo}}</option>
     </select>
   </div>
@@ -34,7 +39,7 @@ export class SelectChannelMandatoryComponent implements OnInit, ControlValueAcce
 
   @Input() id: string;
   @Input() name: string;
-
+  @Input() actualStaticValue: string;
   @Input() lastConfigRow: number;
 
   chanMandatoryOpts: string[] = ['No', 'Email', 'IVR', 'SMS'];
@@ -43,6 +48,7 @@ export class SelectChannelMandatoryComponent implements OnInit, ControlValueAcce
   constructor() { }
 
   ngOnInit() {
+    console.log('SelectChannelMandatoryComponent:', this.id, this.name);
   }
 
   // get accessor

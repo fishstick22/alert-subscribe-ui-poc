@@ -12,13 +12,19 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'app-select-channel-priority',
   template: `
-  <div class="flex-justify-right">
+  <div *ngIf="lastConfigRow" class="flex-justify-right">
     <select id="{{id}}" name="{{name}}" [(ngModel)]="value" required
-      class="form-control form-control-sm" (blur)="onBlur()"
-      [disabled]="lastConfigRow">
+      class="form-control form-control-sm" (blur)="onBlur()">
       <option *ngFor="let cpo of channelPriortyOpts" [ngValue]="cpo">{{cpo}}</option>
     </select>
-  </div>`,
+  </div>
+  <div *ngIf="!lastConfigRow" class="flex-justify-right">
+    <select id="{{id}}" name="{{name}}" value="actualStaticValue" required
+      class="form-control form-control-sm" disabled>
+      <option value="actualStaticValue">{{actualStaticValue}}</option>
+    </select>
+  </div>
+  `,
   // https://tutorialzine.com/2015/09/quick-tip-the-simplest-way-to-center-elements-vertically-and-horizontally
   styles: [
     '.flex-justify-center {display: flex; justify-content: center; align-items: center;}',
@@ -34,7 +40,8 @@ export class SelectChannelPriorityComponent implements OnInit, ControlValueAcces
 
   @Input() id: string;
   @Input() name: string;
-
+  @Input() actualStaticValue: string; // sometimes you just do stuff because
+                                      // a problem is driving you nuts
   @Input() lastConfigRow: boolean;
 
   channelPriortyOpts: number[] = [0, 1, 2, 3];
