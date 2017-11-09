@@ -5,7 +5,7 @@ import { APP_CONFIG, IAppConfig } from 'app/app.config';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Program } from 'app/model/program';
+import { Program } from 'app/classes/model/program';
 
 @Injectable()
 export class ProgramService {

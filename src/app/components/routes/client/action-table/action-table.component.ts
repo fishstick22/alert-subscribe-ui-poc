@@ -1,7 +1,7 @@
 import { Component, OnInit,
          Input, Output, EventEmitter } from '@angular/core';
 
-import { Client, ClientSortCriteria }  from 'app/model/client';
+import { Client, ClientSortCriteria }  from 'app/classes/model/client';
 
 @Component({
   selector: 'app-client-action-table',

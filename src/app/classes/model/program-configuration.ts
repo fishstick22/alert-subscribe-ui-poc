@@ -1,6 +1,6 @@
-import { Program }              from 'app/model/program';
-import { Communication }        from 'app/model/communication';
-import { ICommunicationConfig } from 'app/model/icomm-config';
+import { Program }              from 'app/classes/model/program';
+import { Communication }        from 'app/classes/model/communication';
+import { ICommunicationConfig } from 'app/classes/model/icomm-config';
 
 export class ProgramConfiguration implements ICommunicationConfig {
 

@@ -23,7 +23,7 @@ import { NgbDateStruct }            from '@ng-bootstrap/ng-bootstrap';
            [required]="required">
 <!--
     <button class="input-group-addon" (click)="d.toggle()"  type="button">
-      <img src="assets/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+      <img src="assets/images/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
     </button>
 -->
 <!-- for debugging

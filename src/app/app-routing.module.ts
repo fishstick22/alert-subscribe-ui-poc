@@ -7,6 +7,7 @@ import { DashboardComponent }     from 'app/components/routes/dashboard/dashboar
 import { CommunicationComponent } from 'app/components/routes/communication/communication.component';
 import { ClientComponent }        from 'app/components/routes/client/client.component';
 import { ProgramComponent }       from 'app/components/routes/program/program.component';
+import { TestComponent }          from 'app/components/test/test.component';
 
 const routes: Routes = [
   { path: '',               redirectTo: '/home', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'communication',  component: CommunicationComponent },
   { path: 'program',        component: ProgramComponent },
   { path: 'client',         component: ClientComponent },
+  { path: 'test',           component: TestComponent },
   { path: '**',             component: PageNotFoundComponent }
 ];
 

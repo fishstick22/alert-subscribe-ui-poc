@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { Program }                  from 'app/model/program';
-import { ProgramConfiguration }     from 'app/model/program-configuration';
-import { Communication }            from 'app/model/communication';
+import { Program }                  from 'app/classes/model/program';
+import { ProgramConfiguration }     from 'app/classes/model/program-configuration';
+import { Communication }            from 'app/classes/model/communication';
 
 @Component({
   // selector: 'app-program-config-by-comm', Entry Component needs no selector?

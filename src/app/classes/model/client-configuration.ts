@@ -1,6 +1,6 @@
-import { Client }               from 'app/model/client';
-import { Communication }        from 'app/model/communication';
-import { ICommunicationConfig } from 'app/model/icomm-config';
+import { Client }               from 'app/classes/model/client';
+import { Communication }        from 'app/classes/model/communication';
+import { ICommunicationConfig } from 'app/classes/model/icomm-config';
 
 export class ClientConfiguration implements ICommunicationConfig {
 

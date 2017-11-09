@@ -9,11 +9,11 @@ import { ProgramConfigByCommComponent,
 //
 import { Communication,
          CommunicationSortCriteria,
-         CommunicationConfigAction }   from 'app/model/communication';
-import { Program }                     from 'app/model/program';
-import { ProgramConfiguration }        from 'app/model/program-configuration';
-import { Client }                      from 'app/model/client';
-import { ClientConfiguration }         from 'app/model/client-configuration';
+         CommunicationConfigAction }   from 'app/classes/model/communication';
+import { Program }                     from 'app/classes/model/program';
+import { ProgramConfiguration }        from 'app/classes/model/program-configuration';
+import { Client }                      from 'app/classes/model/client';
+import { ClientConfiguration }         from 'app/classes/model/client-configuration';
 
 import { DataApiService }              from 'app/services/data-api/data-api.service';
 

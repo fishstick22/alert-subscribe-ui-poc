@@ -3,7 +3,7 @@ import { Component, OnInit,
 
 import { Communication,
          CommunicationSortCriteria,
-         CommunicationConfigAction }   from 'app/model/communication';
+         CommunicationConfigAction }   from 'app/classes/model/communication';
 
 @Component({
   selector: 'app-comm-action-table',

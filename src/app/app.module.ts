@@ -61,7 +61,7 @@ import { InMemoryDataService }         from 'app/services/data-api/in-memory-dat
 import { environment }                 from 'environments/environment';
 
 // Directives
-import { NgClickOutsideDirective }     from 'app/directives/ng-click-outside.directive';
+import { ClickOutsideDirective }       from 'app/directives/click-outside.directive';
 import { SortableTableDirective }      from 'app/directives/sortable-table.directive';
 //
 import { CommActionsPopoverComponent } from 'app/components/routes/communication/actions-popover/actions-popover.component';
@@ -70,9 +70,11 @@ import { CommActionTableComponent }    from 'app/components/routes/communication
 import { ClientActionTableComponent }  from 'app/components/routes/client/action-table/action-table.component';
 import { DragDropComponent } from './components/test/drag-drop/drag-drop.component';
 import { DragDropService }         from 'app/services/drag-drop.service';
-import { DraggableDirective } from './directives/draggable.directive';
-import { DroppableDirective } from './directives/droppable.directive';
+import { DraggableDirective } from './directives/drag-drop/draggable.directive';
+import { DroppableDirective } from './directives/drag-drop/droppable.directive';
 import { BootstrapGradientsComponent } from './components/test/bootstrap-gradients/bootstrap-gradients.component';
+import { TestComponent } from './components/test/test.component';
+import { ClickOutsideComponent } from './components/test/click-outside/click-outside.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +102,7 @@ import { BootstrapGradientsComponent } from './components/test/bootstrap-gradien
     SelectChannelMandatoryComponent,
     SelectChannelPriorityComponent,
 
-    NgClickOutsideDirective,
+    ClickOutsideDirective,
     SortableTableDirective,
 
     CommActionsPopoverComponent,
@@ -110,7 +112,9 @@ import { BootstrapGradientsComponent } from './components/test/bootstrap-gradien
     DragDropComponent,
     DraggableDirective,
     DroppableDirective,
-    BootstrapGradientsComponent
+    BootstrapGradientsComponent,
+    TestComponent,
+    ClickOutsideComponent
   ],
   imports: [
     BrowserModule,

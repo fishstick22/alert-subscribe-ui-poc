@@ -6,13 +6,13 @@ import { CommunicationService }        from 'app/services/data-api/communication
 import { ProgramService }              from 'app/services/data-api/program/program.service';
 import { ProgramConfigurationService } from 'app/services/data-api/program-configuration/program-configuration.service';
 
-import { IProgramConfig }              from 'app/model/iprog-config';
+import { IProgramConfig }              from 'app/classes/model/iprog-config';
 
-import { Communication }               from 'app/model/communication';
-import { ClientConfiguration }         from 'app/model/client-configuration';
-import { Program }                     from 'app/model/program';
-import { ProgramConfiguration }        from 'app/model/program-configuration';
-import { Client }                      from 'app/model/client';
+import { Communication }               from 'app/classes/model/communication';
+import { ClientConfiguration }         from 'app/classes/model/client-configuration';
+import { Program }                     from 'app/classes/model/program';
+import { ProgramConfiguration }        from 'app/classes/model/program-configuration';
+import { Client }                      from 'app/classes/model/client';
 
 @Injectable()
 export class DataApiService {

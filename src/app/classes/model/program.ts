@@ -1,4 +1,4 @@
-import { IProgramConfig } from 'app/model/iprog-config';
+import { IProgramConfig } from 'app/classes/model/iprog-config';
 
 export class Program implements IProgramConfig {
     id: number;

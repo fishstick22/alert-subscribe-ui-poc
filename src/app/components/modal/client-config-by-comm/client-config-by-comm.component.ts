@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { Client }                   from 'app/model/client';
-import { ClientConfiguration }      from 'app/model/client-configuration';
-import { Communication }            from 'app/model/communication';
+import { Client }                   from 'app/classes/model/client';
+import { ClientConfiguration }      from 'app/classes/model/client-configuration';
+import { Communication }            from 'app/classes/model/communication';
 
 @Component({
   // selector: 'app-client-config-by-comm', Entry Component needs no selector!

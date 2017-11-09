@@ -6,7 +6,7 @@ import { ProgramConfigByCommComponent,
          ProgramConfigModalResult }    from 'app/components/modal/program-config-by-comm/program-config-by-comm.component';
 //
 
-import { Client }                      from 'app/model/client';
+import { Client }                      from 'app/classes/model/client';
 
 import { DataApiService }              from 'app/services/data-api/data-api.service';
 

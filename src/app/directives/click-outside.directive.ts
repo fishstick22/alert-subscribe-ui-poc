@@ -11,7 +11,7 @@ import { isPlatformBrowser }          from '@angular/common';
 @Directive({
   selector: '[appClickOutside]'
 })
-export class NgClickOutsideDirective implements OnInit, OnChanges, OnDestroy {
+export class ClickOutsideDirective implements OnInit, OnChanges, OnDestroy {
 
   @Input() attachOutsideOnClick: boolean = false;
   @Input() delayClickOutsideInit: boolean = false;

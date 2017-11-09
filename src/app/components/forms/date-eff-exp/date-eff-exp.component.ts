@@ -1,7 +1,7 @@
 import { Component, OnInit, Input,
          Output, EventEmitter }     from '@angular/core';
 import { DatepickerPopupComponent } from 'app/components/forms/datepicker-popup/datepicker-popup.component';
-import { ProgramConfiguration }     from 'app/model/program-configuration';
+import { ProgramConfiguration }     from 'app/classes/model/program-configuration';
 
 @Component({
   selector: 'app-date-eff-exp',
