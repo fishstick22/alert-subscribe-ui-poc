@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { Program }         from 'app/model/program';
+import { Program }         from 'app/classes/model/program';
 
 @Component({
   selector: 'app-editprogram',

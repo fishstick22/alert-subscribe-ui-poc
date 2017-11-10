@@ -3,7 +3,7 @@ import { Component, OnInit, Input,
 
  import { Communication,
           CommunicationSortCriteria,
-          CommunicationConfigAction } from 'app/model/communication';
+          CommunicationConfigAction } from 'app/classes/model/communication';
 
 // https://ng-bootstrap.github.io/#/components/popover/examples
 

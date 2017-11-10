@@ -1,6 +1,7 @@
-import { IProgramConfig } from 'app/model/iprog-config';
+import { IProgramConfig } from 'app/classes/model/iprog-config';
+import { IClientConfig } from 'app/classes/model/iclient-config';
 
-export class Communication implements IProgramConfig {
+export class Communication implements IProgramConfig, IClientConfig {
     id: number;
     name: string;
     description: string;

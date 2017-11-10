@@ -5,7 +5,7 @@ import { APP_CONFIG, IAppConfig } from 'app/app.config';
 
 import 'rxjs/add/operator/toPromise';
 
-import { Communication } from 'app/model/communication';
+import { Communication } from 'app/classes/model/communication';
 
 @Injectable()
 export class CommunicationService {

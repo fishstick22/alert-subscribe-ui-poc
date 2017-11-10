@@ -3,7 +3,7 @@ import { Component, OnInit,
 
 import { Communication,
          CommunicationSortCriteria,
-         CommunicationConfigAction }   from 'app/model/communication';
+         CommunicationConfigAction }   from 'app/classes/model/communication';
 
 @Component({
   selector: 'app-comm-action-table',
@@ -14,6 +14,7 @@ export class CommActionTableComponent implements OnInit {
 
   @Input() communications: Communication[];
   @Input() displayComm: Communication[];
+  @Input() displayCommStartEmpty: boolean = true;
   @Input() showCommId: boolean = true;
   @Input() showCommName: boolean = true;
   @Input() showCommDesc: boolean = false;
@@ -21,7 +22,8 @@ export class CommActionTableComponent implements OnInit {
   @Input() showAction: boolean = true;
 
   @Output() selRowOut = new EventEmitter<any>();
-  @Output() commConfigAction = new EventEmitter<any>();
+  @Output() selectedCommunication = new EventEmitter<Communication>();
+  @Output() commConfigAction = new EventEmitter<CommunicationConfigAction>();
   @Output() displayCommCurrent = new EventEmitter<any>();
 
   commIdSearch: string = '';
@@ -37,6 +39,13 @@ export class CommActionTableComponent implements OnInit {
 
   ngOnInit() {
     console.log('CommActionTableComponent:', this.communications);
+    if (!this.displayComm) { // if all else fails, start with it empty
+      this.displayComm = []; // instead of 'undefined'
+    }
+  }
+
+  selectCommunication(communication: Communication) {
+    this.selectedCommunication.emit(communication);
   }
 
   setClickedRow(index) {
@@ -94,6 +103,11 @@ export class CommActionTableComponent implements OnInit {
   }
 
   private searchCommunicatonTable() {
+    // TODO yes this is a monster if-then-else method
+    // once the logic is worked out move it into a service and refactor
+    if (!this.displayCommStartEmpty && this.displayComm.length === 0) {
+      this.displayComm = this.communications;
+    }
     // align/chain the filter pattern across all searchable rows
     const commIdAdded     = this.commIdSearch.indexOf(this.commIdSearchLast) === 0;
     const commNameAdded   = this.commNameSearch.indexOf(this.commNameSearchLast) === 0;
@@ -101,24 +115,54 @@ export class CommActionTableComponent implements OnInit {
 
     if ( !commIdAdded || !commNameAdded || !commDescAdded ) {
       console.log('user deleting something...');
+      if (this.displayCommStartEmpty &&
+        this.commNameSearch === '' &&
+        this.commDescSearch === '' &&
+        this.commIdSearch === ''
+      ) {
+        this.displayComm = [];
+      } else {
       // refresh the list, reapply each filter, gonna guess mostly searching on names
       this.displayComm = this.communications.filter(comm => {
         return this.containsString(comm.name, this.commNameSearch);
       });
+      }
     } else {
-      this.displayComm = this.displayComm.filter(comm => {
-        return this.containsString(comm.name, this.commNameSearch);
-      });
+      console.log('just adding to what was there');
+      if (this.commNameSearch !== '') {
+        // we may be starting empty, if so use the full array first
+        if (this.displayComm.length === 0) {
+          this.displayComm = this.communications.filter(client => {
+            return this.containsString(client.name, this.commNameSearch);
+          });
+        } else {
+          this.displayComm = this.displayComm.filter(client => {
+            return this.containsString(client.name, this.commNameSearch);
+          });
+        }
+      }
     }
     if (this.commDescSearch !== '') {
-      this.displayComm = this.displayComm.filter(comm => {
-        return (comm.description.indexOf(this.commDescSearch) !== -1 );
-      });
+      if (this.displayComm.length === 0) {
+        this.displayComm = this.communications.filter(comm => {
+          return this.containsString(comm.description, this.commDescSearch);
+        });
+      } else {
+        this.displayComm = this.displayComm.filter(comm => {
+          return this.containsString(comm.description, this.commDescSearch);
+        });
+      }
     }
     if (this.commIdSearch !== '') {
-      this.displayComm = this.displayComm.filter(comm => {
-        return (String(comm.id).indexOf(this.commIdSearch) !== -1 );
-      });
+      if (this.displayComm.length === 0) {
+        this.displayComm = this.communications.filter(comm => {
+          return (String(comm.id).indexOf(this.commIdSearch) !== -1 );
+        });
+      } else {
+        this.displayComm = this.displayComm.filter(comm => {
+          return (String(comm.id).indexOf(this.commIdSearch) !== -1 );
+        });
+      }
     }
   }
 

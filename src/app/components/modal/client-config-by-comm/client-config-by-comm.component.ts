@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { Client }                   from 'app/model/client';
-import { ClientConfiguration }      from 'app/model/client-configuration';
-import { Communication }            from 'app/model/communication';
+import { Client }                   from 'app/classes/model/client';
+import { ClientConfiguration }      from 'app/classes/model/client-configuration';
+import { Communication }            from 'app/classes/model/communication';
 
 @Component({
   // selector: 'app-client-config-by-comm', Entry Component needs no selector!
@@ -27,6 +27,8 @@ export class ClientConfigByCommComponent implements OnInit {
     displayClient: Client[];
     lastClientConfigRow: number;
     configureState: 'start' | 'pick' | 'configure' | 'save';
+
+    clientDropEnabled: boolean = false;
 
     constructor(public configureClientModal: NgbActiveModal) { }
 
@@ -70,6 +72,7 @@ export class ClientConfigByCommComponent implements OnInit {
       this.lastClientConfigRow = this.clientConfigurations.length;
       this.clientConfigurations[this.clientConfigurations.length] = this.newClientConfig;
       this.configureState = 'pick';
+      this.clientDropEnabled = true;
     }
 
 
@@ -90,6 +93,13 @@ export class ClientConfigByCommComponent implements OnInit {
     // this.lastClientConfigRow = this.clientConfigurations.length;
     // this.clientConfigurations[this.clientConfigurations.length] = this.newClientConfig;
 
+  }
+
+  clientDrop(dragEvent) {
+    console.log('ClientConfigByCommComponent clientDrop: ', dragEvent);
+    if (dragEvent.dragData && typeof(dragEvent.dragData.id) === 'number' ) {
+      this.addClientConfig(this.findClient(dragEvent.dragData.id));
+    }
   }
 
   updateDateValue(newDate, cc: ClientConfiguration, dateType: string) {

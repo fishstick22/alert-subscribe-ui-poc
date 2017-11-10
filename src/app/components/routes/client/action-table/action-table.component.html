@@ -27,16 +27,25 @@
   </tr>
 </thead>
 <tbody>
-  <tr *ngFor="let client of displayClient; let i = index"
-      title="Click to configure {{client.name}} {{displayCommunication}} settings" 
-      (click)="setClickedRow(i); " [class.table-info]="i == selectedRow">
+  <tr appDraggable
+      [draggable] *ngFor="let client of displayClient; let i = index"
+      [dragData]="client" [dragClass]="'drag-over'"  
+      (click)="setClickedRow(i); " [class.table-info]="i == selectedRow"
+       title="Click or Drag to configure {{client.name}} {{displayCommunication}} settings" >
     <td *ngIf="showClientId">
       <span class="badge badge-secondary clickable"
-           (click)="selectClient(client)">{{client.id}}</span></td>
+        (click)="selectClient(client)">{{client.id}}</span></td>
     <td *ngIf="showClientCode"><span>{{client.code}}</span></td>
     <td *ngIf="showClientName"><span>{{client.name}}</span></td>
     <td *ngIf="showStatus"><span *ngIf="client.id === 142"><i class="fa fa-check" aria-hidden="true" title="{{client.name}} Configured (Date)"></i></span></td>
-    <td *ngIf="showAction"></td>
+    <td *ngIf="showAction">
+      <app-client-actions-popover
+        [clientId]="client.id"
+        [clientName]="client.name"
+        (configAction)="configureClient($event)">
+        <i class="fa fa-pencil-square-o clickable" aria-hidden="true" title="Click to configure {{client.name}} Communication settings"></i>
+    </app-client-actions-popover>
+    </td>
   </tr>
 </tbody>
 <tfoot></tfoot>

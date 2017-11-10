@@ -5,7 +5,7 @@ import { APP_CONFIG, IAppConfig } from 'app/app.config';
 
 import 'rxjs/add/operator/toPromise';
 
-import { ClientConfiguration }    from 'app/model/client-configuration';
+import { ClientConfiguration }    from 'app/classes/model/client-configuration';
 
 
 @Injectable()

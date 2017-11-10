@@ -1,10 +1,10 @@
-<form #clientConfigurationViaCommunicationForm="ngForm" 
+<form #clientConfigurationForm="ngForm" 
 (ngSubmit)="saveClientConfiguration()" >
 
   <div class="modal-header bg-gradient-dark">
     <h4 class="modal-title text-white">
-      Configure Client(s)
-      <small>for CommId {{communication.id}}: {{communication.name}}</small>
+      Configure Communication(s)
+      <small>for ClientId {{client.id}}: {{client.name}}</small>
     </h4>
     <button type="button" class="close text-white" aria-label="Close" (click)="configureClientModal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
@@ -14,13 +14,11 @@
   <div class="modal-body">
     <div id="configuredClients">
 
-
             <table class="table table-responsive table-sm table-striped table-bordered table-hover">
               <caption></caption>
               <thead class="bg-gradient-dark text-white">
                 <tr>
                   <th>ID</th>
-                  <th>C<small>ode</small></th>
                   <th>N<small>ame</small></th>
                   <th>E<small>mail</small></th>
                   <th>IVR</th>
@@ -35,20 +33,19 @@
               <tbody>
                 <tr appDroppable *ngFor="let cc of clientConfigurations; let i = index"
                     [dragOverClass]="'drag-target-border'" [dragHintClass]="'drag-hint'"
-                    [dropEnabled]="i === lastClientConfigRow && !cc.client.id"
+                    [dropEnabled]="i === lastClientConfigRow && !cc.communication.id"
                     
-                    (onDrop)="clientDrop($event)"
+                    (onDrop)="communicationDrop($event)"
                     [class.table-info]="i == lastClientConfigRow"> 
                   
                   <td>
-                    <span *ngIf="i !== lastClientConfigRow" class="badge badge-secondary">{{cc.client.id}}</span>
-                    <span *ngIf="i === lastClientConfigRow && !cc.client.id">
+                    <span *ngIf="i !== lastClientConfigRow" class="badge badge-secondary">{{cc.communication.id}}</span>
+                    <span *ngIf="i === lastClientConfigRow && !cc.communication.id">
                       <i class="fa fa-file-o clickable" aria-hidden="true" 
-                         title="New Client configuration for {{communication.name}}"></i></span>
-                    <span *ngIf="i === lastClientConfigRow && cc.client.id" class="badge badge-primary">{{cc.client.id}}</span>
+                         title="New Client configuration for {{cc.communication.name}}"></i></span>
+                    <span *ngIf="i === lastClientConfigRow && cc.communication.id" class="badge badge-primary">{{cc.communication.id}}</span>
                   </td>
-                  <td><span >{{cc.client.code}}</span></td>
-                  <td width="18%"><span >{{cc.client.name}}</span></td>
+                  <td width="18%"><span >{{cc.communication.name}}</span></td>
                   <td><app-select-channel-priority 
                         id="chanEmailPriority" name="chanEmailPriority" 
                         [(ngModel)]="cc.chanEmailPriority"
@@ -91,7 +88,7 @@
                 <tr *ngIf="configureState === 'start'">
                   <td>
                     <i class="fa fa-plus-square-o clickable" aria-hidden="true" 
-                      (click)="addClientConfig()" title="Add New Client Configuration to {{communication.name}}"></i>
+                      (click)="addClientConfig()" title="Add New Client Configuration to {{client.name}}"></i>
                   </td>
                 </tr>
               </tbody>
@@ -101,19 +98,19 @@
 
     <div id=ActionTable>
 
-      <app-client-action-table  *ngIf="configureState === 'pick'" 
-        [clients]="clients"
-        [displayClient]="displayClient"
-        [displayCommunication]="communication.name"
-        [showClientId]="true"
-        [showClientCode]="true"
-        [showClientName]="true"
+      <app-comm-action-table *ngIf="configureState === 'pick'" 
+        [communications]="communications"
+        [displayComm]="displayComm"
+        [displayCommStartEmpty]="true"
+        [showCommId]="true"
+        [showCommName]="true"
+        [showCommDesc]="true"
         [showStatus]="false"
         [showAction]="false"
         (selRowOut)="setClickedRow($event)"
-        (clientConfigAction)="configureClient($event)"
-        (selectedClient)="addClientConfig($event)">
-      </app-client-action-table>
+        (selectedCommunication)="addClientConfig($event)"
+        (commConfigAction)="configureCommunication($event)">
+      </app-comm-action-table>
 
     </div>
 
@@ -123,7 +120,7 @@
     <div class="w-100">
       <span class="float-left">Some instructional content or condition message goes here: </span>
       <div class="float-right">
-          <button type="submit" class="btn btn-outline-dark" [disabled]="!clientConfigurationViaCommunicationForm.valid">Save</button>
+          <button type="submit" class="btn btn-outline-dark" [disabled]="!clientConfigurationForm.valid">Save</button>
           <button type="button" class="btn btn-outline-dark" (click)="configureClientModal.close('Close click')">Cancel</button>
       </div>
     </div>

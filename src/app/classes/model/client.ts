@@ -1,4 +1,6 @@
-export class Client {
+import { IClientConfig } from 'app/classes/model/iclient-config';
+
+export class Client implements IClientConfig {
     id: number;
     code: string;
     name: string;

@@ -7,7 +7,7 @@ import { EditProgramComponent }   from 'app/components/modal/editprogram/editpro
 import { DeleteProgramComponent } from 'app/components/modal/deleteprogram/deleteprogram.component';
 
 import { Program,
-         ProgramConfigAction }    from 'app/model/program';
+         ProgramConfigAction }    from 'app/classes/model/program';
 import { DataApiService }         from 'app/services/data-api/data-api.service';
 
 @Component({
