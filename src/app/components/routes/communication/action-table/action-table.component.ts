@@ -15,6 +15,7 @@ export class CommActionTableComponent implements OnInit {
   @Input() communications: Communication[];
   @Input() displayComm: Communication[];
   @Input() displayCommStartEmpty: boolean = true;
+  @Input() displayClient: string = 'Client';
   @Input() showCommId: boolean = true;
   @Input() showCommName: boolean = true;
   @Input() showCommDesc: boolean = false;
@@ -24,7 +25,6 @@ export class CommActionTableComponent implements OnInit {
   @Output() selRowOut = new EventEmitter<any>();
   @Output() selectedCommunication = new EventEmitter<Communication>();
   @Output() commConfigAction = new EventEmitter<CommunicationConfigAction>();
-  @Output() displayCommCurrent = new EventEmitter<any>();
 
   commIdSearch: string = '';
   commIdSearchLast: string = '';
@@ -59,7 +59,6 @@ export class CommActionTableComponent implements OnInit {
 
   private configureCommunication(commConfigAction: CommunicationConfigAction) {
     this.commConfigAction.emit(commConfigAction);
-    this.displayCommCurrent.emit(this.displayComm);
   }
 
   onSorted($event) {
@@ -116,16 +115,16 @@ export class CommActionTableComponent implements OnInit {
     if ( !commIdAdded || !commNameAdded || !commDescAdded ) {
       console.log('user deleting something...');
       if (this.displayCommStartEmpty &&
-        this.commNameSearch === '' &&
-        this.commDescSearch === '' &&
-        this.commIdSearch === ''
+          this.commNameSearch === '' &&
+          this.commDescSearch === '' &&
+          this.commIdSearch === ''
       ) {
         this.displayComm = [];
       } else {
-      // refresh the list, reapply each filter, gonna guess mostly searching on names
-      this.displayComm = this.communications.filter(comm => {
-        return this.containsString(comm.name, this.commNameSearch);
-      });
+        // refresh the list, reapply each filter, gonna guess mostly searching on names
+        this.displayComm = this.communications.filter(comm => {
+          return this.containsString(comm.name, this.commNameSearch);
+        });
       }
     } else {
       console.log('just adding to what was there');

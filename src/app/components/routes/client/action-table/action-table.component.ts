@@ -13,6 +13,7 @@ export class ClientActionTableComponent implements OnInit {
 
   @Input() clients: Client[];
   @Input() displayClient: Client[];
+  @Input() displayClientStartEmpty: boolean = true;
   @Input() displayCommunication: string = 'Communication';
   @Input() showClientId: boolean = true;
   @Input() showClientCode: boolean = true;
@@ -20,16 +21,14 @@ export class ClientActionTableComponent implements OnInit {
   @Input() showStatus: boolean = false;
   @Input() showAction: boolean = true;
 
+  @Output() selRowOut = new EventEmitter<any>();
   @Output() selectedClient = new EventEmitter<Client>();
   @Output() clientConfigAction = new EventEmitter<ClientConfigAction>();
-  // @Output() displayClientCurrent = new EventEmitter<Client>();
 
   clientIdSearch: string = '';
   clientIdSearchLast: string = '';
-
   clientNameSearch: string = '';
   clientNameSearchLast: string = '';
-
   clientCodeSearch: string = '';
   clientCodeSearchLast: string = '';
 
@@ -39,15 +38,26 @@ export class ClientActionTableComponent implements OnInit {
 
   ngOnInit() {
     console.log('ClientActionTableComponent onInit...', this.clients, this.displayClient);
+    if (!this.displayClient) { // if all else fails, start with it empty
+      this.displayClient = []; // instead of 'undefined'
+    }
   }
 
   selectClient(client: Client) {
     this.selectedClient.emit(client);
   }
 
+  setClickedRow(index) {
+    if (this.selectedRow === index) {
+      this.selectedRow = null;
+    } else {
+      this.selectedRow = index;
+    }
+    this.selRowOut.emit(index);
+  }
+
   private configureClient(clientConfigAction: ClientConfigAction) {
     this.clientConfigAction.emit(clientConfigAction);
-    // this.displayClientCurrent.emit(this.displayClient);
   }
 
   onSorted($event) {
@@ -92,6 +102,8 @@ export class ClientActionTableComponent implements OnInit {
   }
 
   private searchClientTable() {
+    // TODO yes this is a monster if-then-else method
+    // once the logic is worked out move it into a service and refactor
     // align/chain the filter pattern across all searchable rows
     const clientIdAdded     = this.clientIdSearch.indexOf(this.clientIdSearchLast) === 0;
     const clientCodeAdded   = this.clientCodeSearch.indexOf(this.clientCodeSearchLast) === 0;
@@ -99,10 +111,18 @@ export class ClientActionTableComponent implements OnInit {
 
     if ( !clientIdAdded  || !clientCodeAdded || !clientNameAdded ) {
       console.log('user deleting something...');
-      // refresh the list, reapply each filter, gonna guess mostly searching on names
-      this.displayClient = this.clients.filter(client => {
-        return this.containsString(client.name, this.clientNameSearch);
-      });
+      if (this.displayClientStartEmpty &&
+          this.clientNameSearch === '' &&
+          this.clientCodeSearch === '' &&
+          this.clientIdSearch === ''
+      ) {
+        this.displayClient = [];
+      } else {
+        // refresh the list, reapply each filter, gonna guess mostly searching on names
+        this.displayClient = this.clients.filter(client => {
+          return this.containsString(client.name, this.clientNameSearch);
+        });
+      }
     } else {
       console.log('just adding to what was there');
       if (this.clientNameSearch !== '') {
@@ -147,7 +167,4 @@ export class ClientActionTableComponent implements OnInit {
     return (columnValue.toLocaleLowerCase().indexOf(searchValue.toLocaleLowerCase()) !== -1);
   }
 
-  private setClickedRow(index) {
-    this.selectedRow = index;
-  }
 }

@@ -26,11 +26,17 @@ export class ProgramComponent implements OnInit {
     private modalService: NgbModal
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     console.log('ProgramComponent ngOnInit...');
-    this.dataApiService.getPrograms()
-      .then(programs => this.programs = programs)
-      .catch(error => console.log('getPrograms error: ', error));
+    await this.getPrograms();
+  }
+
+  async getPrograms() {
+    try {
+      this.programs = await this.dataApiService.getPrograms();
+    } catch (error) {
+      console.log('getPrograms error: ', error);
+    }
   }
 
   addProgram(program: Program): void {

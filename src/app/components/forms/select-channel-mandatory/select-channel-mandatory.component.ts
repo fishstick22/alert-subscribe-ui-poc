@@ -4,11 +4,14 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 const noop = () => {
 };
 
+/* tslint:disable:no-use-before-declare */
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => SelectChannelMandatoryComponent),
     multi: true
 };
+/* tslint:enable:no-use-before-declare */
+
 @Component({
   selector: 'app-select-channel-mandatory',
   template: `
