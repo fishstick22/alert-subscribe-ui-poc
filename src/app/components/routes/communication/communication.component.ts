@@ -29,8 +29,9 @@ export class CommunicationComponent implements OnInit {
   programConfigurations: ProgramConfiguration[];
   clients: Client[];
   clientConfigurations: ClientConfiguration[];
-
   displayComm: Communication[];
+  displayCommStartEmpty: boolean;
+
   selectedRow: number;
   closeResult: string;
 
@@ -41,13 +42,17 @@ export class CommunicationComponent implements OnInit {
 
   async ngOnInit() {
     console.log('CommunicationComponent ngOnInit...');
+
     await this.getCommunications();
     this.getPrograms();
-    await this.getProgramConfigurations();
+    this.getProgramConfigurations();
     this.getClients();
-    await this.getClientConfigurations();
+    this.getClientConfigurations();
 
+    this.displayCommStartEmpty = false;
     this.displayComm = this.communications;
+
+    console.log('CommunicationComponent ngOnInit', this.communications);
   }
 
   async getCommunications() {
@@ -60,30 +65,26 @@ export class CommunicationComponent implements OnInit {
 
   getPrograms(): void {
     this.dataApiService.getPrograms()
-      .then(programs => this.programs = programs)
+      .then(p => this.programs = p)
       .catch(error => console.log('getPrograms error: ', error));
   }
 
-  async getProgramConfigurations() {
-    try {
-      this.programConfigurations = await this.dataApiService.getProgramConfigurations();
-    } catch (error) {
-      console.log('getProgramConfigurations error: ', error);
-    }
+  getProgramConfigurations(): void {
+    this.dataApiService.getProgramConfigurations()
+      .then(pc => this.programConfigurations = pc)
+      .catch (error => console.log('getProgramConfigurations error: ', error));
   }
 
   getClients(): void {
     this.dataApiService.getClients()
-      .then(clients => this.clients = clients)
+      .then(c => this.clients = c)
       .catch(error => console.log('getClients error: ', error));
   }
 
-  async getClientConfigurations() {
-    try {
-      this.clientConfigurations = await this.dataApiService.getClientConfigurations();
-    } catch (error) {
-      console.log('getClientConfigurations error: ', error);
-    }
+  getClientConfigurations(): void {
+    this.dataApiService.getClientConfigurations()
+      .then(cc => this.clientConfigurations = cc)
+      .catch (error => console.log('getClientConfigurations error: ', error));
   }
 
   private configureCommunication(commConfigAction: CommunicationConfigAction) {

@@ -28,6 +28,8 @@ export class ClientConfigByCommComponent implements OnInit {
     lastClientConfigRow: number;
     configureState: 'start' | 'pick' | 'configure' | 'save';
 
+    clientDropEnabled: boolean = false;
+
     constructor(public configureClientModal: NgbActiveModal) { }
 
   ngOnInit() {
@@ -70,6 +72,7 @@ export class ClientConfigByCommComponent implements OnInit {
       this.lastClientConfigRow = this.clientConfigurations.length;
       this.clientConfigurations[this.clientConfigurations.length] = this.newClientConfig;
       this.configureState = 'pick';
+      this.clientDropEnabled = true;
     }
 
 
@@ -90,6 +93,13 @@ export class ClientConfigByCommComponent implements OnInit {
     // this.lastClientConfigRow = this.clientConfigurations.length;
     // this.clientConfigurations[this.clientConfigurations.length] = this.newClientConfig;
 
+  }
+
+  clientDrop(dragEvent) {
+    console.log('ClientConfigByCommComponent clientDrop: ', dragEvent);
+    if (dragEvent.dragData && typeof(dragEvent.dragData.id) === 'number' ) {
+      this.addClientConfig(this.findClient(dragEvent.dragData.id));
+    }
   }
 
   updateDateValue(newDate, cc: ClientConfiguration, dateType: string) {

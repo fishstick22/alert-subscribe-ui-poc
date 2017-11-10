@@ -1,7 +1,8 @@
 import { Component, OnInit,
          Input, Output, EventEmitter } from '@angular/core';
 
-import { Client, ClientSortCriteria }  from 'app/classes/model/client';
+import { Client, ClientSortCriteria,
+         ClientConfigAction }  from 'app/classes/model/client';
 
 @Component({
   selector: 'app-client-action-table',
@@ -20,6 +21,8 @@ export class ClientActionTableComponent implements OnInit {
   @Input() showAction: boolean = true;
 
   @Output() selectedClient = new EventEmitter<Client>();
+  @Output() clientConfigAction = new EventEmitter<ClientConfigAction>();
+  // @Output() displayClientCurrent = new EventEmitter<Client>();
 
   clientIdSearch: string = '';
   clientIdSearchLast: string = '';
@@ -40,6 +43,11 @@ export class ClientActionTableComponent implements OnInit {
 
   selectClient(client: Client) {
     this.selectedClient.emit(client);
+  }
+
+  private configureClient(clientConfigAction: ClientConfigAction) {
+    this.clientConfigAction.emit(clientConfigAction);
+    // this.displayClientCurrent.emit(this.displayClient);
   }
 
   onSorted($event) {

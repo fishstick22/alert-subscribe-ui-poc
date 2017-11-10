@@ -10,7 +10,7 @@ appSortableTable (sorted)="onSorted($event)">
     <th *ngIf="showAction">Actions</th>
   </tr>
   <tr class="thead-light"><!-- search/filter header row -->
-    <th width="7%" *ngIf="showCommId">
+    <th width="10%" *ngIf="showCommId">
       <input type="text" id="seachCommId" class="form-control form-control-sm" placeholder="search"
              name="commId" [(ngModel)]="commIdSearch" (keyup)="searchCommId()"/>
     </th>
@@ -27,11 +27,14 @@ appSortableTable (sorted)="onSorted($event)">
   </tr>
 </thead>
 <tbody>
-  <tr *ngFor="let communication of displayComm; let i = index"
-       title="" 
-      (click)="setClickedRow(i)" 
-      [class.table-info]="i == selectedRow">
-    <td *ngIf="showCommId"><span class="badge badge-secondary">{{communication.id}}</span></td>
+  <tr appDraggable 
+      [draggable] *ngFor="let communication of displayComm; let i = index"
+      [dragData]="communication" [dragClass]="'drag-over'"  
+      (click)="setClickedRow(i)" [class.table-info]="i == selectedRow"
+      title="Click or Drag to configure {{communication.name}} for Client ~fixme~">
+    <td *ngIf="showCommId">
+      <span class="badge badge-secondary clickable"
+        (click)="selectCommunication(communication)">{{communication.id}}</span></td>
     <td *ngIf="showCommName"><span>{{communication.name}}</span></td>
     <td *ngIf="showCommDesc"><span>{{communication.description}}</span></td>
     <td *ngIf="showStatus">

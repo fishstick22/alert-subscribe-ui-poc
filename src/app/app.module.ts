@@ -75,6 +75,8 @@ import { DroppableDirective } from './directives/drag-drop/droppable.directive';
 import { BootstrapGradientsComponent } from './components/test/bootstrap-gradients/bootstrap-gradients.component';
 import { TestComponent } from './components/test/test.component';
 import { ClickOutsideComponent } from './components/test/click-outside/click-outside.component';
+import { ClientConfigComponent } from './components/modal/client-config/client-config.component';
+import { ActionsPopoverComponent } from './components/routes/client/actions-popover/actions-popover.component';
 
 @NgModule({
   declarations: [
@@ -114,7 +116,9 @@ import { ClickOutsideComponent } from './components/test/click-outside/click-out
     DroppableDirective,
     BootstrapGradientsComponent,
     TestComponent,
-    ClickOutsideComponent
+    ClickOutsideComponent,
+    ClientConfigComponent,
+    ActionsPopoverComponent
   ],
   imports: [
     BrowserModule,
@@ -129,7 +133,8 @@ import { ClickOutsideComponent } from './components/test/click-outside/click-out
     AddProgramComponent,
     EditProgramComponent,
     DeleteProgramComponent,
-    ProgramConfigByCommComponent
+    ProgramConfigByCommComponent,
+    ClientConfigComponent
   ],
   providers: [
     DataApiService,
