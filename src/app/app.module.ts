@@ -76,7 +76,7 @@ import { BootstrapGradientsComponent } from './components/test/bootstrap-gradien
 import { TestComponent } from './components/test/test.component';
 import { ClickOutsideComponent } from './components/test/click-outside/click-outside.component';
 import { ClientConfigComponent } from './components/modal/client-config/client-config.component';
-import { ActionsPopoverComponent } from './components/routes/client/actions-popover/actions-popover.component';
+import { ClientActionsPopoverComponent } from './components/routes/client/actions-popover/actions-popover.component';
 
 @NgModule({
   declarations: [
@@ -118,7 +118,7 @@ import { ActionsPopoverComponent } from './components/routes/client/actions-popo
     TestComponent,
     ClickOutsideComponent,
     ClientConfigComponent,
-    ActionsPopoverComponent
+    ClientActionsPopoverComponent
   ],
   imports: [
     BrowserModule,

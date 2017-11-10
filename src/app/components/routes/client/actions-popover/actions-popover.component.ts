@@ -39,7 +39,7 @@ styles: [
   '.inner-popover { padding: 5px; }'
 ]
 })
-export class ActionsPopoverComponent implements OnInit {
+export class ClientActionsPopoverComponent implements OnInit {
 
   private attachOutsideOnClick = false;
   private delayClickOutsideInit = true;
