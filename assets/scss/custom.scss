@@ -1,0 +1,63 @@
+/* https://scotch.io/tutorials/using-sass-with-the-angular-cli */
+@import './variables';
+@import './mixins';
+
+// https://getbootstrap.com/docs/4.0/getting-started/theming/#introduction
+//@import "node_modules/bootstrap/scss/bootstrap";
+
+//@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~bootstrap/scss/bootstrap";
+@import "~font-awesome/css/font-awesome.css";
+
+/* https://getbootstrap.com/docs/4.0/examples/starter-template/starter-template.css */
+html {
+  position: relative;
+  min-height: 100%;
+  font-size: 14px;
+}
+body {
+  padding-top: 5rem;
+}
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: left;
+}
+.clickable { 
+  cursor: pointer; 
+}
+/* http://getbootstrap.com/docs/4.0/content/typography/
+@include media-breakpoint-up(sm) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  html {
+    font-size: 20px;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  html {
+    font-size: 28px;
+  }
+}
+*/
+
+//https://github.com/twbs/bootstrap/issues/17310
+
+// IE 11 flexbox fix.
+// TODO: Remove when fixed in bootstrap.
+// https://github.com/twbs/bootstrap/issues/17310
+// @if $enable-flex {
+//     @each $breakpoint in map-keys($grid-breakpoints) {
+//         @include media-breakpoint-up($breakpoint) {
+//             @for $size from 1 through $grid-columns {
+//                 .col-#{$breakpoint}-#{$size} {
+//                     max-width: percentage($size / $grid-columns);
+//                 }
+//             }
+//         }
+//     }
+// }
