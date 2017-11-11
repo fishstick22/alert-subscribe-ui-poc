@@ -77,6 +77,7 @@ import { TestComponent } from './components/test/test.component';
 import { ClickOutsideComponent } from './components/test/click-outside/click-outside.component';
 import { ClientConfigComponent } from './components/modal/client-config/client-config.component';
 import { ClientActionsPopoverComponent } from './components/routes/client/actions-popover/actions-popover.component';
+import { ProgramConfigComponent } from './components/modal/program-config/program-config.component';
 
 @NgModule({
   declarations: [
@@ -118,7 +119,8 @@ import { ClientActionsPopoverComponent } from './components/routes/client/action
     TestComponent,
     ClickOutsideComponent,
     ClientConfigComponent,
-    ClientActionsPopoverComponent
+    ClientActionsPopoverComponent,
+    ProgramConfigComponent
   ],
   imports: [
     BrowserModule,
@@ -133,6 +135,7 @@ import { ClientActionsPopoverComponent } from './components/routes/client/action
     AddProgramComponent,
     EditProgramComponent,
     DeleteProgramComponent,
+    ProgramConfigComponent,
     ProgramConfigByCommComponent,
     ClientConfigComponent
   ],

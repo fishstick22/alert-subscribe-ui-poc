@@ -1,14 +1,19 @@
-import { Component, OnInit }      from '@angular/core';
-import { NgbModal,
-         ModalDismissReasons }    from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit }        from '@angular/core';
+import { NgbModal, ModalDismissReasons,
+         NgbModalOptions }          from '@ng-bootstrap/ng-bootstrap';
 
-import { AddProgramComponent }    from 'app/components/modal/addprogram/addprogram.component';
-import { EditProgramComponent }   from 'app/components/modal/editprogram/editprogram.component';
-import { DeleteProgramComponent } from 'app/components/modal/deleteprogram/deleteprogram.component';
+import { AddProgramComponent }      from 'app/components/modal/addprogram/addprogram.component';
+import { EditProgramComponent }     from 'app/components/modal/editprogram/editprogram.component';
+import { DeleteProgramComponent }   from 'app/components/modal/deleteprogram/deleteprogram.component';
+import { ProgramConfigComponent,
+         ProgramConfigModalResult } from 'app/components/modal/program-config/program-config.component';
 
 import { Program,
-         ProgramConfigAction }    from 'app/classes/model/program';
-import { DataApiService }         from 'app/services/data-api/data-api.service';
+         ProgramConfigAction }      from 'app/classes/model/program';
+import { ProgramConfiguration, }    from 'app/classes/model/program-configuration';
+import { Communication }            from 'app/classes/model/communication';
+
+import { DataApiService }           from 'app/services/data-api/data-api.service';
 
 @Component({
   // selector: 'app-program', selector not needed on routed components
@@ -18,6 +23,9 @@ import { DataApiService }         from 'app/services/data-api/data-api.service';
 export class ProgramComponent implements OnInit {
 
   programs: Program[];
+  programConfigurations: ProgramConfiguration[];
+  communications: Communication[];
+
   selectedRow: number;
   closeResult: string;
 
@@ -29,6 +37,8 @@ export class ProgramComponent implements OnInit {
   async ngOnInit() {
     console.log('ProgramComponent ngOnInit...');
     await this.getPrograms();
+    await this.getProgramConfigurations();
+    await this.getCommunications();
   }
 
   async getPrograms() {
@@ -36,6 +46,22 @@ export class ProgramComponent implements OnInit {
       this.programs = await this.dataApiService.getPrograms();
     } catch (error) {
       console.log('getPrograms error: ', error);
+    }
+  }
+
+  async getProgramConfigurations() {
+    try {
+      this.programConfigurations = await this.dataApiService.getProgramConfigurations();
+    } catch (error) {
+      console.log('getProgramConfigurations error: ', error);
+    }
+  }
+
+  async getCommunications() {
+    try {
+      this.communications = await this.dataApiService.getCommunications();
+    } catch (error) {
+      console.log('getCommunications error: ', error);
     }
   }
 
@@ -81,6 +107,9 @@ export class ProgramComponent implements OnInit {
     }
     if (progConfigAction.configType === 'delete') {
       this.deleteProgramModal(progConfigAction.progId);
+    }
+    if (progConfigAction.configType === 'communications') {
+      this.configureProgramModal(progConfigAction.progId);
     }
   }
 
@@ -156,8 +185,67 @@ export class ProgramComponent implements OnInit {
     });
   }
 
+  configureProgramModal(commId) {
+    const modalOpts: NgbModalOptions = {
+      size: 'lg'
+    };
+    const modalRef = this.modalService.open(ProgramConfigComponent, modalOpts);
+    const modalComp: ProgramConfigComponent  = modalRef.componentInstance;
+    const selectedProgram: Program  = this.findProgram(commId);
+    // modalComp.name = 'Configure Clients';
+    modalComp.program = selectedProgram;
+    modalComp.communications = this.communications;
+    modalComp.programConfigurations = this.findProgramConfigurations(selectedProgram);
+
+    modalRef.result.then((result) => {
+      if (result.resultTxt === modalComp.SAVESUCCESS) {
+        console.log('configureProgramModal result: ', result.modalResult);
+        this.closeResult = `Closed with: ${result.resultTxt}`;
+        if (result.modalResult) {
+          const modalResult: ProgramConfigModalResult = result.modalResult;
+          // if (modalResult.prevProgConfig) {
+          //   this.updateProgramConfiguration(modalResult.prevProgConfig);
+          // }
+          if (modalResult.newProgramConfig) {
+            this.addProgramConfiguration(modalResult.newProgramConfig);
+          }
+        } else {
+          // this would be some kind of exception
+          console.log('CommunicationComponent configureProgramModal bad result: ', result.modalResult);
+        }
+      } else {
+        this.closeResult = `Closed with: ${result}`;
+      }
+      this.setClickedRow(null);
+      console.log('configureProgram result: ', this.closeResult);
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.setClickedRow(null);
+      console.log('addNewProgramConfig result: ', this.closeResult);
+    });
+  }
+
   private findProgram(id): Program {
     return this.programs.find(p => p.id === id);
+  }
+
+  private findProgramConfigurations(id): ProgramConfiguration[] {
+    return this.programConfigurations.filter(pc => {
+      if (pc.communication.id === id) {
+        console.log(pc, 'Program: ', typeof(pc.program));
+        if (typeof(pc.program) === 'number') {
+          const programId = <number> pc.program;
+          pc.program = this.findProgram(programId);
+        }
+        return true;
+      }
+    });
+  }
+
+  private addProgramConfiguration(programConfiguration: ProgramConfiguration): void {
+    this.dataApiService.createProgramConfiguration(programConfiguration)
+      .then(pc => console.log('addProgramConfiguration:', programConfiguration, this.programConfigurations))
+      .catch(error =>  console.log('addProgramConfiguration error: ', error));
   }
 
   private getDismissReason(reason: any): string {

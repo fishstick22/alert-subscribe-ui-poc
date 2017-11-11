@@ -9,42 +9,8 @@ import { Component, OnInit, Input,
 
 @Component({
   selector: 'app-comm-actions-popover',
-  template: `
-    <ng-template #popContent>
-      <div class="w-100 outer-popover"
-        (click)="onClick($event)"
-        (appClickOutside)="onClickedOutside($event, p)"
-        [attachOutsideOnClick]="attachOutsideOnClick"
-        [delayClickOutsideInit]="delayClickOutsideInit"
-        [clickOutsideEvents]="clickOutsideEvents"
-        [exclude]="exclude"
-        [excludeBeforeClick]="excludeBeforeClick">
-
-        <div class="float-left inner-popover">
-            <span class="badge badge-success clickable"
-                 (click)="configure(commId, 'program'); p.close();"
-                  title="Configure Program for CommId {{commId}}: {{commName}} ">
-              Program</span></div>
-        <div class="float-right inner-popover">
-            <span class="badge badge-success clickable"
-                 (click)="configure(commId, 'clients'); p.close();"
-                  title="Configure Client(s) for CommId {{commId}}: {{commName}} ">
-              Clients</span>
-          </div>
-      </div>
-    </ng-template>
-    <div [ngbPopover]="popContent"
-         #p="ngbPopover"
-         popoverTitle=""
-         placement="left">
-      <ng-content></ng-content>
-    </div>
-  `,
-  styles: [
-    '.outer-popover, .inner-popover { display: block; }',
-    '.outer-popover { width: 300px; padding: 0; }',
-    '.inner-popover { padding: 5px; }'
-  ]
+  templateUrl: './actions-popover.component.html',
+  styleUrls: ['./actions-popover.component.scss']
 })
 export class CommActionsPopoverComponent implements OnInit {
 

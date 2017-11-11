@@ -15,7 +15,8 @@ export class CommActionTableComponent implements OnInit {
   @Input() communications: Communication[];
   @Input() displayComm: Communication[];
   @Input() displayCommStartEmpty: boolean = true;
-  @Input() displayClient: string = 'Client';
+  @Input() displayClient: string; // = 'Client';
+  @Input() displayProgram: string; // = 'Program';
   @Input() showCommId: boolean = true;
   @Input() showCommName: boolean = true;
   @Input() showCommDesc: boolean = false;
