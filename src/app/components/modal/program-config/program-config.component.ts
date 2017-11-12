@@ -21,16 +21,21 @@ export class ProgramConfigComponent implements OnInit {
 
   displayComm: Communication[];
   displayCommStartEmpty: boolean;
+  supressComm: number[];
 
   newProgramConfig: ProgramConfiguration;
   prevProgramConfig: ProgramConfiguration;
+  newProgramConfigs: ProgramConfiguration[];
 
   lastProgramConfigRow: number;
-  configureState: 'start' | 'pick' | 'configure' | 'save';
+  configureState: 'start' | 'pick' | 'continue' | 'configure' | 'save';
 
   programDropEnabled: boolean = false;
 
   selectedRow: number;
+
+  today = new Date();
+  tomorrow = new Date();
 
   constructor(public configureProgramModal: NgbActiveModal) { }
 
@@ -42,29 +47,60 @@ export class ProgramConfigComponent implements OnInit {
 
     this.displayCommStartEmpty = true;
     this.displayComm = [];
+    this.newProgramConfigs = [];
+    this.tomorrow.setDate(this.today.getDate() + 1);
     this.configureState = 'start';
+
+    this.supressComm = this.findExistingComms();
+  }
+
+  findExistingComms(): number[] {
+    const existing: number[] = [];
+    for (let i = 0; i < this.programConfigurations.length; i++) {
+      existing.push(this.programConfigurations[i].communication.id);
+    }
+    return existing;
   }
 
   addProgramConfig(communication?: Communication) {
-    const today = new Date();
-    const tomorrow = new Date();
-    tomorrow.setDate(today.getDate() + 1);
 
     if (this.newProgramConfig && this.configureState === 'pick') {
       this.newProgramConfig.communication = communication;
-      this.configureState = 'configure';
+      // this.newProgramConfigs[this.newProgramConfigs.length] = this.newProgramConfig;
+      this.supressComm.push(communication.id);
+      // this.configureState = 'continue';
+      // this.newProgramConfig = null;
+      this.programDropEnabled = false;
     }
 
-    if (this.configureState === 'start') {
-      this.newProgramConfig = new ProgramConfiguration();
-      this.newProgramConfig.effective = tomorrow.getFullYear() + '-' + (tomorrow.getMonth() + 1) + '-' + tomorrow.getDate();
+    if (this.configureState === 'start' || this.configureState === 'continue') {
+      // first time through
+      this.lastProgramConfigRow = this.programConfigurations.length;
+      if (this.lastProgramConfigRow === 0) {
+        this.newProgramConfig = new ProgramConfiguration();
+        this.newProgramConfig.effective =  // TODO shared util method
+           this.tomorrow.getFullYear() + '-' +
+          (this.tomorrow.getMonth() + 1) + '-' +
+           this.tomorrow.getDate();
+      } else {
+        // clone setting from previous config row
+        this.prevProgramConfig = this.programConfigurations[this.lastProgramConfigRow - 1];
+        this.newProgramConfig = new ProgramConfiguration(this.prevProgramConfig);
+        this.newProgramConfig.effective = this.prevProgramConfig.effective;
+      }
+      this.programConfigurations[this.programConfigurations.length] = this.newProgramConfig;
+      this.newProgramConfigs[this.newProgramConfigs.length] = this.newProgramConfig;
       this.newProgramConfig.expiration = '9999-12-31';
       this.newProgramConfig.program = this.program;
+
       this.newProgramConfig.communication = new Communication();
-      this.lastProgramConfigRow = this.programConfigurations.length;
-      this.programConfigurations[this.programConfigurations.length] = this.newProgramConfig;
+
       this.configureState = 'pick';
       this.programDropEnabled = true;
+    } else {
+      if (this.newProgramConfig && this.configureState === 'pick') {
+        this.configureState = 'continue';
+      }
     }
   }
 
@@ -90,7 +126,7 @@ export class ProgramConfigComponent implements OnInit {
     console.log(this.newProgramConfig, ' program id: ', this.program);
 
     const modalResult: ProgramConfigModalResult = {
-      newProgramConfig: this.newProgramConfig
+      newProgramConfigs: this.newProgramConfigs
     };
 
     this.configureProgramModal.close({resultTxt: this.SAVESUCCESS, modalResult: modalResult});
@@ -105,6 +141,6 @@ export class ProgramConfigComponent implements OnInit {
   }
 }
 export class ProgramConfigModalResult {
-  newProgramConfig: ProgramConfiguration;
+  newProgramConfigs: ProgramConfiguration[];
 }
 

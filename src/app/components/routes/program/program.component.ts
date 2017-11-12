@@ -206,8 +206,10 @@ export class ProgramComponent implements OnInit {
           // if (modalResult.prevProgConfig) {
           //   this.updateProgramConfiguration(modalResult.prevProgConfig);
           // }
-          if (modalResult.newProgramConfig) {
-            this.addProgramConfiguration(modalResult.newProgramConfig);
+          if (modalResult.newProgramConfigs) {
+            for (let i = 0; i < modalResult.newProgramConfigs.length; i++) {
+              this.addProgramConfiguration(modalResult.newProgramConfigs[i]);
+            }
           }
         } else {
           // this would be some kind of exception
@@ -229,13 +231,23 @@ export class ProgramComponent implements OnInit {
     return this.programs.find(p => p.id === id);
   }
 
-  private findProgramConfigurations(id): ProgramConfiguration[] {
+  private findCommunication(id: number): Communication {
+    return this.communications.find(c => c.id === id);
+  }
+
+  private findProgramConfigurations(selectedProgram: Program): ProgramConfiguration[] {
     return this.programConfigurations.filter(pc => {
-      if (pc.communication.id === id) {
-        console.log(pc, 'Program: ', typeof(pc.program));
-        if (typeof(pc.program) === 'number') {
-          const programId = <number> pc.program;
-          pc.program = this.findProgram(programId);
+      if (typeof(pc.program) === 'number') {
+        if (pc.program === selectedProgram.id) {
+          pc.program = selectedProgram;
+          if (typeof(pc.communication) === 'number') {
+            pc.communication = this.findCommunication(<number>pc.communication);
+          }
+          return true;
+        } else { return false; }
+      } else if (pc.program.id === selectedProgram.id) {
+        if (typeof(pc.communication) === 'number') {
+          pc.communication = this.findCommunication(<number>pc.communication);
         }
         return true;
       }

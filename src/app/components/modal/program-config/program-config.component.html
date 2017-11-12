@@ -45,7 +45,7 @@
                          title="Pick Communication to configure for {{program.name}}"></i></span>
                     <span *ngIf="i === lastProgramConfigRow && cc.communication.id" class="badge badge-primary">{{cc.communication.id}}</span>
                   </td>
-                  <td width="18%"><span >{{cc.communication.name}}</span></td>
+                  <td width="20%"><small>{{cc.communication.name}}</small></td>
                   <td><app-select-channel-priority 
                         id="chanEmailPriority" name="chanEmailPriority" 
                         [(ngModel)]="cc.chanEmailPriority"
@@ -85,7 +85,7 @@
                         [lastConfigRow]="i === lastProgramConfigRow"
                         (newDateValue)="updateDateValue($event, cc, 'expiration')"></app-date-eff-exp></td>
                 </tr>
-                <tr *ngIf="configureState === 'start'">
+                <tr *ngIf="configureState === 'start' || configureState === 'continue'">
                   <td>
                     <i class="fa fa-plus-square-o clickable" aria-hidden="true" 
                       (click)="addProgramConfig()" title="Add New Communication to {{program.name}} Configurations"></i>
@@ -93,25 +93,6 @@
                 </tr>
               </tbody>
             </table>
-
-    </div>
-
-    <div id=ActionTable>
-
-      <app-comm-action-table *ngIf="configureState === 'pick'" 
-        [communications]="communications"
-        [displayComm]="displayComm"
-        [displayCommStartEmpty]="true"
-        [displayProgram]="program.name"
-        [showCommId]="true"
-        [showCommName]="true"
-        [showCommDesc]="true"
-        [showStatus]="false"
-        [showAction]="false"
-        (selRowOut)="setClickedRow($event)"
-        (selectedCommunication)="addProgramConfig($event)"
-        (commConfigAction)="configureCommunication($event)">
-      </app-comm-action-table>
 
     </div>
 
@@ -125,7 +106,27 @@
           <button type="button" class="btn btn-outline-dark" (click)="configureProgramModal.close('Close click')">Cancel</button>
       </div>
     </div>
-    
+  </div>
+
+  <div class="modal-footer">
+    <div class="w-100">
+      <app-comm-action-table *ngIf="configureState === 'pick' || configureState === 'continue'" 
+        [configureState]="configureState"
+        [communications]="communications"
+        [displayComm]="displayComm"
+        [supressComm]="supressComm"
+        [displayCommStartEmpty]="true"
+        [displayProgram]="program.name"
+        [showCommId]="true"
+        [showCommName]="true"
+        [showCommDesc]="true"
+        [showStatus]="false"
+        [showAction]="false"
+        (selRowOut)="setClickedRow($event)"
+        (selectedCommunication)="addProgramConfig($event)"
+        (commConfigAction)="configureCommunication($event)">
+      </app-comm-action-table>
+    </div>
   </div>
   
 </form>

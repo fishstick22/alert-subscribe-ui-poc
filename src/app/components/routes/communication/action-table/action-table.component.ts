@@ -1,4 +1,5 @@
-import { Component, OnInit,
+import { Component, OnInit, OnChanges,
+         SimpleChanges, SimpleChange,
          Input, Output, EventEmitter } from '@angular/core';
 
 import { Communication,
@@ -10,13 +11,15 @@ import { Communication,
   templateUrl: './action-table.component.html',
   styleUrls: ['./action-table.component.scss']
 })
-export class CommActionTableComponent implements OnInit {
+export class CommActionTableComponent implements OnChanges, OnInit {
 
+  @Input() configureState: string;
   @Input() communications: Communication[];
   @Input() displayComm: Communication[];
+  @Input() supressComm: number[] = [];
   @Input() displayCommStartEmpty: boolean = true;
-  @Input() displayClient: string; // = 'Client';
-  @Input() displayProgram: string; // = 'Program';
+  @Input() displayClient: string = ''; // = 'Client';
+  @Input() displayProgram: string = ''; // = 'Program';
   @Input() showCommId: boolean = true;
   @Input() showCommName: boolean = true;
   @Input() showCommDesc: boolean = false;
@@ -38,11 +41,29 @@ export class CommActionTableComponent implements OnInit {
 
   constructor() { }
 
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+
+    // https://github.com/angular/angular/issues/2404
+    // ngOnChanges can fire before ngOnInit
+    // not sure why, but just make sure these are not undefined
+    // before calling the search to referesh
+    if (this.displayComm && this.communications && this.supressComm) {
+      this.searchCommunicatonTable();
+    }
+
+  }
+
   ngOnInit() {
     console.log('CommActionTableComponent:', this.communications);
-    if (!this.displayComm) { // if all else fails, start with it empty
-      this.displayComm = []; // instead of 'undefined'
-    }
+    // shouldn't have to do this?
+    // if (!this.displayComm) {
+    //   this.displayComm = [];
+    //   this.displayCommStartEmpty = true;
+    // }
+    // if (!this.supressComm) {
+    //   this.supressComm = [];
+    // }
   }
 
   selectCommunication(communication: Communication) {
@@ -102,6 +123,10 @@ export class CommActionTableComponent implements OnInit {
     this.commDescSearchLast = this.commDescSearch;
   }
 
+  private isSuppressed(comm: Communication): boolean {
+    return (this.supressComm.indexOf(comm.id) > -1);
+  }
+
   private searchCommunicatonTable() {
     // TODO yes this is a monster if-then-else method
     // once the logic is worked out move it into a service and refactor
@@ -124,7 +149,7 @@ export class CommActionTableComponent implements OnInit {
       } else {
         // refresh the list, reapply each filter, gonna guess mostly searching on names
         this.displayComm = this.communications.filter(comm => {
-          return this.containsString(comm.name, this.commNameSearch);
+          return !this.isSuppressed(comm) && this.containsString(comm.name, this.commNameSearch);
         });
       }
     } else {
@@ -132,12 +157,12 @@ export class CommActionTableComponent implements OnInit {
       if (this.commNameSearch !== '') {
         // we may be starting empty, if so use the full array first
         if (this.displayComm.length === 0) {
-          this.displayComm = this.communications.filter(client => {
-            return this.containsString(client.name, this.commNameSearch);
+          this.displayComm = this.communications.filter(comm => {
+            return !this.isSuppressed(comm) && this.containsString(comm.name, this.commNameSearch);
           });
         } else {
-          this.displayComm = this.displayComm.filter(client => {
-            return this.containsString(client.name, this.commNameSearch);
+          this.displayComm = this.displayComm.filter(comm => {
+            return !this.isSuppressed(comm) && this.containsString(comm.name, this.commNameSearch);
           });
         }
       }
@@ -145,22 +170,22 @@ export class CommActionTableComponent implements OnInit {
     if (this.commDescSearch !== '') {
       if (this.displayComm.length === 0) {
         this.displayComm = this.communications.filter(comm => {
-          return this.containsString(comm.description, this.commDescSearch);
+          return !this.isSuppressed(comm) && this.containsString(comm.description, this.commDescSearch);
         });
       } else {
         this.displayComm = this.displayComm.filter(comm => {
-          return this.containsString(comm.description, this.commDescSearch);
+          return !this.isSuppressed(comm) && this.containsString(comm.description, this.commDescSearch);
         });
       }
     }
     if (this.commIdSearch !== '') {
       if (this.displayComm.length === 0) {
         this.displayComm = this.communications.filter(comm => {
-          return (String(comm.id).indexOf(this.commIdSearch) !== -1 );
+          return !this.isSuppressed(comm) && (String(comm.id).indexOf(this.commIdSearch) !== -1 );
         });
       } else {
         this.displayComm = this.displayComm.filter(comm => {
-          return (String(comm.id).indexOf(this.commIdSearch) !== -1 );
+          return !this.isSuppressed(comm) && (String(comm.id).indexOf(this.commIdSearch) !== -1 );
         });
       }
     }

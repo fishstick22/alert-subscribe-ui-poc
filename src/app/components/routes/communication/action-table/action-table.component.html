@@ -27,6 +27,7 @@ appSortableTable (sorted)="onSorted($event)">
   </tr>
 </thead>
 <tbody>
+  <tr><td class="bg-gradient-light" border=0 colspan=3></td></tr>
   <tr appDraggable 
       [draggable] *ngFor="let communication of displayComm; let i = index"
       [dragData]="communication" [dragClass]="'drag-over'"  
