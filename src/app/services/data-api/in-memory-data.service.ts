@@ -100,14 +100,28 @@ export class InMemoryDataService implements InMemoryDbService {
           'name': 'Prescription Alerts',
           'description': 'PBM Communications including Order Status and Refill Reminder alerts',
           'programConfiguration': [1]
-        },
-      'communication':
-        {'id': 261,
+         },
+       'communication':
+         {'id': 261,
           'name': 'Order Received',
           'description': 'Notifies a member when their order is received',
           'programConfiguration': [1]
-        }
-      }
+         }
+      },
+       {'id': 2,
+        'name': 'Prescription Alerts Order Status',
+        'description': 'Order Status Program-level Configuration',
+        'chanEmailPriority': 2,
+        'chanIvrPriority': 3,
+        'chanSmsPriority': 1,
+        'chanMailPriority': 0,
+        'chanMobilePriority': 0,
+        'chanMandatory': 'Email',
+        'effective': '2017-1-1',
+        'expiration': '9999-12-31',
+        'program': 1,
+        'communication': 264
+       }
     ];
     const client = [
       {'id': 142,   'code': 'AMD',   'name': 'AT&T INC.'},
@@ -170,12 +184,8 @@ export class InMemoryDataService implements InMemoryDbService {
        'chanMandatory': 'No',
        'effective': '2017-01-01',
        'expiration': '9999-12-31',
-       'client':
-         {'id': 259,
-          'code': 'BCC',
-          'name': 'BLUE CROSS OF CONNECTICUT'
-         },
-      'communication': 261
+       'client': 259,
+       'communication': 261
       }
     ];
     return {

@@ -31,7 +31,7 @@
       [draggable] *ngFor="let client of displayClient; let i = index"
       [dragData]="client" [dragClass]="'drag-over'"  
       (click)="setClickedRow(i); " [class.table-info]="i == selectedRow"
-       title="Click or Drag to configure {{client.name}} {{displayCommunication}} settings" >
+       title="Click or Drag to configure {{client.name}} for Communication {{displayCommunication}}" >
     <td *ngIf="showClientId">
       <span class="badge badge-secondary clickable"
         (click)="selectClient(client)">{{client.id}}</span></td>

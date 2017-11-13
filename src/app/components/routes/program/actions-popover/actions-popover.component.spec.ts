@@ -1,20 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule }    from '@angular/forms';
+import { NgbModule }              from '@ng-bootstrap/ng-bootstrap';
 
-import { ActionsPopoverComponent } from './actions-popover.component';
+import { ClickOutsideDirective }       from 'app/directives/click-outside.directive';
 
-describe('ActionsPopoverComponent', () => {
-  let component: ActionsPopoverComponent;
-  let fixture: ComponentFixture<ActionsPopoverComponent>;
+import { ProgActionsPopoverComponent } from './actions-popover.component';
+
+describe('ProgActionsPopoverComponent', () => {
+  let component: ProgActionsPopoverComponent;
+  let fixture: ComponentFixture<ProgActionsPopoverComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ActionsPopoverComponent ]
+      declarations: [ ProgActionsPopoverComponent, ClickOutsideDirective ],
+      imports: [ FormsModule, NgbModule.forRoot() ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ActionsPopoverComponent);
+    fixture = TestBed.createComponent(ProgActionsPopoverComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

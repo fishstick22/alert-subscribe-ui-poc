@@ -25,6 +25,7 @@ export class ClientConfigByCommComponent implements OnInit {
 
     selectedClient: number;
     displayClient: Client[];
+    displayClientStartEmpty: boolean;
     lastClientConfigRow: number;
     configureState: 'start' | 'pick' | 'configure' | 'save';
 
@@ -37,18 +38,9 @@ export class ClientConfigByCommComponent implements OnInit {
     console.log(this.communication);
     console.log(this.clients);
     console.log(this.clientConfigurations);
-    // if (this.clientConfigurations.length === 0) { // no existing configs for comm
-    //   this.addClientConfig();
-    // } else {
-    //   const indxOfLast = this.clientConfigurations.length - 1;
-    //   if (this.clientConfigurations[indxOfLast] && this.clientConfigurations[indxOfLast].client) {
-    //     this.prevClientConfig = <ClientConfiguration> this.clientConfigurations[indxOfLast];
-    //     this.selectedClient = this.prevClientConfig.client.id;
-    //     this.addClientConfig(this.clientConfigurations[indxOfLast]);
-    //   }
-    // }
-    // this.displayClient = this.clients;
+
     this.displayClient = [];
+    this.displayClientStartEmpty = true;
     this.configureState = 'start';
   }
 
@@ -74,25 +66,6 @@ export class ClientConfigByCommComponent implements OnInit {
       this.configureState = 'pick';
       this.clientDropEnabled = true;
     }
-
-
-    // if (lastClientConfig) {
-    //   // adding a new row, expiring the previous, copying the previous values
-    //   lastClientConfig.expiration = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    //   this.newClientConfig = new ClientConfiguration(lastClientConfig);
-
-    // } else {
-    //   // this is a first-time row for this communication, set some defaults
-    //   this.newClientConfig = new ClientConfiguration();
-
-    // }
-
-    // this.newClientConfig.effective = tomorrow.getFullYear() + '-' + (tomorrow.getMonth() + 1) + '-' + tomorrow.getDate();
-    // this.newClientConfig.expiration = '9999-12-31';
-
-    // this.lastClientConfigRow = this.clientConfigurations.length;
-    // this.clientConfigurations[this.clientConfigurations.length] = this.newClientConfig;
-
   }
 
   clientDrop(dragEvent) {
@@ -102,22 +75,19 @@ export class ClientConfigByCommComponent implements OnInit {
     }
   }
 
-  updateDateValue(newDate, cc: ClientConfiguration, dateType: string) {
-    console.log('ClientConfigByCommComponent updateDateValue: ', newDate.newDateValue, cc, dateType);
+  updateDateValue(newDateValue, cc: ClientConfiguration, dateType: string) {
+    console.log('ClientConfigByCommComponent updateDateValue: ', newDateValue, cc, dateType);
     if (dateType === 'effective') {
-      cc.effective = newDate.newDateValue;
+      cc.effective = newDateValue;
     }
     if (dateType === 'expiration') {
-      cc.expiration = newDate.newDateValue;
+      cc.expiration = newDateValue;
     }
   }
 
   saveClientConfiguration() {
     console.log('ClientConfigByCommComponent save');
     console.log(this.newClientConfig, ' client id: ', this.selectedClient);
-
-    // this.newClientConfig.client = this.findClient(this.selectedClient);
-    // this.newClientConfig.communication = this.communication;
 
     const modalResult: ClientConfigModalResult = {
       newClientConfig: this.newClientConfig

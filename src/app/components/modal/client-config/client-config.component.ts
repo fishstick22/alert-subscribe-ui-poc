@@ -77,13 +77,13 @@ export class ClientConfigComponent implements OnInit {
     }
   }
 
-  updateDateValue(newDate, cc: ClientConfiguration, dateType: string) {
-    console.log('ClientConfigComponent updateDateValue: ', newDate.newDateValue, cc, dateType);
+  updateDateValue(newDateValue, cc: ClientConfiguration, dateType: string) {
+    console.log('ClientConfigComponent updateDateValue: ', newDateValue, cc, dateType);
     if (dateType === 'effective') {
-      cc.effective = newDate.newDateValue;
+      cc.effective = newDateValue;
     }
     if (dateType === 'expiration') {
-      cc.expiration = newDate.newDateValue;
+      cc.expiration = newDateValue;
     }
   }
 

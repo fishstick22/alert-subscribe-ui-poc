@@ -1,4 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule }    from '@angular/forms';
+import { NgbModule }              from '@ng-bootstrap/ng-bootstrap';
+
+import { ProgActionsPopoverComponent } from 'app/components/routes/program/actions-popover/actions-popover.component';
+
+import { ClickOutsideDirective }       from 'app/directives/click-outside.directive';
 
 import { ProgramComponent } from './program.component';
 
@@ -8,7 +14,12 @@ describe('ProgramComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProgramComponent ]
+      declarations: [
+        ProgramComponent,
+        ProgActionsPopoverComponent,
+        ClickOutsideDirective
+      ],
+      imports: [ FormsModule, NgbModule.forRoot() ]
     })
     .compileComponents();
   }));
