@@ -1,4 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule }    from '@angular/forms';
+import { NgbModule }              from '@ng-bootstrap/ng-bootstrap';
+
+import { ClickOutsideDirective }       from 'app/directives/click-outside.directive';
 
 import { CommActionsPopoverComponent } from './actions-popover.component';
 
@@ -8,7 +12,8 @@ describe('CommActionsPopoverComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CommActionsPopoverComponent ]
+      declarations: [ CommActionsPopoverComponent, ClickOutsideDirective ],
+      imports: [ FormsModule, NgbModule.forRoot() ]
     })
     .compileComponents();
   }));

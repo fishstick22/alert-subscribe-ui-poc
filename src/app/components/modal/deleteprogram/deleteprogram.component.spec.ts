@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule }    from '@angular/forms';
 
 import { DeleteProgramComponent } from './deleteprogram.component';
 
@@ -8,7 +9,8 @@ describe('DeleteprogramComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DeleteProgramComponent ]
+      declarations: [ DeleteProgramComponent ],
+      imports: [ FormsModule ]
     })
     .compileComponents();
   }));
